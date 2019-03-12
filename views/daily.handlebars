@@ -1,0 +1,73 @@
+
+
+{{!-- Daily card layout. --}}
+
+<div class="contatiner  cardContainer ">
+    <div class="row">
+
+        {{!-- Add new entry card. --}}
+        <div class="card mb-3 col-sm-12 col-lg-6 col-xl-4">
+            <div class="plusButton">
+                <span class="add"><a href="/daily/new">+</a></span>
+            </div>
+        </div>
+
+
+        {{!-- Main daily card. --}}
+            {{#each daily}}
+        <div class="card mb-3 col-sm-12 col-lg-6 col-xl-4">
+            <div class="card-header bg-transparent">
+                <div class="dailyTimeRow">
+                    <span>{{wakeup}}</span> <span class="dateStamp"> 11451 </span> <span>{{sleep}}</span>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="contentSection">
+                    <span class="contentSection">
+                        <i class="fas fa-flag"></i>
+                        <strong>Highlight:</strong> {{highlights}}
+                    </span>
+                    <br>
+                    <span class="contentSection">
+                        <i class="fas fa-arrow-up"></i>
+                        <strong>Positive:</strong> {{positive}}
+                    </span>
+                    <br>
+                    <span class="contentSection">
+                        <i class="fas fa-arrow-down"></i>
+                        <strong>Negative:</strong> {{negative}}
+                    </span>
+                    <br>
+                </div>
+            </div>
+
+            <div class="card-footer habitsRow bg-transparent" >
+                <div>
+                    <span>
+                        <i class="fas fa-running"></i>
+                    </span>
+                    <span>
+                        <i class="fas fa-dumbbell"></i>
+                    </span>
+                    <span>
+                        <i class="fas fa-tint"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+    <div class="row blog-container daily">
+
+    </div>
+</div>
+
+
+        
+{{!-- 
+    </div>
+</div> --}}
+{{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js" type="text/javascript"></script> --}}
+{{!-- <script src="/js/blog.js" type="text/javascript"></script> --}}

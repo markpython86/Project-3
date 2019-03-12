@@ -1,0 +1,32 @@
+<div id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 offset-2 signup">
+        <h1>Minimalist Journal</h1>
+        <h3>How was Your Day Today?</h3>
+        {{#each users}}
+        <form class="clearfix mb-4" action="/monthly/{{id}}" method="POST">
+        {{/each}}
+            <br>
+          <div class="form-group">
+            <label for="remember">A moment to rememebr</label>
+            <input name="remember" type="text" id="remember" class="form-control" aria-describedby="example-text" placeholder="Remember">
+          </div>
+          <div class="form-group">
+            <label for="start">What habbit you want to start?</label>
+            <input name="start" type="text" id="start" class="form-control" aria-describedby="example-text" placeholder="Start">
+          </div>
+          <div class="form-group">
+            <label for="stop">Whats habbit you want to stop?</label>
+            <input name="stop" type="text" id="stop" class="form-control" aria-describedby="example-text" placeholder="Stop">
+          </div>
+          <button id="submit" class="btn btn-primary float-right">Confirm</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/blog.js"></script> --}}

@@ -1,0 +1,135 @@
+/* .cardContainer*/
+#learnMore {
+  margin-right: 20px;
+}
+
+.navbar-toggler {
+  padding: .25rem .40rem;
+  border-radius: 12px;
+}
+
+/* .list-group-item {
+  line-height: 2.5;
+} */
+
+
+/* Card Styling. */
+
+.cardContainer {
+  margin-top: 75px;
+  }
+
+.card {
+  background-image: linear-gradient(#E4ECFC, #B2A7BB);
+  width: 24rem !important;
+  max-width: 24rem !important;
+  height: 24rem !important;
+  border-radius: 65px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0px;
+}
+
+.card-body {
+  padding: 5px;
+  line-height: 2.65em;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.optional {
+  color: #5E5E5E;   
+}
+
+#habitsRow {
+  font-weight: bolder;
+  font-size: 24px;
+  word-spacing: 2em;
+  line-height: 1.55em;
+  padding: 10px;
+  text-align: center;
+  color: #5E5E5E;   
+}
+
+#plusButton {
+  font-weight: bolder;
+  font-size: 100px;
+  margin: auto;
+  color: #5E5E5E;   
+}
+
+/* Daily  */
+
+#dailyTimeRow {
+  word-spacing: 2em;
+  line-height: .6em;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+#dateStamp {
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.contentSection {
+  float: left;
+  font-size: 18px;
+  /* line-height: 2.1em; */
+  padding: auto;
+  margin: auto;
+}
+
+/* Weekly */
+
+#weeklyRow {
+  word-spacing: .75em;
+  line-height: .6em;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.weeklyContentSection {
+  float: left;
+  font-size: 18px;
+  line-height: 1.75em;
+  padding: 0px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Weekly */
+
+#monthlyRow {
+  word-spacing: .75em;
+  line-height: .6em;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.monthlyContentSection {
+  float: left;
+  font-size: 18px;
+  line-height: 1.75em;
+  padding: 0px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+/* Footer */
+/* .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #F8F9FA;
+  color: gray;
+  text-align: center;
+} */
