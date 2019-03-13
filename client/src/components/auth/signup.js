@@ -20,7 +20,7 @@ class Signup extends Component {
         if (data.password == data.password2) {
             this.props.signUserUp(data);
         }else{
-            this.renderAlert('password does not matched');
+            this.renderAlert('password does not match');
         }
     }
     render() {
