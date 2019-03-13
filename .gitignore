@@ -3,6 +3,8 @@ bundle.js
 npm-debug.log
 yarn.lock
 
+New_folder/
+
 /.idea
 /public
 
