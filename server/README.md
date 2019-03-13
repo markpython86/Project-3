@@ -1,18 +1,21 @@
-# client-side
-React/Redux
+# server-side
+MongoDB, Express, Node
 
 ## clone or download and send me PR(please)
 ```terminal
 $ git clone https://github.com/amazingandyyy/mern-stack
 ```
 
-# Usage(make it run on your machine)
-### Client-side usage(PORT: 3000)
+### Server-side usage(PORT: 8000)
+(I am sure you need to add a JWT_SECRET in .env to connect to MongoDB -> make it run -> check your terminal for instructions
+)
 ```terminal
-$ cd client
+$ cd server
 $ npm i
 $ npm run dev
 ```
+### Deploy to Heroku
+docs is [here](https://github.com/amazingandyyy/mern-stack#deploy-server-to-heroku)
 
 # Dependencies(tech-stack)
 | Server-side
@@ -25,17 +28,6 @@ $ npm run dev
 | jwt-simple: ^0.5.1
 | mongoose: ^4.7.4
 | morgan: ^1.7.0
-
-# Some screemshots
-
-User visit public and Home page
-![User visit public and Home page](http://i.imgur.com/ORCGHHY.png)
-
-User can sign in or sign up
-![User can sign in or sign up](http://i.imgur.com/rrmbU5I.png)
-
-After signing in user can go to account page and make request to token-protected API endpoint
-![After signing in user can go to account page](http://i.imgur.com/FzLB51u.png)
 
 ## BUGs or comments
 [Create new Issues](https://github.com/amazingandyyy/mern-stack/issues)

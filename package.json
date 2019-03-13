@@ -1,34 +1,42 @@
 {
-  "name": "minimalapp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "Server.js",
+  "name": "mern-stack",
+  "version": "2.0.1",
+  "description": "CRUD in MongoDB, Express, React/Redux, Node",
+  "main": "index.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "seed": "node scripts/seedDB.js",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "test": "eslint --fix src/",
+    "precommit": "npm test",
+    "prepush": "npm test",
+    "heroku:add": "heroku git:remote -a",
+    "deploy:heroku": "git subtree push --prefix server heroku master"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amazingandyyy/mern-stack.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Amazingandyyy <amazingandyyy@gmail.com> (Andy Chen)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amazingandyyy/mern-stack/issues"
+  },
+  "homepage": "https://github.com/amazingandyyy/mern-stack#readme",
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "nodemon": "^1.18.7"
+    "eslint": "^4.14.0",
+    "eslint-config-logux": "^17.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-es5": "^1.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.5"
   },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "express-handlebars": "^3.0.0",
-    "if-env": "^1.0.4",
-    "moment": "^2.24.0",
-    "mysql": "^2.16.0",
-    "mysql2": "^1.6.5",
-    "sequelize": "^4.42.0"
-  }
+  "dependencies": {}
 }
