@@ -38,7 +38,7 @@ ReactDOM.render(
           <Route path="/signin" component= {Signin} />
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />
-          <Route path="/daily" component= {Daily} />
+          <Route path="/daily" component= {RequireAuth(Daily)} />
 
 
         </Switch>

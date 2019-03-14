@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 // import bcrypt from 'bcrypt-nodejs';
 
   const dailySchema = new mongoose.Schema({
-    _id: {type: Double},
+    _id: {type: String},
     highlights: { type: String },
     positive: { type: String },
     negative: { type: String },

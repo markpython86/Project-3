@@ -1,5 +1,6 @@
 import token from '../services/token';
 import User from '../models/user';
+import Daily from '../models/Daily';
 
 export default {
     signup: (req, res, next) => {
@@ -106,6 +107,13 @@ export default {
                 })
                 .catch(next)
         })
+    },
+    getDaily: (req,res,next) =>{
+        // console.log(Daily)
+        Daily.find({})
+        .then(data => res.send(data))
+        .catch(next)
     }
+
 
 }
