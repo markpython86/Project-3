@@ -14,20 +14,3 @@ import mongoose from 'mongoose';
 const Monthly = mongoose.model('Monthly', monthlySchema);
 
 module.exports = Monthly;
-
-
-// module.exports = (sequelize, DataTypes) => {
-//   const Monthly = sequelize.define('Monthly', {
-//     remember: DataTypes.STRING,
-//     start: DataTypes.STRING,
-//     stop: DataTypes.STRING,
-//     monthAt: DataTypes.STRING
-//   }, {});
-//   Monthly.associate = function(models) {
-//     // associations can be defined here
-//     Monthly.belongsTo(models.User,{
-//             foreignKey: 'userId'
-//     })
-//   };
-//   return Monthly;
-// };
