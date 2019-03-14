@@ -8,10 +8,10 @@ import cors from 'cors';
 import routers from './routes';
 import config from './config';
 
-if(!process.env.JWT_SECRET) {
-    const err = new Error('No JWT_SECRET in env variable');
-    console.error(err);
-}
+// if(!process.env.JWT_SECRET) {
+//     const err = new Error('No JWT_SECRET in env variable');
+//     console.error(err);
+// }
 
 const app = express();
 

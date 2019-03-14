@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 // import bcrypt from 'bcrypt-nodejs';
 
 const weeklySchema = new mongoose.Schema({
-  best: DataTypes.STRING,
-  worst: DataTypes.STRING,
-  next: DataTypes.STRING,
-  weekAt: DataTypes.DATE
+  best: { type: String },
+  worst: { type: String },
+  next: { type: String },
+  weekAt: { type: Date }
 })
 // add association later
 

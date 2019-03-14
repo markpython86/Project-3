@@ -9,7 +9,6 @@ New_folder/
 /.idea
 /public
 
-.env
 .passport.js
 .DS_Store
 

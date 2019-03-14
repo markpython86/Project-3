@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 
 
   const monthlySchema = new mongoose.Schema({
-    remember: DataTypes.STRING,
-    start: DataTypes.STRING,
-    stop: DataTypes.STRING,
-    monthAt: DataTypes.STRING
+    remember: { type: String },
+    start: { type: String },
+    stop: { type: String },
+    monthAt: { type: String }
   })
 // add association later
 
