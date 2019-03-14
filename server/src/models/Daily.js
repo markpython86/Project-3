@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 // import bcrypt from 'bcrypt-nodejs';
 
   const dailySchema = new mongoose.Schema({
+    _id: {type: Double},
     highlights: { type: String },
     positive: { type: String },
     negative: { type: String },
@@ -10,8 +11,12 @@ import mongoose from 'mongoose';
   })
 // add association later
 
-  export default mongoose.model('Daily', dailySchema);
+  const Daily = mongoose.model('Daily', dailySchema);
 
+  module.exports = Daily;
+
+
+ 
 
 
 // module.exports = (sequelize, DataTypes) => {

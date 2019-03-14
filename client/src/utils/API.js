@@ -1,9 +1,10 @@
+import axios from "axios";
 
 // Adding Daily functions
 export default {
     // Gets all dailys
     getDailies: function() {
-      return axios.get("/api/dailys");
+      return axios.get("/api/daily");
     },
     // Gets the daily with the given id
     getDaily: function(id) {

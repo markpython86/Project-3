@@ -9,7 +9,9 @@ const weeklySchema = new mongoose.Schema({
 })
 // add association later
 
-export default mongoose.model('Weekly', weeklySchema);
+const Weekly = mongoose.model('Weekly', weeklySchema);
+
+  module.exports = Weekly;
 
 
 

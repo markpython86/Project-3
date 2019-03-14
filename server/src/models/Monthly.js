@@ -11,7 +11,9 @@ import mongoose from 'mongoose';
 // add association later
 
 
-  export default mongoose.model('Monthly', monthlySchema);
+const Monthly = mongoose.model('Monthly', monthlySchema);
+
+module.exports = Monthly;
 
 
 // module.exports = (sequelize, DataTypes) => {

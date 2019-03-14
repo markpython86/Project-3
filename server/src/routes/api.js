@@ -6,7 +6,9 @@ const router = require('express').Router();
 // const monthlyRoutes = require("../controllers/monthlyController");
 
 // Daily routes
-// router.use("/daily", dailyRoutes);
+router.get("api/daily", (req, res)=>{
+    res.send(req.id)
+});
 
 // Weekly routes
 // router.use("/weekly", weeklyRoutes);
