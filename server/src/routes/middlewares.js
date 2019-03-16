@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Daily from '../models/Daily';
 import token from '../services/token';
 
 export default {
@@ -9,6 +10,19 @@ export default {
     let try_token = req.header('Authorization').split(' ')[0];
     token.verifyToken(try_token, (err, payload) => {
       if (err) return res.status(401).send(err);
+      // Daily.findOne().exec((err, Daily) => {
+      //     if (err || !Daily) {
+      //         return res.status(404).send(err || {
+      //             error: 'middleware Daily not found!!!'
+      //         });
+      //     }
+      //     // delete Daily.password;
+      //     req.Daily = Daily;
+      //     console.log('==================')
+      //     console.log(req.Daily)
+      //     console.log('==================')
+      //     next();
+      //   })
       User.findById(payload.sub)
         .exec((err, user) => {
           if (err || !user) {
