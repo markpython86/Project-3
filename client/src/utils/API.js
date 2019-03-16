@@ -4,11 +4,11 @@ import axios from "axios";
 export default {
     // Gets all dailys
     getDailies: function() {
-      return axios.get("/api/daily");
+      return axios.get("/daily");
     },
     // Gets the daily with the given id
     getDaily: function(id) {
-      return axios.get("/api/daily/" + id);
+      return axios.get("/daily/" + id);
     },
     // Deletes the daily with the given id
     deleteDaily: function(id) {

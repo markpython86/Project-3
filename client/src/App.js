@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import reduxThunk from 'redux-thunk';
-
+import App1 from './components/app1';
 import App from './components/app';
 import Home from './components/home';
 import Public from './components/public';
@@ -38,7 +38,9 @@ ReactDOM.render(
           <Route path="/signin" component= {Signin} />
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />
-          <Route path="/daily" component= {Daily} />
+          <Route path="/daily" component= {RequireAuth(Daily)} />
+          <Route path="/ui" component= {App1} />
+
 
 
         </Switch>

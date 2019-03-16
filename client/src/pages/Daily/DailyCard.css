@@ -1,0 +1,68 @@
+/* #headerLine {
+    border-bottom: 1px solid #808e95;
+    width: 120%;
+    margin-left: -16px;
+} */
+
+#header {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    /* background-color: #b0bec5; */
+    background-color: #808e95;
+    /* background-color: #b0c5c2; */
+    font-weight: bold;
+}
+
+/* #footerLine {
+    border-top: 1px solid #808e95;
+    width: 120%;
+    margin-left: -16px;
+    padding-bottom: 0px;
+} */
+
+#footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* background-color: #b0c5c2; */
+    /* color: #809492; */
+    background-color: #808e95;
+    background-color: #b0bec5;
+}
+
+#card {
+    margin-bottom: 0px !important;
+    /* border: 1px solid #808e95; */
+    border-radius: 10px;
+    /* background-color: #e2f1f8; */
+    background-color: #b0bec5;
+}
+
+#text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#icon {
+    margin-bottom: -6px;
+}
+
+
+#editButton {
+    background-color: #c4b6af;
+    text-align: center;
+}
+
+#saveButton {
+    background-color: #b0c5c2;
+    text-align: center;
+}
+
+#editButton {
+    background-color: #c4b6af;
+    text-align: center;
+}
+
+#deleteButton {
+    background-color: #ba6b6c;
+    text-align: center;
+}
