@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import "./App.css";
-import Wrapper from "./components/Grid/Wrapper";
-import Container from "./components/Grid/Container";
-import Item from "./components/Grid/Item";
-import Nav from "./components/Nav/Nav";
-import DailyCard from "./components/Daily/DailyCard";
+import Wrapper from "../pages/Grid/Wrapper";
+import Palette from "../pages/Grid/Palette";
+import Container from "../pages/Grid/Container";
+import Item from "../pages/Grid/Item";
+import Nav from "../pages/Nav/Nav";
+import FAB from "../pages/FAB/FAB";
+import DailyCard from "../pages/Daily/DailyCard";
 
 
 class App extends Component {
   render() { 
     return (
+      <Palette>
       <Wrapper>
       <Nav />
       <div id="sectionWrapper">
-        <Container spacing="16">
+        <Container spacing="32">
             <Item xs='12' sm='3'>
               <DailyCard />
             </Item>
@@ -34,10 +37,11 @@ class App extends Component {
             <Item xs="12" sm='3'>
               <DailyCard />
             </Item>
-
       </Container>
+      <FAB />
         </div>
       </Wrapper>
+      </Palette>
     )}
 }
 
