@@ -109,3 +109,17 @@ export function updateUserProfile(profile) {
             });
     }
 }
+
+export function getDailies() {
+    return function (dispatch) {
+             axios
+            .get(`/daily`)
+            .then(res => {
+                dispatch({
+                    type: GET_USER_PROFILE,
+                    payload: res.data
+                })
+            })
+            .catch(error => console.log(error.response.data));
+    }
+}
