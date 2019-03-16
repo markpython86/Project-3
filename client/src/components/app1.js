@@ -24,22 +24,17 @@ class App extends Component {
             <Item xs='12' sm='3'>
               <DailyCard />
             </Item>
-            
+
             <Item xs='12' sm='3'>
               <DailyCard />
             </Item>
-            
+
             <Item xs='12' sm='3'>
-              <DailyCard />
-            
-            </Item>
-            
-            <Item xs="12" sm='3'>
               <DailyCard />
             </Item>
       </Container>
-      <FAB />
         </div>
+        <FAB />
       </Wrapper>
       </Palette>
     )}
