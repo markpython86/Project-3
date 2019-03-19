@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import reduxThunk from 'redux-thunk';
-import App1 from './components/app1';
+// import App1 from './pages/Daily/daily';
 import App from './components/app';
 import Home from './components/home';
 import Public from './components/public';
 import Account from './components/account';
-import Daily from './components/dailyPage';
+import Daily from './pages/Daily/dailyPage';
+// import Monthly from './pages/monthlyPage';
+// import Weekly from './pages/weeklyPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import Signout from './components/auth/signout'
@@ -39,7 +41,9 @@ ReactDOM.render(
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
-          <Route path="/ui" component= {App1} />
+          {/* <Route path="/weekly" component= {RequireAuth(weekly)} />
+          <Route path="/monthly" component= {RequireAuth(Monthly)} /> */}
+          {/* <Route path="/ui" component= {App1} /> */}
 
 
 

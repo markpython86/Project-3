@@ -79,6 +79,9 @@ export function getUserProfile() {
         axios
             .get(`/api/userProfile`)
             .then(res => {
+
+                window.location = '/#account';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
                     payload: res.data
@@ -113,10 +116,13 @@ export function updateUserProfile(profile) {
 export function getDailies() {
     return function (dispatch) {
              axios
-            .get(`/daily`)
+            .get(`/api/daily`)
             .then(res => {
+
+                window.location = '/#daily';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
-                    type: GET_USER_PROFILE,
+                    type: GET_USER_DAILY,
                     payload: res.data
                 })
             })

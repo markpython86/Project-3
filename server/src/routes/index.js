@@ -9,7 +9,7 @@ router.post('/signup', Authentication.signup)
 router.post('/signin', Authentication.signin)
 router.get('/ping', (req, res) => res.send('pong'))
 router.get('/', (req, res) => res.json({'source': 'https://github.com/amazingandyyy/mern-stack'}))
-router.get('/daily', Authentication.getDaily)
+
 
 module.exports = router;
 
