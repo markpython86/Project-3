@@ -29,7 +29,6 @@ router.post('/userProfile', Authentication.updateProfile)
 
 router.get('/daily', Authentication.getDaily)
 
-// router.get('/daily', dailyController.findAll)
 
 // router.get('/daily', (req, res)=>{
 //     console.log(req.daily);

@@ -41,6 +41,21 @@ class App extends Component {
       <Wrapper>
         <Nav />
         <div id="sectionWrapper">
+        <form action="/daily/new" method="POST">
+          First name:<br/>
+          <input type="text" name="highlight"/>
+          <br/>
+          Last name:<br/>
+          <input type="text" name="pos"/>
+          <br/>
+          Last name:<br/>
+          <input type="text" name="neg"/><br/>
+          Last name:<br/>
+          <input type="text" name="wake"/><br/>
+          Last name:<br/>
+          <input type="text" name="sleep"/><br/>
+          <input type="submit" value="Submit"/>
+        </form> 
           <Container spacing="16">
             {this.state.dailies.map((person, index) => (
               <Item xs='12' sm='3'>
