@@ -117,6 +117,31 @@ export default {
             res.send(data)
         )
         .catch(next)
+    },
+    createDaily: (req, res, next) => {
+         const {
+            highlight,
+            pos,
+            neg,
+            wake,
+            sleep
+        } = req.body;
+
+        const daily = new Daily({
+                    highlights: highlight,
+                    positive: pos,
+                    negative: neg,
+                    wakeup: wake,
+                    sleep:sleep
+                })
+
+                daily.save(function (err, savedDaily) {
+                    if (err) {
+                        return next(err)
+                    }
+                })
+                 .catch(next)
+
     }
 
 
