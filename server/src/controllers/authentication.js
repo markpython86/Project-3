@@ -139,9 +139,10 @@ export default {
                     if (err) {
                         return next(err)
                     }
+                }).then(newDaily => {
+                    res.sendStatus(200);
                 })
-                 .catch(next)
-
+                .catch(next)
     }
 
 

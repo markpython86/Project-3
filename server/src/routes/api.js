@@ -21,7 +21,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/userProfile', (req, res)=>{
-    console.log(req)
+    console.log('user',req)
     res.send(req.user);
 })
 
@@ -29,7 +29,7 @@ router.post('/userProfile', Authentication.updateProfile)
 
 router.get('/daily', Authentication.getDaily)
 
-router.post('/daily/new', Authentication.createDaily)
+// router.post('/daily/new', Authentication.createDaily)
 
 // router.get('/daily', (req, res)=>{
 //     console.log(req.daily);

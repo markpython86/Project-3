@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 // import "./App.css";
 // import {connect} from 'react-redux';
+import {reduxForm, Field} from 'redux-form';
+import {connect} from 'react-redux';
 import API from "../../utils/API";
-import {tryConnect, getUserProfile, getDailies} from "../../actions";
-
+import {tryConnect, getUserProfile, getDailies,postDaily} from "../../actions";
+// import postDaily from '../../actions/index'
 import Wrapper from "../Grid/Wrapper";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
@@ -36,25 +38,72 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   };
+
+    handleFormSubmit(data) {
+       
+       this.props.postDaily(data)
+        
+    }
+
   render() {
+    const {handleSubmit} = this.props;
     return (
       <Wrapper>
         <Nav />
         <div id="sectionWrapper">
-        <form action="/daily/new" method="POST">
-          First name:<br/>
-          <input type="text" name="highlight"/>
-          <br/>
-          Last name:<br/>
-          <input type="text" name="pos"/>
-          <br/>
-          Last name:<br/>
-          <input type="text" name="neg"/><br/>
-          Last name:<br/>
-          <input type="text" name="wake"/><br/>
-          Last name:<br/>
-          <input type="text" name="sleep"/><br/>
-          <input type="submit" value="Submit"/>
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="highlight"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="pos"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="neg"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="wake"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="sleep"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+          
+          <button type="submit">Post Up</button>
         </form> 
           <Container spacing="16">
             {this.state.dailies.map((person, index) => (
@@ -80,5 +129,13 @@ class App extends Component {
   }
 }
 
+function mapStateToProps({auth}) {
+    return {
+        errorMsg: auth.error
+    }
+}
 
-export default App;
+
+export default connect(mapStateToProps,{postDaily})(reduxForm({
+    form: 'postDaily'
+})(App));

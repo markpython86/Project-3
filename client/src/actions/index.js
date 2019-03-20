@@ -129,3 +129,24 @@ export function getDailies() {
             .catch(error => console.log(error.response.data));
     }
 }
+
+export function postDaily(dailyObj) {
+    return function (dispatch) {
+        // Submit email/password to server
+        axios
+            .post(`/daily/new`, dailyObj)
+            .then(() => {
+                // console.log('\\\\\\\\\working')
+                // dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                //==================== change this window location to daily================================
+                
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
