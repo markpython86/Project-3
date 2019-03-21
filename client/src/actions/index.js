@@ -134,7 +134,7 @@ export function postDaily(dailyObj) {
     return function (dispatch) {
         // Submit email/password to server
         axios
-            .post(`/daily/new`, dailyObj)
+            .post(`/api/daily/new`, dailyObj)
             .then(() => {
                 // console.log('\\\\\\\\\working')
                 // dispatch({type: AUTH_USER})

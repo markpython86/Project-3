@@ -4,7 +4,7 @@ import token from '../services/token';
 
 export default {
   loginRequired: (req, res, next) => {
-    console.log('header',req.header)
+    // console.log('header',req.header)
 
     
     if (!req.header('Authorization')) return res.status(401).send({message: 'Please make sure your request has an Authorization header.'});
@@ -21,7 +21,7 @@ export default {
               });
           }
           delete user.password;
-          console.log(user)
+          // console.log(user)
           req.user = user;
           next();
         })

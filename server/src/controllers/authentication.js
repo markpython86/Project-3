@@ -110,7 +110,8 @@ export default {
         })
     },
     getDaily: (req,res,next) =>{
-        // console.log()
+        console.log('==========',req.Daily)
+        // console.log('==========',req.Daily)
         Daily.find({})
         
         .then(data => 
@@ -126,6 +127,8 @@ export default {
             wake,
             sleep
         } = req.body;
+        // console.log('user request', req.daily)
+        // User.findByIdAndUpdate({_id:req.user._id},{ $push: {daily: req.daily._id}})
 
         const daily = new Daily({
                     highlights: highlight,
@@ -140,6 +143,7 @@ export default {
                         return next(err)
                     }
                 }).then(newDaily => {
+                    // console.log(newDaily)
                     res.sendStatus(200);
                 })
                 .catch(next)
