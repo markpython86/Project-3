@@ -79,6 +79,9 @@ export function getUserProfile() {
         axios
             .get(`/api/userProfile`)
             .then(res => {
+
+                window.location = '/#account';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
                     payload: res.data
@@ -113,13 +116,37 @@ export function updateUserProfile(profile) {
 export function getDailies() {
     return function (dispatch) {
              axios
-            .get(`/daily`)
+            .get(`/api/daily`)
             .then(res => {
+
+                window.location = '/#daily';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
-                    type: GET_USER_PROFILE,
+                    type: GET_USER_DAILY,
                     payload: res.data
                 })
             })
             .catch(error => console.log(error.response.data));
+    }
+}
+
+export function postDaily(dailyObj) {
+    return function (dispatch) {
+        // Submit email/password to server
+        axios
+            .post(`/api/daily/new`, dailyObj)
+            .then(() => {
+                // console.log('\\\\\\\\\working')
+                // dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                //==================== change this window location to daily================================
+                
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
     }
 }

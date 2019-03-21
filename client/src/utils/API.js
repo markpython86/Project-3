@@ -4,7 +4,7 @@ import axios from "axios";
 export default {
     // Gets all dailys
     getDailies: function() {
-      return axios.get("/daily");
+      return axios.get("/api/daily");
     },
     // Gets the daily with the given id
     getDaily: function(id) {

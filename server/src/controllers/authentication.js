@@ -2,6 +2,7 @@ import token from '../services/token';
 import User from '../models/user';
 import Daily from '../models/Daily';
 
+
 export default {
     signup: (req, res, next) => {
         const {
@@ -109,11 +110,45 @@ export default {
         })
     },
     getDaily: (req,res,next) =>{
-        // console.log(Daily)
+        console.log('==========',req.Daily)
+        // console.log('==========',req.Daily)
         Daily.find({})
-        .then(data => res.send(data))
+        
+        .then(data => 
+            res.send(data)
+        )
         .catch(next)
+    },
+    createDaily: (req, res, next) => {
+         const {
+            highlight,
+            pos,
+            neg,
+            wake,
+            sleep
+        } = req.body;
+        // console.log('user request', req.daily)
+        // User.findByIdAndUpdate({_id:req.user._id},{ $push: {daily: req.daily._id}})
+
+        const daily = new Daily({
+                    highlights: highlight,
+                    positive: pos,
+                    negative: neg,
+                    wakeup: wake,
+                    sleep:sleep
+                })
+
+                daily.save(function (err, savedDaily) {
+                    if (err) {
+                        return next(err)
+                    }
+                }).then(newDaily => {
+                    // console.log(newDaily)
+                    res.sendStatus(200);
+                })
+                .catch(next)
     }
+
 
 
 }

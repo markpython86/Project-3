@@ -104,20 +104,20 @@ function DailyCard(props) {
         <Grid container spacing={0} id="header">
           <Grid item xs={4}>
             <Typography className={classes.headerActive} color="textSecondary" gutterBottom>
-            AM:AM
+            {props.wakeup}
           </Typography>
           </Grid>
 
 
           <Grid item xs={4}>
             <Typography className={classes.headerActive} color="textSecondary" gutterBottom>
-            01/01/01
+            {Date().now}
           </Typography>
           </Grid>
 
           <Grid item xs={4}>
             <Typography className={classes.headerActive} color="textSecondary" gutterBottom>
-            PM:PM
+            {props.sleep}
           </Typography>
           </Grid>
         
@@ -126,15 +126,15 @@ function DailyCard(props) {
         <div id="headerLine"></div>
 
         <Typography id="text">
-          <Flag id="icon"/> Daily Highlight {props.name}
+          <Flag id="icon"/> Daily Highlight: {props.Highlights}
         </Typography>
 
         <Typography component="p" id="text">
-          <ArrowUpward id="icon"/> Positive
+          <ArrowUpward id="icon"/> Positive: {props.positive}
         </Typography>
 
         <Typography component="p" id="text">
-          <ArrowDownward id="icon"/> Negative
+          <ArrowDownward id="icon"/> Negative: {props.negative}
         </Typography>
 
 <div id="footerLine"></div>
