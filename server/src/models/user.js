@@ -25,7 +25,20 @@ const userSchema = new mongoose.Schema({
             type: Boolean,
             default: false
         }
-    }
+    },
+    daily: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Daily'
+    }],
+    weekly: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Weekly'
+    }],
+    monthly: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Monthly'
+    }]
+
 })
 
 userSchema.pre('save', function(next){

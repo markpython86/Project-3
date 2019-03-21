@@ -21,9 +21,24 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/userProfile', (req, res)=>{
+    // console.log('user',req)
     res.send(req.user);
 })
 
 router.post('/userProfile', Authentication.updateProfile)
+
+router.get('/daily', Authentication.getDaily)
+
+router.post('/daily/new', Authentication.createDaily,(req,res)=>{
+    // console.log('==========+++++++++++====',req)
+    // res.send(req)
+})
+
+// router.get('/daily', (req, res)=>{
+//     console.log(req.daily);
+//     res.send('hello')
+//     // res.send(req.daily);
+// })
+
 
 export default router;
