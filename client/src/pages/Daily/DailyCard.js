@@ -60,15 +60,12 @@ const styles = {
   fab: {
     textAlign: 'center',
     marginBottom: 10,
-    color: 'disabled',
-    justify: 'center',
+    display: 'hidden',
   },
 
   fabActive: {
-    fontSize: 14,
     textAlign: 'center',
-    padding: 0,
-    color: 'black',
+    marginBottom: 10,
   },
 
   pos: {
@@ -83,13 +80,13 @@ function DailyCard(props) {
 
     <Grid container className={classes.container}> 
     <Grid item xs={4}>
-      <Fab size="small" id="saveButton" aria-label="Check" className={classes.fab}>
+      <Fab size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
         <Icon fontSize="small">check_icon</Icon>
       </Fab>
     </Grid>
 
     <Grid item xs={4}>
-      <Fab size="small" id="editButton" aria-label="Edit" className={classes.fab}>
+      <Fab size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
         <Icon fontSize="small">edit_icon</Icon>
       </Fab>
     </Grid>

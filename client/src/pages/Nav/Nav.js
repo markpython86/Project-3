@@ -11,7 +11,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 const styles = {
   root: {
     flexGrow: 1,
-    background: 'red',
   },
   grow: {
     flexGrow: 1,
@@ -32,9 +31,8 @@ const theme = createMuiTheme({
 function Nav(props) {
   const { classes } = props;
   return (
-    <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
-      <AppBar position="static">
+      <AppBar className={classes.root} position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
@@ -46,7 +44,6 @@ function Nav(props) {
         </Toolbar>
       </AppBar>
       </MuiThemeProvider>
-    </div>
   );
 }
 

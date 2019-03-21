@@ -46,19 +46,13 @@
     margin-bottom: -6px;
 }
 
-
-#editButton {
-    background-color: #c4b6af;
-    text-align: center;
-}
-
 #saveButton {
-    background-color: #b0c5c2;
+    /* background-color: #b0c5c2; */
     text-align: center;
 }
 
 #editButton {
-    background-color: #c4b6af;
+    /* background-color: #c4b6af; */
     text-align: center;
 }
 
