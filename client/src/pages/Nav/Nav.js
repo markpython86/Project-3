@@ -7,11 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuList from '@material-ui/core/MenuList';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-import { NavLink } from 'react-router-dom';
-import * as actions from '../../actions';
-import { connect } from 'react-redux';
-
+// import { NavLink } from 'react-router-dom';
+// import * as actions from '../../actions';
+// import { connect } from 'react-redux';
+import navDropDown from './NavDropDown';
 
 const styles = {
   root: {
@@ -34,9 +35,7 @@ const theme = createMuiTheme({
 });
 
 function Nav(props) {
-  const { classes } = props;
-
-  
+  const { classes } = props;  
 
   return (
       <MuiThemeProvider theme={theme}>
@@ -48,7 +47,13 @@ function Nav(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Minimalist
           </Typography>
-          <Button color="inherit"><AccountIcon/></Button>
+          <Button color="inherit"><AccountIcon onClick={navDropDown}/></Button>
+          {/* <MenuList>
+            <ListItem>
+              <li value="One"/>
+              <li value="One"/>
+            <ListItem/>
+          <MenuList/> */}
         </Toolbar>
       </AppBar>
       </MuiThemeProvider>
