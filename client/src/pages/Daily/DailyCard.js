@@ -74,6 +74,13 @@ const styles = {
 };
 
 function DailyCard(props) {
+  const allProps = {
+    highlight: props.Highlights,
+    positive: props.positive,
+    negative: props.negative,
+    wakeup: props.wakeup,
+    sleep: props.sleep, 
+  };
   const { classes } = props;
   return (
     <Grid item>
@@ -86,7 +93,7 @@ function DailyCard(props) {
     </Grid>
 
     <Grid item xs={4}>
-      <Fab size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
+      <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
         <Icon fontSize="small">edit_icon</Icon>
       </Fab>
     </Grid>

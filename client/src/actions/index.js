@@ -6,7 +6,9 @@ import {
     TRY_CONNECT,
     GET_USER_PROFILE,
     UPDATE_USER_PROFILE_GOOD,
-    UPDATE_USER_PROFILE_FAIL 
+    UPDATE_USER_PROFILE_FAIL,
+    UPDATE_DAILY_GOOD,
+    UPDATE_DAILY_FAIL
 } from './types';
 const ROOT_URL = process.env.API_URI || 'http://localhost:8000';
 
@@ -147,6 +149,25 @@ export function postDaily(dailyObj) {
             .catch(error => {
                 console.log(error);
                 dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function updateDaily(id, update) {
+    return function (dispatch) {
+        axios
+            .put(`/api/daily/${id}`, update)
+            .then(() => {
+                dispatch({
+                    type: UPDATE_DAILY_GOOD
+                })
+                window.location.reload(true);
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch({
+                    type: UPDATE_DAILY_FAIL
+                })
             });
     }
 }

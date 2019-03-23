@@ -14,6 +14,10 @@ export default {
     deleteDaily: function(id) {
       return axios.delete("/api/daily/" + id);
     },
+
+    updateDaily: function(id, dailyData) {
+      return axios.put("/api/daily/" + id, dailyData);
+    },
     // Saves a daily to the database
     saveDaily: function(dailyData) {
       return axios.post("/api/daily", dailyData);
