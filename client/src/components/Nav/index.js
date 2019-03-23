@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuList from '@material-ui/core/MenuList';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-// import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // import * as actions from '../../actions';
 // import { connect } from 'react-redux';
 import navDropDown from './NavDropDown';

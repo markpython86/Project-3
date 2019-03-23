@@ -9,7 +9,7 @@ import {tryConnect, getUserProfile, getDailies,postDaily} from "../../actions";
 import Wrapper from "../Grid/Wrapper";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../Nav/Nav";
+import Nav from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
