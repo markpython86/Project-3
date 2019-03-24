@@ -28,12 +28,12 @@ router.get('/userProfile', (req, res)=>{
 router.post('/userProfile', Authentication.updateProfile)
 
 router.get('/daily', Authentication.getDaily)
+router.post('/daily/new', Authentication.createDaily)
 
-router.post('/daily/new', Authentication.createDaily,(req,res)=>{
-    // console.log('==========+++++++++++====',req)
-    // res.send(req)
-})
 
+//delete route
+
+router.delete('/daily/:id', Authentication.deleteDaily)
 // router.get('/daily', (req, res)=>{
 //     console.log(req.daily);
 //     res.send('hello')

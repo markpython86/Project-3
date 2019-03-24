@@ -5,6 +5,7 @@ import {
     AUTH_ERROR,
     TRY_CONNECT,
     GET_USER_PROFILE,
+    GET_USER_DAILY,
     UPDATE_USER_PROFILE_GOOD,
     UPDATE_USER_PROFILE_FAIL 
 } from './types';
@@ -126,7 +127,7 @@ export function getDailies() {
                     payload: res.data
                 })
             })
-            .catch(error => console.log(error.response.data));
+            .catch(error => console.log(error));
     }
 }
 
@@ -137,6 +138,28 @@ export function postDaily(dailyObj) {
             .post(`/api/daily/new`, dailyObj)
             .then(() => {
                 // console.log('\\\\\\\\\working')
+                dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                //==================== change this window location to daily================================
+                
+                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function deleteDaily(dailyID) {
+    return function (dispatch) {
+        console.log(dailyID)
+        // Submit email/password to server
+        axios
+            .delete(`/api/daily/${dailyID}`)
+            .then(() => {
+                console.log('\\\\\\\\\working')
                 // dispatch({type: AUTH_USER})
                  window.location.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);

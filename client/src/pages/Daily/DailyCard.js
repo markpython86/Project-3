@@ -74,7 +74,9 @@ const styles = {
 };
 
 function DailyCard(props) {
+  // console.log(this.props)
   const { classes } = props;
+  // console.log('props', props)
   return (
     <Grid item>
 
@@ -93,13 +95,13 @@ function DailyCard(props) {
 
     <Grid item xs={4}>
       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
-        <Icon fontSize="small">delete_icon</Icon>
+        <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
       </Fab>
     </Grid>
     </Grid>
 
 
-    <Card className={classes.root} id="card">
+    <Card className={classes.root} id="card" key={props.index.toString()}>
       <CardContent className={classes.root}>
         <Grid container spacing={0} id="header">
           <Grid item xs={4}>

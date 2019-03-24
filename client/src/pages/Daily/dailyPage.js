@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import API from "../../utils/API";
-import {tryConnect, getUserProfile, getDailies,postDaily} from "../../actions";
+import { postDaily} from "../../actions";
 // import postDaily from '../../actions/index'
 import Wrapper from "../Grid/Wrapper";
 import Container from "../Grid/Container";
@@ -18,24 +18,38 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      dailies: []
+      dailies: [],
+      
     }
   }
   // 
+  
 
   componentDidMount() {
+    
     // this.props.tryConnect();
     this.loadDailies();
   };
 
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
+    
     API.getDailies()
       .then(res => {
-        this.setState({ dailies: res.data })
+        
+        this.setState({ dailies: res.data.daily })
         // console.log(this.props)
-        console.log('dailies from updated state', this.state.dailies)
+        console.log('dailies from updated state', res.data)
       })
+      .catch(err => console.log(err));
+  };
+
+  deleteDailies(id){
+    // this.props.deleteDaily(id)
+    console.log(id)
+    // console.log('deleted '+id)
+    API.deleteDaily(id)
+     .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
 
@@ -43,7 +57,7 @@ class App extends Component {
        
        this.props.postDaily(data)
         
-    }
+    };
 
   render() {
     const {handleSubmit} = this.props;
@@ -110,6 +124,8 @@ class App extends Component {
               <Item xs='12' sm='3'>
                 <DailyCard
                   key={person._id}
+                  index={person._id}
+                  deleteDaily = {this.deleteDailies}
                   Highlights={person.highlights}
                   positive={person.positive}
                   negative={person.negative}
@@ -136,6 +152,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{postDaily})(reduxForm({
+export default connect(mapStateToProps,{ postDaily})(reduxForm({
     form: 'postDaily'
 })(App));
