@@ -176,8 +176,30 @@ export default {
             res.sendStatus(200)
         }))
         .catch(next)
-        }
+        },
         
+    
+    updateDaily: (req, res, next) => {
+        
+            const dailyId = req.params.id;
+            console.log(req.daily)
+            // const newDaily = {
+            //         highlights: req.body.highlight,
+            //         positive: req.body.pos,
+            //         negative: req.body.neg,
+            //         wakeup: req.body.wake,
+            //         sleep: req.body.sleep
+            // };
+           
+    //         Daily.findByIdAndUpdate(dailyId, newDaily, {
+    //                 new: true
+    //             })
+    //             .then(newDaily => {
+    //                 res.sendStatus(200);
+    //             })
+    //             .catch(next)
+    },
+
     
 
 

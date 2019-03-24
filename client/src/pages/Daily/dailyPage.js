@@ -19,11 +19,10 @@ class App extends Component {
     super();
     this.state = {
       dailies: [],
-      
+      update: {}
     }
   }
-  // 
-  
+
 
   componentDidMount() {
     
@@ -33,7 +32,7 @@ class App extends Component {
 
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
-    
+    console.log('hello from the other side',this.state.update)
     API.getDailies()
       .then(res => {
         
@@ -52,12 +51,31 @@ class App extends Component {
      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
+  updateDailies(id, update) {
+    console.log("updating", id);
+
+    // this.setState({update: "updated ass"})
+   console.log("update", update)
+    
+
+  
+    // API.updateDaily(id)
+    //   .then(res => {
+        
+    //       res.send()
+
+    //       console.log(res);
+    //     // console.log(this.props)
+    //   })
+    //   .catch(err => console.log(err));
+  }; 
 
     handleFormSubmit(data) {
        
        this.props.postDaily(data)
         
     };
+
 
   render() {
     const {handleSubmit} = this.props;
@@ -120,18 +138,31 @@ class App extends Component {
           <button type="submit">Post Up</button>
         </form> 
           <Container spacing="16">
+
+          {/* // Add edit button to this page
+          // Add onClick to button to change to edit mode */}
+          {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
+
             {this.state.dailies.map((person, index) => (
               <Item xs='12' sm='3'>
-                <DailyCard
+              
+
+                <DailyCard 
                   key={person._id}
                   index={person._id}
+<<<<<<< HEAD
                   deleteDaily = {this.deleteDailies}
+=======
+                  updatedDaily={this.updateDailies}
+                  updates={person}
+>>>>>>> 3f5646435b4dc359b13855f542f6bfba1faac688
                   Highlights={person.highlights}
                   positive={person.positive}
                   negative={person.negative}
                   wakeup={person.wakeup}
                   sleep={person.sleep}
                 />
+              
               </Item>
               
             ))}
