@@ -48,7 +48,7 @@ class App extends Component {
   render() {
     const {handleSubmit} = this.props;
     return (
-      <Wrapper>
+      <div>
         <Nav />
         <div id="sectionWrapper">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -124,7 +124,7 @@ class App extends Component {
               </Item>
           </Container>
         </div>
-      </Wrapper>
+      </div>
     )
   }
 }
