@@ -17,7 +17,9 @@ export default {
     },
 
     updateDaily: function(id, dailyData) {
+      console.log('daily data', dailyData)
       return axios.put("/api/daily/" + id, dailyData);
+
     },
     // Saves a daily to the database
     saveDaily: function(dailyData) {

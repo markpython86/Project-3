@@ -182,7 +182,8 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
-            console.log(req.daily)
+            console.log('update request', req.body)
+            const newDaily = req.body
             // const newDaily = {
             //         highlights: req.body.highlight,
             //         positive: req.body.pos,
@@ -191,13 +192,13 @@ export default {
             //         sleep: req.body.sleep
             // };
            
-    //         Daily.findByIdAndUpdate(dailyId, newDaily, {
-    //                 new: true
-    //             })
-    //             .then(newDaily => {
-    //                 res.sendStatus(200);
-    //             })
-    //             .catch(next)
+            Daily.findByIdAndUpdate(dailyId, newDaily, {
+                    new: true
+                })
+                .then(newDaily => {
+                    res.sendStatus(200);
+                })
+                .catch(next)
     },
 
     

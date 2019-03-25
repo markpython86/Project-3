@@ -19,7 +19,10 @@ class App extends Component {
     super();
     this.state = {
       dailies: [],
-      update: {}
+      value: "initial value",
+      preUpdate: {},
+      updated:{},
+      isInEditMode: false
     }
   }
 
@@ -29,7 +32,25 @@ class App extends Component {
     // this.props.tryConnect();
     this.loadDailies();
   };
+  
+  //edit section==========================================================
+  changeEditMode() {
+    this.setState({isInEditMode: !this.state.isInEditMode})
+  }
+  renderEditView() {
+    return <div> <input
+    type="text"
+    defaultValue={this.state.value}
+    ></input></div>
 
+  }
+
+
+
+
+
+
+  //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
     console.log('hello from the other side',this.state.update)
@@ -52,22 +73,23 @@ class App extends Component {
       .catch(err => console.log(err));
   };
   updateDailies(id, update) {
-    console.log("updating", id);
-
-    // this.setState({update: "updated ass"})
-   console.log("update", update)
+    // console.log("updating", res);
+    const updates = {
+      highlights: "HL Andrew",
+      negative: "NEGATIVE upda1212ted",
+      positive: "POS update12d",
+      sleep: "Sleep lklUpdate12d",
+      wakeup: "Wakeup updat12ed",
+      _id: "5c97d1edd953ec46140f8df2",
+    } 
+    // this.setState({update: update})
+  //  console.log("update", update)
     
 
   
-    // API.updateDaily(id)
-    //   .then(res => {
-        
-    //       res.send()
-
-    //       console.log(res);
-    //     // console.log(this.props)
-    //   })
-    //   .catch(err => console.log(err));
+    API.updateDaily(id,updates)
+      .then(()=>  window.location.reload(true))
+      .catch(err => console.log(err));
   }; 
 
     handleFormSubmit(data) {
@@ -137,6 +159,8 @@ class App extends Component {
           
           <button type="submit">Post Up</button>
         </form> 
+        
+        
           <Container spacing="16">
 
           {/* // Add edit button to this page
@@ -152,6 +176,7 @@ class App extends Component {
                   index={person._id}
                   deleteDaily = {this.deleteDailies}
                   updatedDaily={this.updateDailies}
+                  preUpdate={this.updateDailies}
                   updates={person}
                   Highlights={person.highlights}
                   positive={person.positive}

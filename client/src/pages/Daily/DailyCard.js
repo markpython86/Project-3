@@ -88,13 +88,13 @@ function DailyCard(props) {
 
     <Grid container className={classes.container}> 
     <Grid item xs={4}>
-      <Fab size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
+      <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
         <Icon fontSize="small">check_icon</Icon>
       </Fab>
     </Grid>
 
     <Grid item xs={4}>
-      <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
+      <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
         <Icon fontSize="small">edit_icon</Icon>
       </Fab>
     </Grid>
@@ -119,7 +119,7 @@ function DailyCard(props) {
 
           <Grid item xs={4}>
             <Typography className={classes.headerActive} color="textSecondary" gutterBottom>
-            {Date().now}
+            {/* {Date.now} */}
           </Typography>
           </Grid>
 
