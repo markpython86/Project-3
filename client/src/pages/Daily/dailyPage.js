@@ -150,12 +150,9 @@ class App extends Component {
                 <DailyCard 
                   key={person._id}
                   index={person._id}
-<<<<<<< HEAD
                   deleteDaily = {this.deleteDailies}
-=======
                   updatedDaily={this.updateDailies}
                   updates={person}
->>>>>>> 3f5646435b4dc359b13855f542f6bfba1faac688
                   Highlights={person.highlights}
                   positive={person.positive}
                   negative={person.negative}
