@@ -41,7 +41,6 @@ class MenuAppBar extends React.Component {
     this.state = {
       auth: true,
       anchorEl: null,
-      anchorEl2: null
     };
   }
 
@@ -51,6 +50,10 @@ class MenuAppBar extends React.Component {
 
   handleMenu(event) {
     this.setState({ anchorEl: event.currentTarget });
+    console.log("CONSOLE:: MenuAppBar -> handleMenu -> event.currentTarget", event.currentTarget);
+    if (event.currentTarget.id === "account-menu") {
+      console.log("account-menu")
+    }
   }
 
   handleClose() {
@@ -59,9 +62,8 @@ class MenuAppBar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl, anchorEl2 } = this.state;
+    const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const open2 = Boolean(anchorEl2);
 
 
     return (
@@ -79,16 +81,17 @@ class MenuAppBar extends React.Component {
             <Toolbar>
               <div>
                 <IconButton
-                  aria-owns={open2 ? "menu-appbar" : undefined}
+                  aria-owns={open ? "menu-appbar" : undefined}
                   aria-haspopup="true"
                   onClick={e => this.handleMenu(e)}
                   color="inherit"
+                  id="main-menu"
                 >
                   <MenuIcon />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl2={anchorEl2}
+                  anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: "top",
                     horizontal: "right"
@@ -97,7 +100,7 @@ class MenuAppBar extends React.Component {
                     vertical: "top",
                     horizontal: "right"
                   }}
-                  open2={open2}
+                  open={open}
                   onClose={this.handleClose.bind(this)}
                 >
                   <MenuItem onClick={() => this.handleClose}>Daily</MenuItem>
@@ -118,6 +121,7 @@ class MenuAppBar extends React.Component {
                     aria-haspopup="true"
                     onClick={e => this.handleMenu(e)}
                     color="inherit"
+                    id="account-menu"
                   >
                     <AccountCircle />
                   </IconButton>
