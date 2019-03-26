@@ -1,0 +1,30 @@
+.Habit-root-302 {
+  display: block !important;
+  text-align: center;
+}
+
+/* .MuiSelect-outlined-312 {
+  border-radius: 20px !important;
+} */
+
+.MuiSelect-select-310 {
+  padding-right: 1px !important;
+  min-width: none !important;
+}
+
+.MuiOutlinedInput-input-324 {
+padding: 0px !important;
+}
+
+.MuiSelect-icon-315 {
+  display: none !important;
+}
+
+.MuiSelect-selectMenu-313 {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.MuiList {
+  background-color: #808E95 !important;
+}
