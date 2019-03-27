@@ -17,6 +17,14 @@
     margin-left: 6px;
 }
 
+#textIcon {
+    padding-top: 25px;
+}
+
+#textSection {
+    margin-top: -8px;
+}
+
 
 /* Card action buttons (Delete, Edit, Save) */
 
