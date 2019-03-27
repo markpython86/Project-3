@@ -7,7 +7,6 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <MenuAppBar/>
         <div className='cointainer'>
             {this.props.children}
         </div>

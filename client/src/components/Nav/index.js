@@ -41,18 +41,24 @@ class MenuAppBar extends React.Component {
     this.state = {
       auth: true,
       anchorEl: null,
+      menu: null,
     };
   }
+
 
   handleChange(event) {
     this.setState({ auth: event.target.checked });
   }
 
   handleMenu(event) {
-    this.setState({ anchorEl: event.currentTarget });
-    console.log("CONSOLE:: MenuAppBar -> handleMenu -> event.currentTarget", event.currentTarget);
-    if (event.currentTarget.id === "account-menu") {
-      console.log("account-menu")
+    this.setState({ 
+      anchorEl: event.currentTarget,
+      menu: event.currentTarget.id
+     });
+    if (event.currentTarget.id === "main-menu") {
+      menuItems =["Daily"];
+    } else {
+      menuItems = ["Login"];
     }
   }
 
@@ -64,8 +70,8 @@ class MenuAppBar extends React.Component {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
-
+    let menuItems = "TEST";
+    
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
@@ -91,7 +97,7 @@ class MenuAppBar extends React.Component {
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl={anchorEl}
+                  anchorEl={this.state.anchorEl}
                   anchorOrigin={{
                     vertical: "top",
                     horizontal: "right"
@@ -103,7 +109,7 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose.bind(this)}
                 >
-                  <MenuItem onClick={() => this.handleClose}>Daily</MenuItem>
+                  <MenuItem onClick={() => this.handleClose}>{menuItems}</MenuItem>
                   <MenuItem onClick={() => this.handleClose}>Weekly</MenuItem>
                 </Menu>
               </div>
@@ -127,7 +133,7 @@ class MenuAppBar extends React.Component {
                   </IconButton>
                   <Menu
                     id="menu-appbar"
-                    anchorEl={anchorEl}
+                    anchorEl={this.state.anchorEl}
                     anchorOrigin={{
                       vertical: "top",
                       horizontal: "right"
@@ -139,13 +145,9 @@ class MenuAppBar extends React.Component {
                     open={open}
                     onClose={this.handleClose.bind(this)}
                   >
-                    <MenuItem onClick={() => this.handleClose}>
-                      Login
-                    </MenuItem>
-                    <MenuItem onClick={() => this.handleClose}>
-                      Create Account
-                    </MenuItem>
-                    {/* <MenuItem onClick={() => this.handleClose}>My account</MenuItem> */}
+                    
+                    <MenuItem onClick={() => this.handleClose}>{menuItems}</MenuItem>
+                    <MenuItem onClick={() => this.handleClose}> Create Account</MenuItem>
                   </Menu>
                 </div>
               )}
