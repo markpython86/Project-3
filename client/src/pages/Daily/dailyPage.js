@@ -7,6 +7,8 @@ import API from "../../utils/API";
 import {tryConnect, getUserProfile, getDailies,postDaily} from "../../actions";
 // import postDaily from '../../actions/index'
 import Wrapper from "../Grid/Wrapper";
+import FAB from "../FAB/FAB";
+import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
 import Nav from "../../components/Nav/";
@@ -26,7 +28,7 @@ class App extends Component {
   componentDidMount() {
     // this.props.tryConnect();
     this.loadDailies();
-  };
+  }
 
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
@@ -37,7 +39,7 @@ class App extends Component {
         console.log('dailies from updated state', this.state.dailies)
       })
       .catch(err => console.log(err));
-  };
+  }
 
     handleFormSubmit(data) {
        
@@ -48,9 +50,10 @@ class App extends Component {
   render() {
     const {handleSubmit} = this.props;
     return (
-      <div>
-        <Nav />
-        <div id="sectionWrapper">
+      <Palette>
+      <Nav />
+      <Wrapper>
+        <Container spacing="32">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <div className="form-group">
                         <label>First name:</label>
@@ -123,8 +126,10 @@ class App extends Component {
                 
               </Item>
           </Container>
-        </div>
-      </div>
+          </Container>
+      <FAB />
+      </Wrapper>
+      </Palette>
     )
   }
 }
