@@ -33,11 +33,16 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "@date-io/date-fns": "^1.1.0",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "material-components-web": "^1.0.1",
     "axios": "^0.17.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "date-fns": "^2.0.0-alpha.27",
     "lodash": "^4.17.11",
+    "material-components-web": "^1.0.1",
+    "material-ui-pickers": "^2.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",

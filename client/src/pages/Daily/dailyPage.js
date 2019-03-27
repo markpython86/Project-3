@@ -7,6 +7,8 @@ import API from "../../utils/API";
 import { postDaily} from "../../actions";
 // import postDaily from '../../actions/index'
 import Wrapper from "../Grid/Wrapper";
+import FAB from "../FAB/FAB";
+import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
 import Nav from "../Nav/Nav";
@@ -31,21 +33,7 @@ class App extends Component {
     
     // this.props.tryConnect();
     this.loadDailies();
-  };
-  
-  //edit section==========================================================
-  changeEditMode() {
-    this.setState({isInEditMode: !this.state.isInEditMode})
   }
-  renderEditView() {
-    return <div> <input
-    type="text"
-    defaultValue={this.state.value}
-    ></input></div>
-
-  }
-
-
 
 
 
@@ -62,7 +50,7 @@ class App extends Component {
         console.log('dailies from updated state', res.data)
       })
       .catch(err => console.log(err));
-  };
+  }
 
   deleteDailies(id){
     // this.props.deleteDaily(id)
@@ -102,9 +90,10 @@ class App extends Component {
   render() {
     const {handleSubmit} = this.props;
     return (
+      <Palette>
+      <Nav />
       <Wrapper>
-        <Nav />
-        <div id="sectionWrapper">
+        <Container spacing="32">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <div className="form-group">
                         <label>First name:</label>
@@ -192,8 +181,10 @@ class App extends Component {
                 
               </Item>
           </Container>
-        </div>
+          </Container>
+      <FAB />
       </Wrapper>
+      </Palette>
     )
   }
 }
