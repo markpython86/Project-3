@@ -11,6 +11,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from 'material-ui-pickers';
 import 'date-fns';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Build, Code, EventSeat, Explore, Motorcycle, Pets, QuestionAnswer, Rowing, ShoppingCart, Search, Today, SwapVert, WatchLater, Work, Mic, Movie, Call, Email, SentimentSatisfied, Waves, Weekend, AttachMoney, Headset, ColorLens, Brush, Camera, Edit, Landscape, LinkedCamera, Timer, DirectionsBike, DirectionsBus, DirectionsCar, DirectionsRun, DirectionsRailway, LocalLaundryService, LocalActivity, LocalAtm, LocalBar, LocalCafe, LocalCarWash, LocalDining, LocalDrink, LocalHotel, ChildFriendly, Pool, Spa, SmokeFree, FreeBreakfast, GolfCourse, Casino, FitnessCenter, Kitchen, School, LocalLibrary, Watch, } from '@material-ui/icons/';
@@ -96,6 +97,9 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
+      dailyHighlight: '',
+      positive: '',
+      negative: '',
       selectedTime1: new Date(),
       selectedTime2: new Date(),
       selectedDate: new Date(),
@@ -115,6 +119,18 @@ class DailyCard extends React.Component {
 
   handleDateChange = date => {
     this.setState({ selectedDate: date });
+  };
+
+  handleChangeDailyHighlight = dailyHighlight => event => {
+    this.setState({ [dailyHighlight]: event.target.value });
+  };
+
+  handleChangePositive = positive => event => {
+    this.setState({ [positive]: event.target.value });
+  };
+
+  handleChangeNegative = negative => event => {
+    this.setState({ [negative]: event.target.value });
   };
 
   handleHabitChange1 = event => {
@@ -204,7 +220,71 @@ class DailyCard extends React.Component {
 
   {/* Beginning of daily three. */}
 
-          <Typography id="text">
+      <form  noValidate autoComplete="off" id="textSection">
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <Flag />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Daily Highlight"
+            placeholder="Daily Highlight"
+            multiline
+            onChange={this.handleChangeDailyHighlight}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            // value={this.state.dailyHighlight}
+            value={props.Highlights}
+            onChange={this.handleChangeDailyHighlight('dailyHighlight')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowUpward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Positive"
+            placeholder="Positive"
+            multiline
+            onChange={this.handleChangePositive}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            value={this.state.positive}
+            onChange={this.handleChangePositive('positive')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowDownward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Negative"
+            placeholder="Negative"
+            multiline
+            onChange={this.handleChangeNegative}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            value={this.state.negative}
+            onChange={this.handleChangeNegative('negative')}
+            />
+          </Grid>
+        </Grid>
+
+      </form>
+
+          {/* <Typography id="text">
             <Flag id="icon"/> Daily Highlight {props.Highlights}
           </Typography>
 
@@ -216,7 +296,7 @@ class DailyCard extends React.Component {
           <Typography component="p" id="text">
             <ArrowDownward id="icon"/> Negative
             {props.negative}
-          </Typography>
+          </Typography> */}
 
   {/* End of daily three section. */}
 
