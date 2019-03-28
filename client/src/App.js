@@ -11,7 +11,7 @@ import Public from './components/public';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
 // import Monthly from './pages/monthlyPage';
-// import Weekly from './pages/weeklyPage';
+import Weekly from './pages/Weekly/weeklyPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import Signout from './components/auth/signout'
@@ -42,8 +42,8 @@ ReactDOM.render(
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
-          {/* <Route path="/weekly" component= {RequireAuth(weekly)} />
-          <Route path="/monthly" component= {RequireAuth(Monthly)} /> */}
+          <Route path="/weekly" component= {RequireAuth(Weekly)} />
+          {/* <Route path="/monthly" component= {RequireAuth(Monthly)} />  */}
           {/* <Route path="/ui" component= {App1} /> */}
           
 

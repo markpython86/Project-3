@@ -127,7 +127,7 @@ class App extends Component {
               </Item>
           </Container>
           </Container>
-      <FAB />
+      <FAB page="daily"/>
       </Wrapper>
       </Palette>
     )
