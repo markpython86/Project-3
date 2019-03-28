@@ -13,8 +13,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { MenuList } from '@material-ui/core';
 import { Link } from "react-router-dom";
+import SwipeableTemporaryDrawer from './menuButton';
 
 
 const styles = {
@@ -58,11 +58,6 @@ class MenuAppBar extends React.Component {
       anchorEl: event.currentTarget,
       menu: event.currentTarget.id
      });
-    // if (event.currentTarget.id === "main-menu") {
-    //   menuItems =["Daily"];
-    // } else {
-    //   menuItems = ["Login"];
-    // }
   }
 
   handleClose() {
@@ -87,7 +82,10 @@ class MenuAppBar extends React.Component {
         </FormGroup> */}
           <AppBar position="static">
             <Toolbar>
-              <div>
+
+              <SwipeableTemporaryDrawer/>
+
+              {/* <div>
                 <IconButton
                   aria-owns={open ? "menu-appbar" : undefined}
                   aria-haspopup="true"
@@ -118,7 +116,7 @@ class MenuAppBar extends React.Component {
                     Weekly
                   </MenuItem>
                 </Menu>
-              </div>
+              </div> */}
               <Typography
                 variant="h6"
                 color="inherit"

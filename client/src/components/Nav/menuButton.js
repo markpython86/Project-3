@@ -1,69 +1,90 @@
-import React from 'react';
-import Menu, { MenuItem } from "@material-ui/core/Menu";
-import IconButton from "@material-ui/core/IconButton";
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import MenuIcon from "@material-ui/icons/Menu";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { Link } from "react-router-dom";
 
 
-class MenuButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      auth: true,
-      anchorEl: null
-    }
+
+const styles = {
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: "auto"
   }
+};
 
-  handleChange(event, checked) {
-    this.setState({ auth: checked });
-  }
+class SwipeableTemporaryDrawer extends React.Component {
+  state = {
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  };
 
-  handleMenu(event) {
-    this.setState({ anchorEl: event.currentTarget });
-  }
-
-  handleClose() {
-    this.setState({ anchorEl: null });
-  }
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
 
   render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    const Wrapper = this.props.iconType;
-    const listItems = this.props.items.map((link) =>
-      <MenuItem key="mainMenu" onClick={this.handleClose} >{link}</MenuItem>
-    );
+    const { classes } = this.props;
+
+    const sideList = (
+      <div className={classes.list}>
+        <List>
+          {['About', 'Daily', 'Weekly'].map((text, index) => (
+            <ListItem button key={text}>
+              <Link to={"/" + {text}} >
+                <ListItemText primary={text}/>
+              </Link>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['Account', 'Login', 'Create Account'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    )
 
     return (
       <div>
-        <IconButton
-          aria-owns={open ? 'menu-appbar' : null}
-          aria-haspopup="true"
-          onClick={() => this.handleMenu}
-          color="inherit"
+        <Button onClick={this.toggleDrawer('left', true)}><MenuIcon/></Button>
+        <SwipeableDrawer
+          open={this.state.left}
+          onClose={this.toggleDrawer('left', false)}
+          onOpen={this.toggleDrawer('left', true)}
         >
-          {<Wrapper />}
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={open}
-          onClose={() => this.handleClose}
-        >
-          {listItems}
-
-
-        </Menu>
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+          >
+            {sideList}
+          </div>
+        </SwipeableDrawer>
       </div>
-    );
+    )
   }
-
 }
 
-export default MenuButton ;
+SwipeableTemporaryDrawer.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(SwipeableTemporaryDrawer);
