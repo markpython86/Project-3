@@ -7,6 +7,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Grid from '@material-ui/core/Grid';
 import './FAB.css'
+import { Link } from "react-router-dom";
 // import Icon from '@material-ui/core/Icon';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import NavigationIcon from '@material-ui/icons/Navigation';
@@ -43,7 +44,15 @@ function FAB(props) {
   return (
     <Grid container className={classes.mainConatinerStyle}>
       
-      <Fab color="primary" aria-label="Back" className={classes.backView} style={{position: 'fixed'}}>
+      <Fab 
+      color="primary" 
+      aria-label="Back" 
+      className={classes.backView} 
+      style={{position: 'fixed'}}
+      component={Link}
+      to="/weekly"
+
+      >
         <ArrowBackIosIcon id="backArrow"/>
       </Fab>
       
@@ -51,7 +60,14 @@ function FAB(props) {
         <AddIcon />
       </Fab>
 
-      <Fab color="primary" aria-label="Forward" className={classes.forwardView} style={{position: 'fixed'}}>
+      <Fab 
+      color="primary" 
+      aria-label="Forward" 
+      className={classes.forwardView} 
+      style={{position: 'fixed'}}
+      component={Link}
+      to="/daily"
+      >
         <ArrowForwardIosIcon id="forwardArrow"/>
       </Fab>
 
