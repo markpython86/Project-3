@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const weeklySchema = new mongoose.Schema({
   best: { type: String },
   worst: { type: String },
-  next: { type: String },
+  nextWeek: { type: String },
   weekAt: { type: Date },
 })
 // add association later

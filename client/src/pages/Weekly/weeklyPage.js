@@ -4,15 +4,14 @@ import React, { Component } from "react";
 import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import API from "../../utils/API";
-import { postDaily} from "../../actions";
-// import postDaily from '../../actions/index'
+import { postWeekly} from "../../actions";
 import Wrapper from "../Grid/Wrapper";
 import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
 import Nav from "../Nav/Nav";
-import DailyCard from "../Daily/DailyCard";
+import WeeklyCard from "../Weekly/WeeklyCard";
 
 
 class App extends Component {
@@ -20,7 +19,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      dailies: [],
+      weeklies: [],
       value: "initial value",
       
     }
@@ -30,7 +29,7 @@ class App extends Component {
   componentDidMount() {
     
     // this.props.tryConnect();
-    this.loadDailies();
+    this.loadWeeklies();
   }
 
 
@@ -38,32 +37,30 @@ class App extends Component {
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadDailies() {
-    API.getDailies()
+  loadWeeklies() {
+    API.getWeeklies()
       .then(res => {
         
-        this.setState({ dailies: res.data.daily })
-        console.log('dailies from updated state', res.data)
+        this.setState({ weeklies: res.data.weekly })
+        console.log('weeklies from updated state', res.data)
       })
       .catch(err => console.log(err));
   }
 
-  deleteDailies(id){
-    // this.props.deleteDaily(id)
-    console.log(id)
-    API.deleteDaily(id)
+  deleteWeeklies(id){
+    API.deleteWeekly(id)
      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
-  updateDailies(id, update) {
-      API.updateDaily(id, update)
+  updateWeeklies(id, update) {
+      API.updateWeekly(id, update)
       .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit(data) {
        
-       this.props.postDaily(data)
+       this.props.postWeekly(data)
         
     };
 
@@ -79,7 +76,7 @@ class App extends Component {
           <div className="form-group">
                         <label>First name:</label>
                         <Field
-                            name="highlight"
+                            name="best"
                             type='text'
                             component="input"
                             className="form-control form-control-lg"
@@ -89,7 +86,7 @@ class App extends Component {
                     <div className="form-group">
                         <label>First name:</label>
                         <Field
-                            name="pos"
+                            name="worst"
                             type='text'
                             component="input"
                             className="form-control form-control-lg"
@@ -99,34 +96,15 @@ class App extends Component {
                     <div className="form-group">
                         <label>First name:</label>
                         <Field
-                            name="neg"
+                            name="next week"
                             type='text'
                             component="input"
                             className="form-control form-control-lg"
                             placeholder="First Name"
                             required/>
                     </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="wake"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="sleep"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-          
+                    
+                
           <button type="submit">Post Up</button>
         </form> 
         
@@ -137,22 +115,20 @@ class App extends Component {
           // Add onClick to button to change to edit mode */}
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
-            {this.state.dailies.map((person, index) => (
+            {this.state.weeklies.map((person, index) => (
               <Item xs='12' sm='3'>
               
 
-                <DailyCard 
+                <WeeklyCard 
                   key={person._id}
                   index={person._id}
-                  deleteDaily = {this.deleteDailies}
-                  updatedDaily={this.updateDailies}
-                  preUpdate={this.updateDailies}
+                  deleteWeekly = {this.deleteWeeklies}
+                  updatedWeekly={this.updateWeeklies}
+                  preUpdate={this.updateWeeklies}
                   updates={person}
-                  Highlights={person.highlights}
-                  positive={person.positive}
-                  negative={person.negative}
-                  wakeup={person.wakeup}
-                  sleep={person.sleep}
+                  best={person.best}
+                  worst={person.worst}
+                  nextWeek={person.nextWeek}
                 />
               
               </Item>
@@ -177,6 +153,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postDaily})(reduxForm({
-    form: 'postDaily'
+export default connect(mapStateToProps,{ postWeekly})(reduxForm({
+    form: 'postWeekly'
 })(App));

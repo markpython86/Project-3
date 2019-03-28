@@ -194,3 +194,83 @@ export function updateDaily(id, update) {
             });
     }
 }
+
+// Weekly Functions
+
+export function getWeeklies() {
+    return function (dispatch) {
+             axios
+            .get(`/api/weekly`)
+            .then(res => {
+
+                window.location = '/#weekly';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                dispatch({
+                    type: GET_USER_WEEKLY,
+                    payload: res.data
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function postWeekly(weeklyObj) {
+    return function (dispatch) {
+        // Submit email/password to server
+        axios
+            .post(`/api/weekly/new`, weeklyObj)
+            .then(() => {
+                dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                
+                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function deleteWeekly(weeklyID) {
+    return function (dispatch) {
+        console.log(weeklyID)
+        // Submit email/password to server
+        axios
+            .delete(`/api/weekly/${weeklyID}`)
+            .then(() => {
+                console.log('\\\\\\\\\working')
+                // dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function updateWeekly(id, update) {
+    return function (dispatch) {
+        axios
+            .put(`/api/weekly/${id}`, update)
+            .then(() => {
+                dispatch({
+                    type: UPDATE_WEEKLY_GOOD
+                })
+                window.location.reload(true);
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch({
+                    type: UPDATE_WEEKLY_FAIL
+                })
+            });
+    }
+}
+
+

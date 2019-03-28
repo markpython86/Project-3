@@ -7,24 +7,25 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/userProfile', (req, res)=>{
-    // console.log('user',req)
     res.send(req.user);
 })
 
 router.post('/userProfile', Authentication.updateProfile)
 
 router.get('/daily', Authentication.getDaily)
+
 router.post('/daily/new', Authentication.createDaily)
+
+router.get('/weekly', Authentication.getWeekly)
+
+router.post('/weekly/new', Authentication.createWeekly)
+
 
 
 //delete route
 
 router.delete('/daily/:id', Authentication.deleteDaily)
-// router.get('/daily', (req, res)=>{
-//     console.log(req.daily);
-//     res.send('hello')
-//     // res.send(req.daily);
-// })
+
 router.put('/daily/:id', Authentication.updateDaily)
     
 
