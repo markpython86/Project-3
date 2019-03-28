@@ -38,8 +38,8 @@
 //               <DailyCard />
 //             </Item>
 //       </Container>
-//       <FAB />
 //         </div>
+//       <FAB />
 //       </Wrapper>
 //       </Palette>
 //     )}
