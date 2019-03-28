@@ -22,9 +22,7 @@ class App extends Component {
     this.state = {
       dailies: [],
       value: "initial value",
-      preUpdate: {},
-      updated:{},
-      isInEditMode: false
+      
     }
   }
 
@@ -75,7 +73,7 @@ class App extends Component {
     
 
   
-    API.updateDaily(id,updates)
+    API.updateDaily(id, update)
       .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   }; 
