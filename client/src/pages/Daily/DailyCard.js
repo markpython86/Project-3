@@ -4,10 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
 import DateFnsUtils from '@date-io/date-fns';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from 'material-ui-pickers';
 import 'date-fns';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -97,6 +99,7 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
+      editMode: false,
       dailyHighlight: '',
       positive: '',
       negative: '',
@@ -147,9 +150,15 @@ class DailyCard extends React.Component {
 
   toggleHidden () {
     this.setState({
-      isHidden: !this.state.isHidden
+      isHidden: false,
     })
   }
+
+  handleClickAway = () => {
+    this.setState({
+      isHidden: true,
+    });
+  };
 
   render() {
     const {
@@ -163,6 +172,9 @@ class DailyCard extends React.Component {
 
 
     return (
+      
+      <ClickAwayListener onClickAway={this.handleClickAway}>
+
       <Grid item>
       {!this.state.isHidden && <Child />}
 
@@ -178,6 +190,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
+                  disabled={true}
                   value={selectedTime1}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
@@ -231,12 +244,12 @@ class DailyCard extends React.Component {
             label="Daily Highlight"
             placeholder="Daily Highlight"
             multiline
+            disabled
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
-            value={this.state.dailyHighlight}
-            // value={props.Highlights}
+            // value={this.state.dailyHighlight}
+            value={props.Highlights}
             onChange={this.handleChangeDailyHighlight('dailyHighlight')}
             />
           </Grid>
@@ -252,10 +265,10 @@ class DailyCard extends React.Component {
             label="Positive"
             placeholder="Positive"
             multiline
+            disabled
             onChange={this.handleChangePositive}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             value={this.state.positive}
             onChange={this.handleChangePositive('positive')}
             />
@@ -275,7 +288,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangeNegative}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             value={this.state.negative}
             onChange={this.handleChangeNegative('negative')}
             />
@@ -313,6 +325,7 @@ class DailyCard extends React.Component {
                   value={this.state.habit1}
                   onChange={this.handleHabitChange1}
                   disableUnderline={true}
+                  disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
@@ -543,6 +556,9 @@ class DailyCard extends React.Component {
         </CardContent>
       </Card>
     </Grid>
+
+    </ClickAwayListener>
+
     );
   }
 }
@@ -573,6 +589,7 @@ const Child = () => (
   </Grid>
 
   </Grid>
+
 )
 
 // End of hidden FAB buttons.
