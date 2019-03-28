@@ -13,6 +13,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { MenuList } from '@material-ui/core';
+import { Link } from "react-router-dom";
+
 
 const styles = {
   root: {
@@ -55,22 +58,21 @@ class MenuAppBar extends React.Component {
       anchorEl: event.currentTarget,
       menu: event.currentTarget.id
      });
-    if (event.currentTarget.id === "main-menu") {
-      menuItems =["Daily"];
-    } else {
-      menuItems = ["Login"];
-    }
+    // if (event.currentTarget.id === "main-menu") {
+    //   menuItems =["Daily"];
+    // } else {
+    //   menuItems = ["Login"];
+    // }
   }
 
   handleClose() {
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null })
   }
 
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    let menuItems = "TEST";
     
     return (
       <div className={classes.root}>
@@ -109,8 +111,12 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose.bind(this)}
                 >
-                  <MenuItem onClick={() => this.handleClose}>{menuItems}</MenuItem>
-                  <MenuItem onClick={() => this.handleClose}>Weekly</MenuItem>
+                  <MenuItem onClick={() => this.handleClose}>
+                    Daily
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handleClose}>
+                    Weekly
+                  </MenuItem>
                 </Menu>
               </div>
               <Typography
@@ -145,9 +151,17 @@ class MenuAppBar extends React.Component {
                     open={open}
                     onClose={this.handleClose.bind(this)}
                   >
+                    <MenuItem
+                      onClick={() => this.handleClose}
+                      component={Link}
+                      to="/signin"
+                     >Login</MenuItem>
                     
-                    <MenuItem onClick={() => this.handleClose}>{menuItems}</MenuItem>
-                    <MenuItem onClick={() => this.handleClose}> Create Account</MenuItem>
+                    <MenuItem
+                      onClick={() => this.handleClose}
+                      component={Link}
+                      to="/signup"
+                    >Create Account</MenuItem>
                   </Menu>
                 </div>
               )}
