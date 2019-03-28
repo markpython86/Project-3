@@ -28,16 +28,24 @@ const theme = createMuiTheme({
       input: {
         paddingTop: 0,
         paddingBottom: 0,
+        color: '#000000',
+
+        "&$disabled": {
+          color: '#000000',
+        },
       },
       multiline: {
         width: 310,
       },
+
     },
-    // MuiInput: {
-    //   root: {
-    //     width: 310,
-    //   },
-    // },
+    MuiInput: {
+      underline: {
+        "&$disabled:before": {
+          borderBottomStyle: 'none',
+        },
+      },
+    },
     MuiPickersCalendarHeader: {
       iconButton: {      
         backgroundColor: '#c4b6af',

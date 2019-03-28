@@ -87,10 +87,44 @@ const styles = theme => ({
     textAlign: 'center',
   },
 
+// // function DailyCard(props) {
+// //   const allProps = {
+// //     highlight: props.Highlights,
+// //     positive: props.positive,
+// //     negative: props.negative,
+// //     wakeup: props.wakeup,
+// //     sleep: props.sleep, 
+// //   };
+//   const { classes } = props;
+//   // console.log('props', props)
+//   return (
+//     <Grid item>
+
+//     <Grid container className={classes.container}> 
+//     <Grid item xs={4}>
+//       <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
+//         <Icon fontSize="small">check_icon</Icon>
+//       </Fab>
+//     </Grid>
+
+//     <Grid item xs={4}>
+//       <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
+//         <Icon fontSize="small">edit_icon</Icon>
+//       </Fab>
+//     </Grid>
+
+//     <Grid item xs={4}>
+//       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
+//         <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
+//       </Fab>
+//     </Grid>
+//     </Grid>
   hide: {
     display: 'none',
   }
 });
+
+
 
 class DailyCard extends React.Component {
   constructor(props) {
@@ -106,8 +140,11 @@ class DailyCard extends React.Component {
       habit1: '',
       habit2: '',
       habit3: '',
+      isInEditMode: false
     };
   }
+
+  
 
   handleTimeChange1 = date => {
     this.setState({ selectedTime1: date });
@@ -126,7 +163,7 @@ class DailyCard extends React.Component {
   };
 
   handleChangePositive = positive => event => {
-    this.setState({ [positive]: event.target.value });
+    this.setState({ [positive]: event.target.value});
   };
 
   handleChangeNegative = negative => event => {
@@ -136,6 +173,20 @@ class DailyCard extends React.Component {
   handleHabitChange1 = event => {
     this.setState({ habit1: event.target.value });
   };
+
+  editMode = () =>{
+    
+    this.setState({
+      dailyHighlight: this.props.Highlights,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      selectedTime1: this.props.wakeup,
+      selectedTime2: this.props.sleep,
+      isInEditMode: true,
+
+      
+    })
+  }
 
   handleHabitChange2 = event => {
     this.setState({ habit2: event.target.value });
@@ -157,20 +208,30 @@ class DailyCard extends React.Component {
     } = this;
 
     const { classes } = props;
+    // console.log('props',classes)
+    // console.log(this.state)
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
+    const newState = {
+      highlights: this.state.dailyHighlight,
+      positive: this.state.positive,
+      negative: this.state.negative,
+      sleep: this.state.selectedTime2,
+      wakeup: this.state.selectedTime1
+    }
+   
 
 
     return (
       <Grid item>
-      {!this.state.isHidden && <Child />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
           
   {/* Begginning of time section. */}
-          
+  {!this.state.isInEditMode ?   
           <Grid container spacing={0} id="header">
             <Grid item xs={4}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -178,7 +239,55 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={selectedTime1}
+                  disabled={true}
+                  value={this.props.wakeup}
+                  onChange={this.handleTimeChange1}
+                  id="timeRow"
+                />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <DatePicker
+                    margin="normal"
+                    // label="Date"
+                    disabled={true}
+                    value={selectedDate}
+                    onChange={this.handleDateChange}
+                    id="timeRow"
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <TimePicker
+                    margin="normal"
+                    // label="Evening"
+                    disabled={true}
+                    value={this.props.sleep}
+                    onChange={this.handleTimeChange2}
+                    id="timeRow"
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+          
+          </Grid>
+:
+<Grid container spacing={0} id="header">
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <TimePicker
+                  margin="normal"
+                  // label="Morning"
+                  value={this.props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -206,7 +315,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={selectedTime2}
+                    value={this.props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -215,12 +324,13 @@ class DailyCard extends React.Component {
             </Grid>
           
           </Grid>
-
+  }
   {/* End of time section. */}
 
   {/* Beginning of daily three. */}
-
+{!this.state.isInEditMode ? 
       <form  noValidate autoComplete="off" id="textSection">
+      
         <Grid container alignItems="center">
           <Grid item id="textIcon">
             <Flag />
@@ -235,10 +345,83 @@ class DailyCard extends React.Component {
             className={classes.textField}
             margin="normal"
             disableUnderline={true}
+            disabled
             // value={this.state.dailyHighlight}
             value={props.Highlights}
             onChange={this.handleChangeDailyHighlight('dailyHighlight')}
             />
+           
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowUpward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Positive"
+            placeholder="Positive"
+            multiline
+            onChange={this.handleChangePositive}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={props.positive}
+            onChange={this.handleChangePositive('positive')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowDownward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Negative"
+            placeholder="Negative"
+            multiline
+            onChange={this.handleChangeNegative}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={props.negative}
+            onChange={this.handleChangeNegative('negative')}
+            />
+            
+          </Grid>
+        </Grid>
+       
+
+      </form>
+      :
+      <form  noValidate autoComplete="off" id="textSection">
+      
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <Flag />
+          </Grid>
+          <Grid item>
+          
+            <TextField
+            id="standard-textarea"
+            label="Daily Highlight"
+            placeholder="Daily Highlight"
+            multiline
+            onChange={this.handleChangeDailyHighlight}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            value={this.state.dailyHighlight}
+            // value={props.Highlights}
+            onChange={this.handleChangeDailyHighlight('dailyHighlight')}
+            />
+           
           </Grid>
         </Grid>
 
@@ -279,10 +462,15 @@ class DailyCard extends React.Component {
             value={this.state.negative}
             onChange={this.handleChangeNegative('negative')}
             />
+            
           </Grid>
         </Grid>
+       
 
       </form>
+      
+      
+      }
 
           {/* <Typography id="text">
             <Flag id="icon"/> Daily Highlight {props.Highlights}
@@ -550,25 +738,28 @@ class DailyCard extends React.Component {
 
 // Beginning of hidden FAB buttons.
 
-const Child = () => (
+const Child = (props) => (
+  
 
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
     <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon fontSize="small">check_icon</Icon>
+      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="small">check_icon</Icon> 
+      {/* props.props.updatedDaily(props.props.index, ) */}
+      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
     <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon fontSize="small">edit_icon</Icon>
+      <Icon onClick={() => {props.editMode(); console.log("clicked")}} fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
     <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon fontSize="small">delete_icon</Icon>
+      <Icon  onClick={() => props.props.deleteDaily(props.props.index)} fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 
