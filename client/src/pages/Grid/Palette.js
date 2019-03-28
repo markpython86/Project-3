@@ -1,5 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { FormControl } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -7,6 +8,51 @@ const theme = createMuiTheme({
     secondary: { main: '#b0c5c2', light: '#e2f8f5', dark: '#809492', contrastText: '#000000', }, 
   },
   typography: { useNextVariants: true },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: '#808E95',
+      },
+      rounded: {
+        borderRadius: 20,
+      },
+    },
+    MuiList: {
+      padding: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        maxWidth: 410,
+      },
+    },
+    MuiInputBase: {
+      input: {
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+      multiline: {
+        width: 310,
+      },
+    },
+    // MuiInput: {
+    //   root: {
+    //     width: 310,
+    //   },
+    // },
+    MuiPickersCalendarHeader: {
+      iconButton: {      
+        backgroundColor: '#c4b6af',
+      },
+    },
+    MuiPickersToolbarButton: {
+      toolbarBtn: {
+        color: 'black',
+      },
+      toolbarBtnSelected: {
+        color: 'black',
+      },
+    },
+
+  },
 });
 
 function Palette(props) {
