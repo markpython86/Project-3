@@ -89,10 +89,44 @@ const styles = theme => ({
     textAlign: 'center',
   },
 
+// // function DailyCard(props) {
+// //   const allProps = {
+// //     highlight: props.Highlights,
+// //     positive: props.positive,
+// //     negative: props.negative,
+// //     wakeup: props.wakeup,
+// //     sleep: props.sleep, 
+// //   };
+//   const { classes } = props;
+//   // console.log('props', props)
+//   return (
+//     <Grid item>
+
+//     <Grid container className={classes.container}> 
+//     <Grid item xs={4}>
+//       <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
+//         <Icon fontSize="small">check_icon</Icon>
+//       </Fab>
+//     </Grid>
+
+//     <Grid item xs={4}>
+//       <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
+//         <Icon fontSize="small">edit_icon</Icon>
+//       </Fab>
+//     </Grid>
+
+//     <Grid item xs={4}>
+//       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
+//         <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
+//       </Fab>
+//     </Grid>
+//     </Grid>
   hide: {
     display: 'none',
   }
 });
+
+
 
 class DailyCard extends React.Component {
   constructor(props) {
@@ -109,8 +143,11 @@ class DailyCard extends React.Component {
       habit1: '',
       habit2: '',
       habit3: '',
+      isInEditMode: false
     };
   }
+
+  
 
   handleTimeChange1 = date => {
     this.setState({ selectedTime1: date });
@@ -129,7 +166,7 @@ class DailyCard extends React.Component {
   };
 
   handleChangePositive = positive => event => {
-    this.setState({ [positive]: event.target.value });
+    this.setState({ [positive]: event.target.value});
   };
 
   handleChangeNegative = negative => event => {
@@ -139,6 +176,20 @@ class DailyCard extends React.Component {
   handleHabitChange1 = event => {
     this.setState({ habit1: event.target.value });
   };
+
+  editMode = () =>{
+    
+    this.setState({
+      dailyHighlight: this.props.Highlights,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      selectedTime1: this.props.wakeup,
+      selectedTime2: this.props.sleep,
+      isInEditMode: true,
+
+      
+    })
+  }
 
   handleHabitChange2 = event => {
     this.setState({ habit2: event.target.value });
@@ -166,9 +217,19 @@ class DailyCard extends React.Component {
     } = this;
 
     const { classes } = props;
+    // console.log('props',classes)
+    // console.log(this.state)
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
+    const newState = {
+      highlights: this.state.dailyHighlight,
+      positive: this.state.positive,
+      negative: this.state.negative,
+      sleep: this.state.selectedTime2,
+      wakeup: this.state.selectedTime1
+    }
+   
 
 
     return (
@@ -176,13 +237,13 @@ class DailyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-      {!this.state.isHidden && <Child />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
           
   {/* Begginning of time section. */}
-          
+  {!this.state.isInEditMode ?   
           <Grid container spacing={0} id="header">
             <Grid item xs={4}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -191,7 +252,54 @@ class DailyCard extends React.Component {
                   margin="normal"
                   // label="Morning"
                   disabled={true}
-                  value={selectedTime1}
+                  value={this.props.wakeup}
+                  onChange={this.handleTimeChange1}
+                  id="timeRow"
+                />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <DatePicker
+                    margin="normal"
+                    // label="Date"
+                    disabled={true}
+                    value={selectedDate}
+                    onChange={this.handleDateChange}
+                    id="timeRow"
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <TimePicker
+                    margin="normal"
+                    // label="Evening"
+                    disabled={true}
+                    value={this.props.sleep}
+                    onChange={this.handleTimeChange2}
+                    id="timeRow"
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+          
+          </Grid>
+  :
+          <Grid container spacing={0} id="header">
+            <Grid item xs={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
+                  <TimePicker
+                  margin="normal"
+                  // label="Morning"
+                  value={this.props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -219,7 +327,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={selectedTime2}
+                    value={this.props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -228,12 +336,13 @@ class DailyCard extends React.Component {
             </Grid>
           
           </Grid>
-
+  }
   {/* End of time section. */}
 
   {/* Beginning of daily three. */}
-
+  {!this.state.isInEditMode ? 
       <form  noValidate autoComplete="off" id="textSection">
+      
         <Grid container alignItems="center">
           <Grid item id="textIcon">
             <Flag />
@@ -244,14 +353,16 @@ class DailyCard extends React.Component {
             label="Daily Highlight"
             placeholder="Daily Highlight"
             multiline
-            disabled
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
             margin="normal"
+            disableUnderline={true}
+            disabled
             // value={this.state.dailyHighlight}
             value={props.Highlights}
             onChange={this.handleChangeDailyHighlight('dailyHighlight')}
             />
+           
           </Grid>
         </Grid>
 
@@ -265,7 +376,76 @@ class DailyCard extends React.Component {
             label="Positive"
             placeholder="Positive"
             multiline
+            onChange={this.handleChangePositive}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
             disabled
+            value={props.positive}
+            onChange={this.handleChangePositive('positive')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowDownward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Negative"
+            placeholder="Negative"
+            multiline
+            onChange={this.handleChangeNegative}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={props.negative}
+            onChange={this.handleChangeNegative('negative')}
+            />
+            
+          </Grid>
+        </Grid>
+       
+
+      </form>
+  :
+      <form  noValidate autoComplete="off" id="textSection">
+      
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <Flag />
+          </Grid>
+          <Grid item>
+          
+            <TextField
+            id="standard-textarea"
+            label="Daily Highlight"
+            placeholder="Daily Highlight"
+            multiline
+            onChange={this.handleChangeDailyHighlight}
+            className={classes.textField}
+            margin="normal"
+            value={this.state.dailyHighlight}
+            // value={props.Highlights}
+            onChange={this.handleChangeDailyHighlight('dailyHighlight')}
+            />
+           
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowUpward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Positive"
+            placeholder="Positive"
+            multiline
             onChange={this.handleChangePositive}
             className={classes.textField}
             margin="normal"
@@ -291,10 +471,15 @@ class DailyCard extends React.Component {
             value={this.state.negative}
             onChange={this.handleChangeNegative('negative')}
             />
+            
           </Grid>
         </Grid>
+       
 
       </form>
+      
+      
+  }
 
           {/* <Typography id="text">
             <Flag id="icon"/> Daily Highlight {props.Highlights}
@@ -313,10 +498,13 @@ class DailyCard extends React.Component {
   {/* End of daily three section. */}
 
   {/* Beginning of habit section. */}
+          
         {/* <MuiThemeProvider theme={theme}> */}
           <Grid id="footer" container spacing={0}>
-   
+          
             <Grid item xs={4}>
+            {!this.state.isInEditMode ? 
+
               <form className={classes.habitRoot} autoComplete="off">
               <FormControl className={classes.formControl} >
                 <Select
@@ -393,20 +581,103 @@ class DailyCard extends React.Component {
                 </Select>
               </FormControl>
               </form>
-            </Grid>
+            :
 
+            <form className={classes.habitRoot} autoComplete="off">
+            <FormControl className={classes.formControl} >
+              <Select
+                classes={{ select: "habitIcon"}}
+                // name={this.state.habit1}
+                value={this.state.habit1}
+                onChange={this.handleHabitChange1}
+                disableUnderline={true}
+                IconComponent={classes.hide}
+                className={classes.color}    
+              >
+                <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+
+                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
+                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
+                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
+                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
+                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
+                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
+                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
+                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
+                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
+                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
+                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
+                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
+                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
+                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
+                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
+                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
+                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
+                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
+                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
+                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
+                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
+                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
+                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
+                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
+                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
+                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
+                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
+                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
+                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
+                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
+                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
+                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
+                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
+                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
+                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
+                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
+                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
+                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
+                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
+                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
+                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
+                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
+                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
+                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+              </Select>
+            </FormControl>
+            </form>
+            }
+            </Grid>
+            
             <Grid item xs={4}>
+            {!this.state.isInEditMode ? 
+
               <form className={classes.habitRoot} autoComplete="off">
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} >
                 <Select
                   classes={{ select: "habitIcon"}}
+                  // name={this.state.habit2}
                   value={this.state.habit2}
                   onChange={this.handleHabitChange2}
-                  disableUnderline={true} 
+                  disableUnderline={true}
+                  disabled={true}
                   IconComponent={classes.hide}
-                  className={classes.color}
+                  className={classes.color}    
                 >
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+
                   <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
                   <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
                   <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
@@ -469,20 +740,103 @@ class DailyCard extends React.Component {
                 </Select>
               </FormControl>
               </form>
+            :
+
+            <form className={classes.habitRoot} autoComplete="off">
+            <FormControl className={classes.formControl} >
+              <Select
+                classes={{ select: "habitIcon"}}
+                // name={this.state.habit2}
+                value={this.state.habit2}
+                onChange={this.handleHabitChange2}
+                disableUnderline={true}
+                IconComponent={classes.hide}
+                className={classes.color}    
+              >
+                <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+
+                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
+                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
+                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
+                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
+                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
+                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
+                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
+                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
+                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
+                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
+                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
+                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
+                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
+                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
+                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
+                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
+                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
+                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
+                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
+                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
+                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
+                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
+                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
+                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
+                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
+                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
+                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
+                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
+                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
+                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
+                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
+                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
+                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
+                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
+                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
+                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
+                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
+                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
+                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
+                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
+                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
+                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
+                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
+                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+              </Select>
+            </FormControl>
+            </form>
+            }
             </Grid>
 
             <Grid item xs={4}>
+            {!this.state.isInEditMode ? 
+
               <form className={classes.habitRoot} autoComplete="off">
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} >
                 <Select
                   classes={{ select: "habitIcon"}}
+                  // name={this.state.habit3}
                   value={this.state.habit3}
                   onChange={this.handleHabitChange3}
-                  disableUnderline={true} 
+                  disableUnderline={true}
+                  disabled={true}
                   IconComponent={classes.hide}
-                  className={classes.color}
+                  className={classes.color}    
                 >
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+
                   <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
                   <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
                   <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
@@ -545,6 +899,84 @@ class DailyCard extends React.Component {
                 </Select>
               </FormControl>
               </form>
+            :
+
+            <form className={classes.habitRoot} autoComplete="off">
+            <FormControl className={classes.formControl} >
+              <Select
+                classes={{ select: "habitIcon"}}
+                // name={this.state.habit3}
+                value={this.state.habit3}
+                onChange={this.handleHabitChange3}
+                disableUnderline={true}
+                IconComponent={classes.hide}
+                className={classes.color}    
+              >
+                <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+
+                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
+                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
+                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
+                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
+                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
+                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
+                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
+                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
+                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
+                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
+                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
+                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
+                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
+                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
+                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
+                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
+                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
+                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
+                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
+                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
+                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
+                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
+                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
+                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
+                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
+                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
+                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
+                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
+                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
+                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
+                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
+                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
+                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
+                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
+                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
+                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
+                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
+                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
+                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
+                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
+                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
+                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
+                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
+                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
+                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
+                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+              </Select>
+            </FormControl>
+            </form>
+            }
             </Grid>
       
           </Grid>
@@ -566,25 +998,28 @@ class DailyCard extends React.Component {
 
 // Beginning of hidden FAB buttons.
 
-const Child = () => (
+const Child = (props) => (
+  
 
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
     <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon fontSize="small">check_icon</Icon>
+      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="small">check_icon</Icon> 
+      {/* props.props.updatedDaily(props.props.index, ) */}
+      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
     <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon fontSize="small">edit_icon</Icon>
+      <Icon onClick={() => {props.editMode(); console.log("clicked")}} fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
     <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon fontSize="small">delete_icon</Icon>
+      <Icon  onClick={() => props.props.deleteDaily(props.props.index)} fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 

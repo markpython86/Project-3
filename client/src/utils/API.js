@@ -6,6 +6,7 @@ export default {
     getDailies: function() {
       return axios.get("/api/daily");
     },
+    // Deletes the daily with the given id
     // Gets the daily with the given id
     getDaily: function(id) {
       return axios.get("/daily/" + id);
@@ -13,6 +14,12 @@ export default {
     // Deletes the daily with the given id
     deleteDaily: function(id) {
       return axios.delete("/api/daily/" + id);
+    },
+
+    updateDaily: function(id, dailyData) {
+      console.log('daily data', dailyData)
+      return axios.put("/api/daily/" + id, dailyData);
+
     },
     // Saves a daily to the database
     saveDaily: function(dailyData) {
