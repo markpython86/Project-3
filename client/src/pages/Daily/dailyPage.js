@@ -175,9 +175,9 @@ class App extends Component {
               </Item>
               
             ))}
-            <Item xs='12' sm='3'>
+            {/* <Item xs='12' sm='3'>
                 
-              </Item>
+              </Item> */}
           </Container>
           </Container>
       <FAB />
