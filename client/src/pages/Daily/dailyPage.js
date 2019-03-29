@@ -11,7 +11,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../Nav/Nav";
+import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
@@ -89,7 +89,7 @@ class App extends Component {
     const {handleSubmit} = this.props;
     return (
       <Palette>
-      <Nav />
+      <MenuAppBar />
       <Wrapper>
         <Container spacing="32">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -180,7 +180,7 @@ class App extends Component {
               </Item> */}
           </Container>
           </Container>
-      <FAB />
+      <FAB page="daily"/>
       </Wrapper>
       </Palette>
     )

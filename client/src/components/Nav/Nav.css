@@ -1,0 +1,9 @@
+.background {
+  background-color: #809492;
+}
+
+a.nav-link {
+  text-decoration-line: none!important;
+  text-decoration-style: none;
+  text-decoration-color: none;
+}
