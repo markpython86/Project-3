@@ -28,7 +28,6 @@ class App extends Component {
 
 
   componentDidMount() {
-    
     // this.props.tryConnect();
     this.loadDailies();
   }
@@ -59,20 +58,6 @@ class App extends Component {
       .catch(err => console.log(err));
   };
   updateDailies(id, update) {
-    // console.log("updating", res);
-    const updates = {
-      highlights: "HL Andrew",
-      negative: "NEGATIVE upda1212ted",
-      positive: "POS update12d",
-      sleep: "Sleep lklUpdate12d",
-      wakeup: "Wakeup updat12ed",
-      _id: "5c97d1edd953ec46140f8df2",
-    } 
-    // this.setState({update: update})
-  //  console.log("update", update)
-    
-
-  
     API.updateDaily(id, update)
       .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
@@ -143,6 +128,36 @@ class App extends Component {
                             placeholder="First Name"
                             required/>
                     </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="habit1"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="habit2"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="habit3"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
           
           <button type="submit">Post Up</button>
         </form> 
@@ -165,11 +180,14 @@ class App extends Component {
                   updatedDaily={this.updateDailies}
                   preUpdate={this.updateDailies}
                   updates={person}
-                  Highlights={person.highlights}
+                  highlights={person.highlights}
                   positive={person.positive}
                   negative={person.negative}
                   wakeup={person.wakeup}
                   sleep={person.sleep}
+                  habit1={person.habit1}
+                  habit2={person.habit2}
+                  habit3={person.habit3}
                 />
               
               </Item>
