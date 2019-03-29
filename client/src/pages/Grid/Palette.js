@@ -1,5 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { FormControl } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,12 +21,29 @@ const theme = createMuiTheme({
       padding: {
         paddingTop: 0,
         paddingBottom: 0,
+        maxWidth: 410,
       },
     },
     MuiInputBase: {
       input: {
         paddingTop: 0,
         paddingBottom: 0,
+        color: '#000000',
+
+        "&$disabled": {
+          color: '#000000',
+        },
+      },
+      multiline: {
+        width: 310,
+      },
+
+    },
+    MuiInput: {
+      underline: {
+        "&$disabled:before": {
+          borderBottomStyle: 'none',
+        },
       },
     },
     MuiPickersCalendarHeader: {
