@@ -18,6 +18,7 @@ import Signout from './components/auth/signout'
 import RequireAuth from './components/auth/require_auth';
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
+import MenuAppBar from './components/Nav';
 
 import '../style/style.scss'
 
@@ -33,7 +34,7 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter hashType="noslash">
       <App>
-        
+        <MenuAppBar />
         <Switch>
           <Route exact path="/" component= {Home} />
           <Route path="/public" component= {Public} />
@@ -49,6 +50,7 @@ ReactDOM.render(
 
 
         </Switch>
+      
       </App>
     </HashRouter>
   </Provider>

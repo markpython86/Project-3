@@ -11,7 +11,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import MenuAppBar from "../../components/Nav/";
+// import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
@@ -89,7 +89,6 @@ class App extends Component {
     const {handleSubmit} = this.props;
     return (
       <Palette>
-      <MenuAppBar />
       <Wrapper>
         <Container spacing="0">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>

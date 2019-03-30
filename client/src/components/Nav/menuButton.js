@@ -44,21 +44,36 @@ class SwipeableTemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          {['About', 'Daily', 'Weekly'].map((text, index) => (
-            <ListItem button key={text}>
-              <Link to={"/" + {text}} >
-                <ListItemText primary={text}/>
+          {/* {['About', 'Daily', 'Weekly'].map((text, index) => ( */}
+            <ListItem button key="About">
+              <Link to="/about" >
+                <ListItemText primary="About"/>
               </Link>
             </ListItem>
-          ))}
+          <ListItem button key="Daily">
+            <Link to="/daily" >
+              <ListItemText primary="Daily" />
+            </Link>
+          </ListItem>
+          <ListItem button key="Weekly">
+            <Link to="/weekly" >
+              <ListItemText primary="Weekly" />
+            </Link>
+          </ListItem>
+          {/* ))} */}
         </List>
         <Divider />
         <List>
-          {['Account', 'Login', 'Create Account'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
+          {/* {['Account', 'Login', 'Create Account'].map((text, index) => ( */}
+            <ListItem button key="Account">
+              <ListItemText primary="Account" />
             </ListItem>
-          ))}
+          <ListItem button key="Login">
+            <Link to="/signin" >
+            <ListItemText primary="Login" />
+            </Link>
+          </ListItem>
+          {/* ))} */}
         </List>
       </div>
     )
