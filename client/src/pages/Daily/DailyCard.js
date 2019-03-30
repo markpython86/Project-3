@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
@@ -56,6 +54,8 @@ const styles = theme => ({
     padding: 0,
     color: '#808e95',
     fontWeight: '500',
+    bottomBorderStyle: 'none',
+
   },
 
   footerActive: {
@@ -74,6 +74,7 @@ const styles = theme => ({
   habitRoot: {
     textAlign: 'center',
     minwidth: 0,
+    bottomBorderStyle: 'none',
   },
 
   menu: {
@@ -89,38 +90,6 @@ const styles = theme => ({
     textAlign: 'center',
   },
 
-// // function DailyCard(props) {
-// //   const allProps = {
-// //     highlight: props.Highlights,
-// //     positive: props.positive,
-// //     negative: props.negative,
-// //     wakeup: props.wakeup,
-// //     sleep: props.sleep, 
-// //   };
-//   const { classes } = props;
-//   // console.log('props', props)
-//   return (
-//     <Grid item>
-
-//     <Grid container className={classes.container}> 
-//     <Grid item xs={4}>
-//       <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
-//         <Icon fontSize="small">check_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
-//         <Icon fontSize="small">edit_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
-//         <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
-//       </Fab>
-//     </Grid>
-//     </Grid>
   hide: {
     display: 'none',
   }
@@ -356,7 +325,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             // value={this.state.dailyHighlight}
             value={props.Highlights}
@@ -379,7 +347,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangePositive}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.positive}
             onChange={this.handleChangePositive('positive')}
@@ -400,7 +367,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangeNegative}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.negative}
             onChange={this.handleChangeNegative('negative')}
@@ -512,7 +478,6 @@ class DailyCard extends React.Component {
                   // name={this.state.habit1}
                   value={this.state.habit1}
                   onChange={this.handleHabitChange1}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
@@ -590,9 +555,9 @@ class DailyCard extends React.Component {
                 // name={this.state.habit1}
                 value={this.state.habit1}
                 onChange={this.handleHabitChange1}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color}  
+                disableUnderline  
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
 
@@ -671,7 +636,6 @@ class DailyCard extends React.Component {
                   // name={this.state.habit2}
                   value={this.state.habit2}
                   onChange={this.handleHabitChange2}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
@@ -749,9 +713,9 @@ class DailyCard extends React.Component {
                 // name={this.state.habit2}
                 value={this.state.habit2}
                 onChange={this.handleHabitChange2}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color} 
+                disableUnderline     
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
 
@@ -830,7 +794,6 @@ class DailyCard extends React.Component {
                   // name={this.state.habit3}
                   value={this.state.habit3}
                   onChange={this.handleHabitChange3}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
@@ -908,9 +871,9 @@ class DailyCard extends React.Component {
                 // name={this.state.habit3}
                 value={this.state.habit3}
                 onChange={this.handleHabitChange3}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color}   
+                disableUnderline   
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
 
@@ -1005,7 +968,10 @@ const Child = (props) => (
   
   <Grid item xs={4}>
     <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="small">check_icon</Icon> 
+      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState).then(this.setState({
+        isHidden: true,
+      }))
+      } fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
@@ -1013,13 +979,17 @@ const Child = (props) => (
 
   <Grid item xs={4}>
     <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon onClick={() => {props.editMode(); console.log("clicked")}} fontSize="small">edit_icon</Icon>
+      <Icon onClick={() => {props.editMode().then(this.setState({
+        isHidden: true,
+      })); console.log("clicked")}} fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
     <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon  onClick={() => props.props.deleteDaily(props.props.index)} fontSize="small">delete_icon</Icon>
+      <Icon  onClick={() => props.props.deleteDaily(props.props.index).then(this.setState({
+        isHidden: true,
+      }))} fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 
