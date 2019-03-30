@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+// import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Grid from '@material-ui/core/Grid';
 import './FAB.css'
+import '../Modal/Modal'
 import { Link } from "react-router-dom";
+import SimpleModalWrapped from '../Modal/Modal';
 // import Icon from '@material-ui/core/Icon';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import NavigationIcon from '@material-ui/icons/Navigation';
@@ -97,9 +99,10 @@ function FAB(props) {
           )
         }
       
-      <Fab color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
-        <AddIcon />
-      </Fab>
+
+        <SimpleModalWrapped />
+
+
 
     </Grid>
   );
