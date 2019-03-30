@@ -10,8 +10,9 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../Nav/Nav";
+import Nav from "../../components/Nav";
 import WeeklyCard from "../Weekly/WeeklyCard";
+
 
 
 class App extends Component {
@@ -60,8 +61,7 @@ class App extends Component {
   }; 
 
     handleFormSubmit(data) {
-       
-       this.props.postWeekly(data)
+      this.props.postWeekly(data)
         
     };
 

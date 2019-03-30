@@ -113,10 +113,26 @@ export default {
     },
     // Daily functions
     getDaily: (req,res,next) =>{
+        User.aggregate( [ (
+            { $match: {'_id': req.user._id}},
+            { $unwind: "$daily" },
+            { $group: {'id':"$daily",count: { $sum: 1 }}})
+        ]).exec(function ( e, d ) {
+    console.log( 'd',d ) 
+    // Daily.aggregate([(
+        
+    //     { $match: {'_id': d[0]._id}},
+    //     { '$habbit1': '$habiit1'}
+    // )]) .exec(function ( e, d ) {
+    // console.log( 'd',d ) }); 
+    });         
+
         User.findById({ _id: req.user._id })
             .populate('daily')
             .then(function (data) {
                 console.log('working')
+                
+                
                 res.send(data)
             })
             .catch(function (err) {
@@ -191,19 +207,27 @@ export default {
 
     getWeekly: (req,res,next) =>{
         console.log("weekly", req)
+                
+        
         User.findById({ _id: req.user._id })
             .populate('weekly')
             .then(function (data) {
-                console.log('working')
+                console.log('working',data)
                 res.send(data)
             })
             .catch(function (err) {
                 // If an error occurred, send it to the client
                 res.json(err);
             });
+            // Daily.aggregate( [ { $group : { _id : "$habbit1" } } ] ).then(data=> console.log("data", data))
        
     },
     createWeekly: (req, res, next) => {
+        User.findById({_id: req.user._id})
+        .populate('daily')
+        .then(daily => {
+            console.log()
+        })
          const {
             best,
             worst,

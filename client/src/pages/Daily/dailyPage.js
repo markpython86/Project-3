@@ -11,7 +11,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../Nav/Nav";
+import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
@@ -72,7 +72,7 @@ class App extends Component {
     const {handleSubmit} = this.props;
     return (
       <Palette>
-      <Nav />
+      <MenuAppBar />
       <Wrapper>
         <Container spacing="32">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -153,17 +153,20 @@ class App extends Component {
                   negative={person.negative}
                   wakeup={person.wakeup}
                   sleep={person.sleep}
+                  habit1={person.habit1}
+                  habit2={person.habit2}
+                  habit3={person.habit3}
                 />
               
               </Item>
               
             ))}
-            <Item xs='12' sm='3'>
+            {/* <Item xs='12' sm='3'>
                 
-              </Item>
+              </Item> */}
           </Container>
           </Container>
-      <FAB />
+      <FAB page="daily"/>
       </Wrapper>
       </Palette>
     )

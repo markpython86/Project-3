@@ -11,6 +11,8 @@ const weeklySchema = new mongoose.Schema({
 
 const Weekly = mongoose.model('Weekly', weeklySchema);
 
+
+
 module.exports = Weekly;
 
 

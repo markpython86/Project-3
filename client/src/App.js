@@ -6,7 +6,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import reduxThunk from 'redux-thunk';
 // import App1 from './pages/Daily/daily';
 import App from './components/app';
-import Home from './components/home';
+import Home from './pages/Home';
 import Public from './components/public';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
@@ -33,6 +33,7 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter hashType="noslash">
       <App>
+        
         <Switch>
           <Route exact path="/" component= {Home} />
           <Route path="/public" component= {Public} />
@@ -42,11 +43,9 @@ ReactDOM.render(
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
           <Route path="/weekly" component= {RequireAuth(Weekly)} />
-
-          {/* <Route path="/weekly" component= {RequireAuth(weekly)} />
-          <Route path="/monthly" component= {RequireAuth(Monthly)} /> */}
+          {/* <Route path="/monthly" component= {RequireAuth(Monthly)} />  */}
           {/* <Route path="/ui" component= {App1} /> */}
-
+          
 
 
         </Switch>
