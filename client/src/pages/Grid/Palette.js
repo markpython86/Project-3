@@ -53,7 +53,7 @@ const theme = createMuiTheme({
     },
     MuiPickersToolbarButton: {
       toolbarBtn: {
-        color: 'black',
+        color: '#808E95',
       },
       toolbarBtnSelected: {
         color: 'black',
