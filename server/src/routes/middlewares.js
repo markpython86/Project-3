@@ -1,5 +1,6 @@
 import User from '../models/user';
 import Daily from '../models/Daily';
+import Weekly from '../models/Weekly';
 import token from '../services/token';
 
 export default {

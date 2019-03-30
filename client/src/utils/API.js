@@ -32,6 +32,7 @@ export default {
 
     // Gets all Weeklies
     getWeeklies: function() {
+      
       return axios.get("/api/weekly");
     },
     // Gets the weekly with the given id

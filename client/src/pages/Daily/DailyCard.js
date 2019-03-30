@@ -182,6 +182,10 @@ class DailyCard extends React.Component {
       negative: this.props.negative,
       selectedTime1: this.props.wakeup,
       selectedTime2: this.props.sleep,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+
       isInEditMode: true,
 
       
@@ -218,7 +222,10 @@ class DailyCard extends React.Component {
       positive: this.state.positive,
       negative: this.state.negative,
       sleep: this.state.selectedTime2,
-      wakeup: this.state.selectedTime1
+      wakeup: this.state.selectedTime1,
+      habit1: this.state.habit1,
+      habit2: this.state.habit2,
+      habit3: this.state.habit3,
     }
    
 

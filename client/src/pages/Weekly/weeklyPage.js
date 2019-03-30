@@ -30,6 +30,7 @@ class App extends Component {
     
     // this.props.tryConnect();
     this.loadWeeklies();
+    console.log(this.state.weeklies)
   }
 
 
@@ -40,7 +41,7 @@ class App extends Component {
   loadWeeklies() {
     API.getWeeklies()
       .then(res => {
-        
+        console.log(res.data)
         this.setState({ weeklies: res.data.weekly })
         console.log('weeklies from updated state', res.data)
       })
@@ -153,6 +154,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postWeekly})(reduxForm({
+export default connect(mapStateToProps,{ postWeekly })(reduxForm({
     form: 'postWeekly'
 })(App));

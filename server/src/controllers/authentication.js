@@ -1,6 +1,7 @@
 import token from '../services/token';
 import User from '../models/user';
 import Daily from '../models/Daily';
+import Weekly from '../models/Weekly';
 // import dailyController from './dailyController'
 
 
@@ -189,6 +190,7 @@ export default {
     // Weekly functions
 
     getWeekly: (req,res,next) =>{
+        console.log("weekly", req)
         User.findById({ _id: req.user._id })
             .populate('weekly')
             .then(function (data) {
