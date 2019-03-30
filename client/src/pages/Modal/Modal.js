@@ -189,8 +189,8 @@ class SimpleModal extends React.Component {
       props,
     } = this;
 
+    // console.log('modal props',props)
     const { classes } = props;
-    // console.log('props',classes)
     // console.log(this.state)
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
@@ -198,21 +198,24 @@ class SimpleModal extends React.Component {
     const { habit1 } = this.state;
     const { habit2 } = this.state;
     const { habit3 } = this.state;
+    const newState = {
+      highlights: this.state.dailyHighlight,
+      positive: this.state.positive,
+      negative: this.state.negative,
+      sleep: this.state.selectedTime2,
+      wakeup: this.state.selectedTime1,
+      habit1: this.state.habit1,
+      habit2: this.state.habit2,
+      habit3: this.state.habit3,
+    }
 
-    // const newState = {
-    //   highlights: this.state.dailyHighlight,
-    //   positive: this.state.positive,
-    //   negative: this.state.negative,
-    //   sleep: this.state.selectedTime2,
-    //   wakeup: this.state.selectedTime1
-    // }
-
+   
 
 
     return (
       
 
-      <Fab color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
+      <Fab  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
         
         <AddIcon onClick={this.handleOpen}/>
       
@@ -233,8 +236,9 @@ class SimpleModal extends React.Component {
   
   <Grid item xs={5}>
     <Fab size="medium" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="medium">check_icon</Icon> 
+      <Icon onClick={() => props.submit(newState) } fontSize="medium">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
+      {/* props.props.updatedDaily(props.props.index, props.newState) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>

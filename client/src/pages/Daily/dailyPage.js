@@ -62,8 +62,13 @@ class App extends Component {
   }; 
 
     handleFormSubmit(data) {
-       
-       this.props.postDaily(data)
+       console.log('data',data)
+      //  console.log("props",props)
+      API.saveDaily(data)
+      .then(()=>  window.location.reload(true))
+      .catch(err => console.log(err));
+
+      //  this.props.postDaily(data)
         
     };
 
@@ -75,7 +80,7 @@ class App extends Component {
       <MenuAppBar />
       <Wrapper>
         <Container spacing="32">
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <form >
           <div className="form-group">
                         <label>First name:</label>
                         <Field
@@ -156,6 +161,7 @@ class App extends Component {
                   habit1={person.habit1}
                   habit2={person.habit2}
                   habit3={person.habit3}
+                  
                 />
               
               </Item>
@@ -166,7 +172,7 @@ class App extends Component {
               </Item> */}
           </Container>
           </Container>
-      <FAB page="daily"/>
+      <FAB page="daily" submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )
@@ -180,6 +186,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postDaily})(reduxForm({
+export default connect(mapStateToProps,{ postDaily })(reduxForm({
     form: 'postDaily'
 })(App));

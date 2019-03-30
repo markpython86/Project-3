@@ -97,7 +97,7 @@ class App extends Component {
                     <div className="form-group">
                         <label>First name:</label>
                         <Field
-                            name="next week"
+                            name="nextWeek"
                             type='text'
                             component="input"
                             className="form-control form-control-lg"
@@ -107,9 +107,7 @@ class App extends Component {
                     
                 
           <button type="submit">Post Up</button>
-        </form> 
-        
-        
+        </form>
           <Container spacing="16">
 
           {/* // Add edit button to this page

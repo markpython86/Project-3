@@ -346,76 +346,6 @@ class WeeklyCard extends React.Component {
             margin="normal"
             disableUnderline={true}
             disabled
-            value={this.state.best}
-            onChange={this.handleChangeBest('best')}
-            />
-           
-          </Grid>
-        </Grid>
-
-        <Grid container alignItems="center">
-          <Grid item id="textIcon">
-            <ArrowUpward />
-          </Grid>
-          <Grid item>
-            <TextField
-            id="standard-textarea"
-            label="Worst"
-            placeholder="Weekly Worst"
-            multiline
-            onChange={this.handleChangeWorst}
-            className={classes.textField}
-            margin="normal"
-            disableUnderline={true}
-            disabled
-            value={this.state.worst}
-            onChange={this.handleChangeWorst('worst')}
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container alignItems="center">
-          <Grid item id="textIcon">
-            <ArrowDownward />
-          </Grid>
-          <Grid item>
-            <TextField
-            id="standard-textarea"
-            label="Next Week"
-            placeholder="Next Week"
-            multiline
-            onChange={this.handleChangeNextWeek}
-            className={classes.textField}
-            margin="normal"
-            disableUnderline={true}
-            disabled
-            value={this.state.nextWeek}
-            onChange={this.handleChangeNextWeek('nextWeek')}
-            />
-            
-          </Grid>
-        </Grid>
-       
-
-      </form>
-      :
-      <form  noValidate autoComplete="off" id="textSection">
-      
-        <Grid container alignItems="center">
-          <Grid item id="textIcon">
-            <Flag />
-          </Grid>
-          <Grid item>
-            <TextField
-            id="standard-textarea"
-            label="best"
-            placeholder="Weekly Best"
-            multiline
-            onChange={this.handleChangeBest}
-            className={classes.textField}
-            margin="normal"
-            disableUnderline={true}
-            disabled
             value={props.best}
             onChange={this.handleChangeBest('best')}
             />
@@ -460,6 +390,76 @@ class WeeklyCard extends React.Component {
             disableUnderline={true}
             disabled
             value={props.nextWeek}
+            onChange={this.handleChangeNextWeek('nextWeek')}
+            />
+            
+          </Grid>
+        </Grid>
+       
+
+      </form>
+      :
+      <form  noValidate autoComplete="off" id="textSection">
+      
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <Flag />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="best"
+            placeholder="Weekly Best"
+            multiline
+            onChange={this.handleChangeBest}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={this.state.best}
+            onChange={this.handleChangeBest('best')}
+            />
+           
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowUpward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Worst"
+            placeholder="Weekly Worst"
+            multiline
+            onChange={this.handleChangeWorst}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={this.state.worst}
+            onChange={this.handleChangeWorst('worst')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container alignItems="center">
+          <Grid item id="textIcon">
+            <ArrowDownward />
+          </Grid>
+          <Grid item>
+            <TextField
+            id="standard-textarea"
+            label="Next Week"
+            placeholder="Next Week"
+            multiline
+            onChange={this.handleChangeNextWeek}
+            className={classes.textField}
+            margin="normal"
+            disableUnderline={true}
+            disabled
+            value={this.state.nextWeek}
             onChange={this.handleChangeNextWeek('nextWeek')}
             />
             

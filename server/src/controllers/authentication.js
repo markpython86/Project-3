@@ -143,20 +143,27 @@ export default {
     },
     createDaily: (req, res, next) => {
          const {
-            highlight,
-            pos,
-            neg,
-            wake,
-            sleep
+            highlights,
+            positive,
+            negative,
+            wakeup,
+            sleep,
+            habit1,
+            habit2,
+            habit3,
+
         } = req.body;
-        // console.log('user request', req.daily)
+        console.log('user request', req)
 
         const daily = new Daily({
-                    highlights: highlight,
-                    positive: pos,
-                    negative: neg,
-                    wakeup: wake,
-                    sleep:sleep
+                    highlights: highlights,
+                    positive: positive,
+                    negative: negative,
+                    wakeup: wakeup,
+                    sleep:sleep,
+                    habit1: habit1,
+                    habit2: habit2,
+                    habit3: habit3,
                 })
 
                 daily.save(function (err, savedDaily) {

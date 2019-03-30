@@ -25,14 +25,14 @@ export default {
     },
     // Saves a daily to the database
     saveDaily: function(dailyData) {
-      return axios.post("/api/daily", dailyData);
+      return axios.post("/api/daily/new", dailyData);
     },
 
 // ======= Weekly Section ======= //
 
     // Gets all Weeklies
     getWeeklies: function() {
-      
+
       return axios.get("/api/weekly");
     },
     // Gets the weekly with the given id

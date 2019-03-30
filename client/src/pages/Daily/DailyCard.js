@@ -102,7 +102,7 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
-      editMode: false,
+      
       dailyHighlight: '',
       positive: '',
       negative: '',
@@ -157,7 +157,7 @@ class DailyCard extends React.Component {
       habit1: this.props.habit1,
       habit2: this.props.habit2,
       habit3: this.props.habit3,
-
+      // isHidden: true,
       isInEditMode: true,
 
       
@@ -179,9 +179,11 @@ class DailyCard extends React.Component {
   }
 
   handleClickAway = () => {
+    if (!this.state.isInEditMode){
     this.setState({
       isHidden: true,
     });
+    }
   };
 
   render() {
@@ -973,29 +975,22 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState).then(this.setState({
-        isHidden: true,
-      }))
-      } fontSize="small">check_icon</Icon> 
+    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState)} size="small" id="saveButton" aria-label="Check" color='secondary'>
+      <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon onClick={() => {props.editMode().then(this.setState({
-        isHidden: true,
-      })); console.log("clicked")}} fontSize="small">edit_icon</Icon>
+    <Fab onClick={() => {props.editMode();console.log("clicked")}}  size="small" id="editButton" aria-label="Edit" color='primary'>
+      <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon  onClick={() => props.props.deleteDaily(props.props.index).then(this.setState({
-        isHidden: true,
-      }))} fontSize="small">delete_icon</Icon>
+    <Fab onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+      <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 

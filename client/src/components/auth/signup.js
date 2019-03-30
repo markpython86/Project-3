@@ -5,6 +5,7 @@ import {signUserUp} from '../../actions';
 import CenterCard363 from '../centerCard363';
 import Input from '@material-ui/core/Input';
 import './style.css';
+import { InputLabel } from '@material-ui/core';
 
 
 class Signup extends Component {
@@ -20,7 +21,9 @@ class Signup extends Component {
         }
     }
     handleFormSubmit(data) {
+        console.log(data)
         if (data.password == data.password2) {
+            // console.log(data)
             this.props.signUserUp(data);
         }else{
             this.renderAlert('password does not match');
@@ -36,10 +39,11 @@ class Signup extends Component {
                         Make an Account for Minimalist
                     </h4>
                         <div className="card-body">
-                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>  
+                    {/*  */}
                         <div className="form-group">
                             {/* <label>First name:</label> */}
-                            <Input
+                            <Field
                                 name="firstName"
                                 type='text'
                                 component="input"
@@ -53,7 +57,7 @@ class Signup extends Component {
                         </div>
                         <div className="form-group">
                             {/* <label>Last name:</label> */}
-                            <Input
+                            <Field
                                 name="lastName"
                                 type='text'
                                 component="input"
@@ -67,7 +71,7 @@ class Signup extends Component {
                         </div>
                         <div className="form-group">
                             {/* <label>Email:</label> */}
-                            <Input
+                            <Field
                                 name="email"
                                 type='email'
                                 component="input"
@@ -81,7 +85,8 @@ class Signup extends Component {
                         </div>
                         <div className="form-group">
                             {/* <label>Password:</label> */}
-                            <Input
+                             
+                            <Field
                                 type='password'
                                 name="password"
                                 component="input"
@@ -92,11 +97,12 @@ class Signup extends Component {
                                 'aria-label': 'Description',
                                 }}
                             />
+                            
                         </div>
                         
                         <div className="form-group">
                             {/* <label>Comfirm Password:</label> */}
-                            <Input
+                            <Field
                                 type='password'
                                 name="password2"
                                 component="input"

@@ -14,7 +14,7 @@ import Daily from './pages/Daily/dailyPage';
 import Weekly from './pages/Weekly/weeklyPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
-import Signout from './components/auth/signout'
+import Signout from './components/auth/signout';
 import RequireAuth from './components/auth/require_auth';
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
