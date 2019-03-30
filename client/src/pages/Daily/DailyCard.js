@@ -102,7 +102,6 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
-      
       dailyHighlight: '',
       positive: '',
       negative: '',
@@ -230,7 +229,7 @@ class DailyCard extends React.Component {
                   margin="normal"
                   // label="Morning"
                   disabled={true}
-                  value={this.props.wakeup}
+                  value={selectedTime1}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -260,7 +259,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Evening"
                     disabled={true}
-                    value={this.props.sleep}
+                    value={selectedTime2}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -277,7 +276,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={this.props.wakeup}
+                  value={props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -305,7 +304,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={this.props.sleep}
+                    value={props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />

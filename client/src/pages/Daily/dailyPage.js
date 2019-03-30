@@ -21,7 +21,7 @@ class App extends Component {
     super();
     this.state = {
       dailies: [],
-      value: "initial value",
+      // value: "initial value",
       
     }
   }
@@ -81,7 +81,7 @@ class App extends Component {
       <Palette>
       <Wrapper>
         <Container spacing="0">
-        <form>
+        {/* <form>
           <div className="form-group">
                         <label>First name:</label>
                         <Field
@@ -134,7 +134,7 @@ class App extends Component {
                     </div>
           
           <button type="submit">Post Up</button>
-        </form> 
+        </form>  */}
         
         
           <Container spacing="16">
