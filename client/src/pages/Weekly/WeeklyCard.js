@@ -180,7 +180,7 @@ class WeeklyCard extends React.Component {
     
     this.setState({
       best: this.props.best,
-      worst: this.props.pworst,
+      worst: this.props.worst,
       nextWeek: this.props.nextWeek,
       selectedTime1: this.props.wakeup,
       selectedTime2: this.props.sleep,
@@ -230,103 +230,7 @@ class WeeklyCard extends React.Component {
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
           
-  {/* Begginning of time section. */}
-  {/* {!this.state.isInEditMode ?   
-          <Grid container spacing={0} id="header">
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <TimePicker
-                  margin="normal"
-                  // label="Morning"
-                  disabled={true}
-                  value={this.props.wakeup}
-                  onChange={this.handleTimeChange1}
-                  id="timeRow"
-                />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <DatePicker
-                    margin="normal"
-                    // label="Date"
-                    disabled={true}
-                    value={selectedDate}
-                    onChange={this.handleDateChange}
-                    id="timeRow"
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <TimePicker
-                    margin="normal"
-                    // label="Evening"
-                    disabled={true}
-                    value={this.props.sleep}
-                    onChange={this.handleTimeChange2}
-                    id="timeRow"
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-          
-          </Grid>
-:
-<Grid container spacing={0} id="header">
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <TimePicker
-                  margin="normal"
-                  // label="Morning"
-                  value={this.props.wakeup}
-                  onChange={this.handleTimeChange1}
-                  id="timeRow"
-                />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <DatePicker
-                    margin="normal"
-                    // label="Date"
-                    value={selectedDate}
-                    onChange={this.handleDateChange}
-                    id="timeRow"
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-
-            <Grid item xs={4}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container className={classes.grid} justify="space-around" id="timeHeader">
-                  <TimePicker
-                    margin="normal"
-                    // label="Evening"
-                    value={this.props.sleep}
-                    onChange={this.handleTimeChange2}
-                    id="timeRow"
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-          
-          </Grid> */}
-  {/* } */}
-  {/* End of time section. */}
-
+  
   {/* Beginning of weekly three. */}
 {!this.state.isInEditMode ? 
       <form  noValidate autoComplete="off" id="textSection">
@@ -344,7 +248,7 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeBest}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
+            // disableUnderline
             disabled
             value={props.best}
             onChange={this.handleChangeBest('best')}
@@ -366,7 +270,6 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeWorst}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.worst}
             onChange={this.handleChangeWorst('worst')}
@@ -387,7 +290,6 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.nextWeek}
             onChange={this.handleChangeNextWeek('nextWeek')}
@@ -414,8 +316,6 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeBest}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
-            disabled
             value={this.state.best}
             onChange={this.handleChangeBest('best')}
             />
@@ -436,8 +336,6 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeWorst}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
-            disabled
             value={this.state.worst}
             onChange={this.handleChangeWorst('worst')}
             />
@@ -457,8 +355,6 @@ class WeeklyCard extends React.Component {
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
-            disabled
             value={this.state.nextWeek}
             onChange={this.handleChangeNextWeek('nextWeek')}
             />
@@ -500,7 +396,7 @@ class WeeklyCard extends React.Component {
                   // name={this.state.habit1}
                   value={this.state.habit1}
                   onChange={this.handleHabitChange1}
-                  disableUnderline={true}
+                  disableUnderline
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
@@ -577,7 +473,7 @@ class WeeklyCard extends React.Component {
                   classes={{ select: "habitIcon"}}
                   value={this.state.habit2}
                   onChange={this.handleHabitChange2}
-                  disableUnderline={true} 
+                  disableUnderline
                   IconComponent={classes.hide}
                   className={classes.color}
                 >
@@ -653,7 +549,7 @@ class WeeklyCard extends React.Component {
                   classes={{ select: "habitIcon"}}
                   value={this.state.habit3}
                   onChange={this.handleHabitChange3}
-                  disableUnderline={true} 
+                  disableUnderline 
                   IconComponent={classes.hide}
                   className={classes.color}
                 >
@@ -744,22 +640,22 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="small">check_icon</Icon> 
+    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+      <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon onClick={() => {props.editMode(); console.log("clicked")}} fontSize="small">edit_icon</Icon>
+    <Fab onClick={() => {props.editMode(); console.log("clicked")}} size="small" id="editButton" aria-label="Edit" color='primary'>
+      <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon  onClick={() => props.props.deleteDaily(props.props.index)} fontSize="small">delete_icon</Icon>
+    <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+      <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 

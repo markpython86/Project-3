@@ -215,9 +215,9 @@ class SimpleModal extends React.Component {
     return (
       
 
-      <Fab  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
+      <Fab onClick={this.handleOpen}  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
         
-        <AddIcon onClick={this.handleOpen}/>
+        <AddIcon />
       
         <Modal
           aria-labelledby="simple-modal-title"
@@ -235,8 +235,8 @@ class SimpleModal extends React.Component {
  
   
   <Grid item xs={5}>
-    <Fab size="medium" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.submit(newState) } fontSize="medium">check_icon</Icon> 
+    <Fab onClick={() => props.submit(newState) } size="medium" id="saveButton" aria-label="Check" color='secondary'>
+      <Icon fontSize="large">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, props.newState) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
@@ -246,8 +246,8 @@ class SimpleModal extends React.Component {
 
 
   <Grid item xs={5}>
-    <Fab size="medium" id="deleteButton" aria-label="Delete">
-      <Icon onClick={this.handleClose} fontSize="medium">exit_to_app_icon</Icon>
+    <Fab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
+      <Icon  fontSize="large">exit_to_app_icon</Icon>
     </Fab>
   </Grid>
 

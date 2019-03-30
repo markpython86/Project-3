@@ -115,7 +115,7 @@ class App extends Component {
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.weeklies.map((person, index) => (
-              <Item xs='12' sm='3'>
+              <Item xs='12' sm='3'key={person._id}>
               
 
                 <WeeklyCard 
