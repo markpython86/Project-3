@@ -1,0 +1,91 @@
+
+/* General card properties */
+
+#card {
+    margin-bottom: 0px !important;
+    border-radius: 20px;
+    background-color: #b0bec5;
+}
+
+#text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#icon {
+    margin-bottom: -6px;
+    margin-left: 6px;
+}
+
+#textIcon {
+    padding-top: 25px;
+}
+
+#textSection {
+    margin-top: -8px;
+}
+
+
+/* Card action buttons (Delete, Edit, Save) */
+
+.fab {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#saveButton {
+    text-align: center;
+}
+
+#editButton {
+    text-align: center;
+}
+
+#deleteButton {
+    background-color: #ba6b6c;
+    text-align: center;
+}
+
+#deleteButton:hover {
+    background-color: #945a5b;
+}
+
+
+/* Card Header (Date and Time Section) */
+
+#header {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #808e95;
+    font-weight: bold;
+}
+
+#timeRow {
+    margin-top: -20px;
+    text-align: center;
+    line-height: 39px;
+    width: 120px;
+
+}
+
+#timeHeader {
+    margin-bottom: -14px !important;
+}
+
+
+/* Card Footer (Habit section) */
+
+
+#footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.habitIcon {
+    padding-right: 0px !important;
+    border-bottom-style: none !important;
+}
+
+.habitIcon:focus {
+    border-radius: 50px !important;
+}
