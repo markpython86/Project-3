@@ -39,13 +39,13 @@ class App extends Component {
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
-    console.log('hello from the other side',this.state.update)
+    // console.log('hello from the other side',this.state.update)
     API.getDailies()
       .then(res => {
         
         this.setState({ dailies: res.data.daily })
         // console.log(this.props)
-        console.log('dailies from updated state', res.data)
+        // console.log('dailies from updated state', res.data)
       })
       .catch(err => console.log(err));
   }
@@ -91,7 +91,7 @@ class App extends Component {
       <Palette>
       <MenuAppBar />
       <Wrapper>
-        <Container spacing="32">
+        <Container spacing="0">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <div className="form-group">
                         <label>First name:</label>
@@ -155,9 +155,8 @@ class App extends Component {
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.dailies.map((person, index) => (
-              <Item xs='12' sm='3'>
+              <Item xs='12' sm='3' key={person._id}>
               
-
                 <DailyCard 
                   key={person._id}
                   index={person._id}

@@ -10,6 +10,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link } from "react-router-dom";
+import IconButton from '@material-ui/core/IconButton';
+
 
 
 
@@ -63,7 +65,7 @@ class SwipeableTemporaryDrawer extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggleDrawer('left', true)}><MenuIcon/></Button>
+        <IconButton onClick={this.toggleDrawer('left', true)} color="inherit" aria-label="Menu"><MenuIcon/></IconButton>
         <SwipeableDrawer
           open={this.state.left}
           onClose={this.toggleDrawer('left', false)}
