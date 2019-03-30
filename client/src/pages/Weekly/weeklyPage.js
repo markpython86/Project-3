@@ -70,9 +70,9 @@ class App extends Component {
     const {handleSubmit} = this.props;
     return (
       <Palette>
-      <Nav />
+      {/* <Nav /> */}
       <Wrapper>
-        <Container spacing="32">
+        <Container spacing="0">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <div className="form-group">
                         <label>First name:</label>

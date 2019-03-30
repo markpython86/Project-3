@@ -11,7 +11,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import MenuAppBar from "../../components/Nav/";
+// import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
@@ -39,11 +39,13 @@ class App extends Component {
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
+    // console.log('hello from the other side',this.state.update)
     API.getDailies()
       .then(res => {
         
         this.setState({ dailies: res.data.daily })
-        console.log('dailies from updated state', res.data)
+        // console.log(this.props)
+        // console.log('dailies from updated state', res.data)
       })
       .catch(err => console.log(err));
   }
@@ -74,13 +76,12 @@ class App extends Component {
 
 
   render() {
-    const {handleSubmit} = this.props;
+    // const {handleSubmit} = this.props;
     return (
       <Palette>
-      <MenuAppBar />
       <Wrapper>
-        <Container spacing="32">
-        <form >
+        <Container spacing="0">
+        <form>
           <div className="form-group">
                         <label>First name:</label>
                         <Field
@@ -143,9 +144,8 @@ class App extends Component {
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.dailies.map((person, index) => (
-              <Item xs='12' sm='3'>
+              <Item xs='12' sm='3' key={person._id}>
               
-
                 <DailyCard 
                   key={person._id}
                   index={person._id}
