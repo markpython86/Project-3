@@ -5,6 +5,7 @@ import {signUserUp} from '../../actions';
 import CenterCard363 from '../centerCard363';
 import Input from '@material-ui/core/Input';
 import './style.css';
+import Palette from "../../pages/Grid/Palette";
 
 
 class Signup extends Component {
@@ -29,83 +30,75 @@ class Signup extends Component {
     render() {
         const {handleSubmit} = this.props;
         return (
+            <Palette>
             <CenterCard363>
                 <div className='card-wrapper'>
                     <div className='card'>
-                    <h4 className="card-header">
-                        Make an Account for Minimalist
-                    </h4>
+                    <h3 id="title" className="card-header">
+                        Create a Minimalist account.
+                    </h3>
                         <div className="card-body">
                     <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                         <div className="form-group">
                             {/* <label>First name:</label> */}
-                            <Input
+                            <Field
                                 name="firstName"
                                 type='text'
                                 component="input"
-                                className="form-control form-control-lg"
+                                className="input form-control form-control-lg"
                                 placeholder="First Name"
                                 required
-                                inputProps={{
-                                'aria-label': 'Description',
-                                }}
+                                
                                 />
                         </div>
                         <div className="form-group">
                             {/* <label>Last name:</label> */}
-                            <Input
+                            <Field
+                           
                                 name="lastName"
                                 type='text'
                                 component="input"
-                                className="form-control form-control-lg"
+                                className="input form-control form-control-lg"
                                 placeholder="Last Name"
                                 required
-                                inputProps={{
-                                'aria-label': 'Description',
-                                }}
+                                
                             />
                         </div>
                         <div className="form-group">
                             {/* <label>Email:</label> */}
-                            <Input
+                            <Field
                                 name="email"
                                 type='email'
                                 component="input"
-                                className="form-control form-control-lg"
+                                className="input form-control form-control-lg"
                                 placeholder="sample@email.com"
                                 required
-                                inputProps={{
-                                'aria-label': 'Description',
-                                }}
+                                
                             />
                         </div>
                         <div className="form-group">
                             {/* <label>Password:</label> */}
-                            <Input
+                            <Field
                                 type='password'
                                 name="password"
                                 component="input"
-                                className="form-control form-control-lg"
+                                className="input form-control form-control-lg"
                                 placeholder="your password"
                                 required
-                                inputProps={{
-                                'aria-label': 'Description',
-                                }}
+                               
                             />
                         </div>
                         
                         <div className="form-group">
                             {/* <label>Comfirm Password:</label> */}
-                            <Input
+                            <Field
                                 type='password'
                                 name="password2"
                                 component="input"
-                                className="form-control form-control-lg"
+                                className="input form-control form-control-lg"
                                 placeholder="confirm password"
                                 required
-                                inputProps={{
-                                'aria-label': 'Description',
-                                }}
+                                
                             />
                         </div>
                         {this.renderAlert()}
@@ -117,6 +110,7 @@ class Signup extends Component {
                     </div>
                 </div>
             </CenterCard363>
+            </Palette>
         );
     }
 }
