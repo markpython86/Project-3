@@ -235,12 +235,10 @@ export function postWeekly(weeklyObj) {
 
 export function deleteWeekly(weeklyID) {
     return function (dispatch) {
-        console.log(weeklyID)
         // Submit email/password to server
         axios
             .delete(`/api/weekly/${weeklyID}`)
             .then(() => {
-                console.log('\\\\\\\\\working')
                 // dispatch({type: AUTH_USER})
                  window.location.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);

@@ -69,7 +69,6 @@ if (window.location.pathname === "/daily") {
 
 function FAB(props) {
   const { classes } = props;
-  console.log('fab props',props)
 
   return (
 

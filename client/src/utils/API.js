@@ -19,7 +19,6 @@ export default {
     },
 
     updateDaily: function(id, dailyData) {
-      console.log('daily data', dailyData)
       return axios.put("/api/daily/" + id, dailyData);
 
     },
@@ -45,7 +44,6 @@ export default {
     },
 
     updateWeekly: function(id, weeklyData) {
-      console.log('weekly data', weeklyData)
       return axios.put("/api/weekly/" + id, weeklyData);
 
     },

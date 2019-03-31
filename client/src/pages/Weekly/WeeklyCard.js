@@ -86,39 +86,6 @@ const styles = theme => ({
     height: 35,
     textAlign: 'center',
   },
-
-// // function DailyCard(props) {
-// //   const allProps = {
-// //     highlight: props.Highlights,
-// //     positive: props.positive,
-// //     negative: props.negative,
-// //     wakeup: props.wakeup,
-// //     sleep: props.sleep, 
-// //   };
-//   const { classes } = props;
-//   // console.log('props', props)
-//   return (
-//     <Grid item>
-
-//     <Grid container className={classes.container}> 
-//     <Grid item xs={4}>
-//       <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
-//         <Icon fontSize="small">check_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
-//         <Icon fontSize="small">edit_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
-//         <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
-//       </Fab>
-//     </Grid>
-//     </Grid>
   hide: {
     display: 'none',
   }
@@ -210,8 +177,6 @@ class WeeklyCard extends React.Component {
     } = this;
 
     const { classes } = props;
-    // console.log('props',classes)
-    // console.log(this.state)
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
@@ -648,7 +613,7 @@ const Child = (props) => (
   </Grid>
 
   <Grid item xs={4}>
-    <Fab onClick={() => {props.editMode(); console.log("clicked")}} size="small" id="editButton" aria-label="Edit" color='primary'>
+    <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>

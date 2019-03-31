@@ -189,9 +189,7 @@ class SimpleModal extends React.Component {
       props,
     } = this;
 
-    // console.log('modal props',props)
     const { classes } = props;
-    // console.log(this.state)
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
@@ -207,6 +205,7 @@ class SimpleModal extends React.Component {
       habit1: this.state.habit1,
       habit2: this.state.habit2,
       habit3: this.state.habit3,
+      selectedDate: this.state.selectedDate
     }
 
    

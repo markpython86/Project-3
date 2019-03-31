@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
     habit1: { type: String },
     habit2: { type: String },
     habit3: { type: String },
+    selectedDate: { type: String },
     
   })
 // add association later

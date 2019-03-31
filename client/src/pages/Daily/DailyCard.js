@@ -105,9 +105,9 @@ class DailyCard extends React.Component {
       dailyHighlight: '',
       positive: '',
       negative: '',
-      selectedTime1: new Date(),
-      selectedTime2: new Date(),
-      selectedDate: new Date(),
+      selectedTime1:  '',
+      selectedTime2: '',
+      selectedDate: '',
       habit1: '',
       habit2: '',
       habit3: '',
@@ -146,7 +146,7 @@ class DailyCard extends React.Component {
   };
 
   editMode = () =>{
-    
+    console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
@@ -156,6 +156,7 @@ class DailyCard extends React.Component {
       habit1: this.props.habit1,
       habit2: this.props.habit2,
       habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
       // isHidden: true,
       isInEditMode: true,
 
@@ -189,13 +190,10 @@ class DailyCard extends React.Component {
     const {
       props,
     } = this;
-
     const { classes } = props;
-    // console.log('props',classes)
-    // console.log(this.state)
-    const { selectedTime1 } = this.state;
-    const { selectedTime2 } = this.state;
-    const { selectedDate } = this.state;
+    // const { selectedTime1 } = this.state;
+    // const { selectedTime2 } = this.state;
+    // const { selectedDate } = this.state;
     const newState = {
       highlights: this.state.dailyHighlight,
       positive: this.state.positive,
@@ -205,7 +203,9 @@ class DailyCard extends React.Component {
       habit1: this.state.habit1,
       habit2: this.state.habit2,
       habit3: this.state.habit3,
+      selectedDate: this.state.selectedDate,
     }
+    console.log(newState)
    
 
 
@@ -229,7 +229,7 @@ class DailyCard extends React.Component {
                   margin="normal"
                   // label="Morning"
                   disabled={true}
-                  value={selectedTime1}
+                  value={props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -244,7 +244,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Date"
                     disabled={true}
-                    value={selectedDate}
+                    value={props.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -259,7 +259,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Evening"
                     disabled={true}
-                    value={selectedTime2}
+                    value={props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -276,7 +276,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={props.wakeup}
+                  value={this.state.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -290,7 +290,7 @@ class DailyCard extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={selectedDate}
+                    value={this.state.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -304,7 +304,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={props.sleep}
+                    value={this.state.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -982,7 +982,7 @@ const Child = (props) => (
   </Grid>
 
   <Grid item xs={4}>
-    <Fab onClick={() => {props.editMode();console.log("clicked")}}  size="small" id="editButton" aria-label="Edit" color='primary'>
+    <Fab onClick={() => {props.editMode()}}  size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>

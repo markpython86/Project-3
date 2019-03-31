@@ -151,9 +151,10 @@ export default {
             habit1,
             habit2,
             habit3,
+            selectedDate
 
         } = req.body;
-        console.log('user request', req)
+        
 
         const daily = new Daily({
                     highlights: highlights,
@@ -164,6 +165,7 @@ export default {
                     habit1: habit1,
                     habit2: habit2,
                     habit3: habit3,
+                    selectedDate: selectedDate
                 })
 
                 daily.save(function (err, savedDaily) {

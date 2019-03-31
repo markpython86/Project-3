@@ -28,10 +28,7 @@ class App extends Component {
 
 
   componentDidMount() {
-    
-    // this.props.tryConnect();
     this.loadWeeklies();
-    console.log(this.state.weeklies)
   }
 
 
@@ -42,9 +39,7 @@ class App extends Component {
   loadWeeklies() {
     API.getWeeklies()
       .then(res => {
-        console.log(res.data)
         this.setState({ weeklies: res.data.weekly })
-        console.log('weeklies from updated state', res.data)
       })
       .catch(err => console.log(err));
   }
