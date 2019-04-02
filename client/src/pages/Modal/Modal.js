@@ -207,13 +207,7 @@ class SimpleModal extends React.Component {
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate
     }
-
-   
-
-
     return (
-      
-
       <Fab onClick={this.handleOpen}  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
         
         <AddIcon />
@@ -227,9 +221,6 @@ class SimpleModal extends React.Component {
           <tbody>
             <tr>
               <td>
-            
-
-
             <Grid container className={classes.center}>
  
   

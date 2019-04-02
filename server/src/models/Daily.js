@@ -11,7 +11,10 @@ import mongoose from 'mongoose';
     habit1: { type: String },
     habit2: { type: String },
     habit3: { type: String },
-    selectedDate: { type: String },
+    selectedDate: { type: Date },
+    year: {type: Number},
+    week: {type: Number},
+    weekRange:{ type: String }
     
   })
 // add association later

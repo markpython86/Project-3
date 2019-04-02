@@ -38,7 +38,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src/index.html')}),
+        // new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src/index.html')}),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
             filename: "manifest.js",
