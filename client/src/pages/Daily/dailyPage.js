@@ -72,10 +72,20 @@ class App extends Component {
   }; 
 
     handleFormSubmit = (data) => {
+      console.log(data)
+      if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
+        console.log("User exists. Go to the login page");
+      } else {
+        console.log("User doesn't exists. Show error message");
+      }
       // console.log(data)
-      API.saveDaily(data)
-      .then(()=>  window.location.reload(true))
-      .catch(err => console.log(err));
+      // API.saveDaily(data)
+      // .then()
+      // .catch(err => {
+      //   // res.end()
+      //   if(err) throw err
+        
+      //   });
 
       
         

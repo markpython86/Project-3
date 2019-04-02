@@ -21,7 +21,7 @@ import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Buil
 import '../Daily/DailyCard';
 import './Modal.css';
 
-
+const Moment = require('moment')
 
 const styles = theme => ({
 
@@ -197,6 +197,7 @@ class SimpleModal extends React.Component {
     const { habit2 } = this.state;
     const { habit3 } = this.state;
     const newState = {
+      fullDate: Moment(this.state.selectedDate).format('MM-DD-YYYY'),
       highlights: this.state.dailyHighlight,
       positive: this.state.positive,
       negative: this.state.negative,

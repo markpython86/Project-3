@@ -114,43 +114,10 @@ export default {
     },
     // Daily functions
     getDaily: (req,res,next) =>{
-        // let newDate = new Date()
-        
-        //     // let a = new Date()
-        //     console.log('a',('2019-03-06T01:44:33.305Z'))
-        //     console.log(parseInt(Moment('2019-03-06T01:44:33.305Z').format('w')-1) )
-        //     console.log(parseInt(Moment(newDate).format('YYYY')))
-        //     console.log({'_id': {"week":
-        //                 parseInt(Moment('2019-03-06T01:44:33.305Z').format('w')-1)
-        //                 , "year": parseInt(Moment(newDate).format('YYYY'))
-        //     }})
-            //  _id: { week: 9, year: 2019 }
-//         const userID = (req.user._id).toString()
-//         var today = new Date();
-//    var startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-//         Daily.find({selectedDate: {$gte: startOfToday}}, function (err, docs) {
-//             console.log(docs)
-//         });
-        Daily.aggregate(
-            [ 
-                {
-        "$group" : {
-           "_id" : { "week": { "$week": "$selectedDate" }, "year": { "$year": "$selectedDate" } },
-           'habits1': {'$addToSet': "$habit1"},
-           'habits2': {'$addToSet': "$habit2"},
-           'habits3': {'$addToSet': "$habit3"},
-           'daily': {'$addToSet':'$_id'},
-        }
-} 
-]).exec(function ( e, d ) {
-
-    console.log(d)            
-});
-
         User.findById({ _id: req.user._id })
             .populate('daily')
             .then(function (data) {
-                console.log('working')
+                // console.log('working')
                 
                 
                 res.send(data)
@@ -162,33 +129,53 @@ export default {
        
     },
     createDaily: (req, res, next) => {
-         const {
-            highlights,
-            positive,
-            negative,
-            wakeup,
-            sleep,
-            habit1,
-            habit2,
-            habit3,
-            selectedDate
+        // console.log('-=-=-=--=-=-=-=-=-==-=-',req)
+        const formattedDate = Moment(req.body.selectedDate).format('MM-DD-YYYY')
+        Daily
+            .findOne({
+                user_id: req.user._id,
+                fullDate: formattedDate
 
-        } = req.body;
-        
+            }, function (err, existingRecord) {
+                if (err) return res.status(422).send(err);
+                if (existingRecord) {
+                    return res
+                        .status(422)
+                        .send({
+                            error: 'Record already created'
+                        }).end();
+                }
+                const {
+                    highlights,
+                    positive,
+                    negative,
+                    wakeup,
+                    sleep,
+                    habit1,
+                    habit2,
+                    habit3,
+                    selectedDate
 
-        const daily = new Daily({
+                } = req.body;
+                // console.log('90909009-----------',req.user._id)
+
+
+                const daily = new Daily({
                     highlights: highlights,
                     positive: positive,
                     negative: negative,
                     wakeup: wakeup,
-                    sleep:sleep,
+                    sleep: sleep,
                     habit1: habit1,
                     habit2: habit2,
                     habit3: habit3,
                     selectedDate: selectedDate,
-                    week: parseInt(Moment(selectedDate).format('w')-1),
-                    year: parseInt(Moment(selectedDate).format('YYYY'))
-                    
+                    user_id: req.user._id,
+                    week: parseInt(Moment(selectedDate).format('w') - 1),
+                    year: parseInt(Moment(selectedDate).format('YYYY')),
+                    fullDate: Moment(selectedDate).format('MM-DD-YYYY')
+
+
                 })
 
                 daily.save(function (err, savedDaily) {
@@ -197,23 +184,21 @@ export default {
                     }
                 }).then(newDaily => {
                     // console.log('-=-=-=-=--=',newDaily)
-                    
-                    User.findByIdAndUpdate({_id:req.user._id},{ $push: {daily: newDaily._id}})
-                    .then((data)=> {
-                    Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: {habits: newDaily.habit1}})
-                        .then(d => console.log(d))
-                        .catch(err=>console.log(err))
 
-
-
-                        console.log('----------------data',newDaily)
-                        res.sendStatus(200)})
-                    .catch(err=>console.log(err))
-
+                    User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
+                        .then((data) => {
+                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: newDaily.habit1 } })
+                                .then(d => console.log(d))
+                                .catch(err => console.log(err))
+                            console.log('----------------data', newDaily)
+                            res.sendStatus(200)
+                        })
+                        .catch(err => console.log(err))
                     // console.log(newDaily)
                     res.sendStatus(200);
                 })
-                .catch(next)
+                    .catch(next)
+            })
     },
 
     deleteDaily: (req, res, next) => {
@@ -234,10 +219,10 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
-            console.log('update request', req.body)
+            // console.log('update request', req.body)
             const newDaily = {
                 ...req.body, week: parseInt(Moment(req.body.selectedDate).format('w')-1),
-                    year: parseInt(Moment(req.body.selectedDate).format('YYYY')), weekRange: Moment(req.body.selectedDate).startOf('week').format()+' - '+ Moment(req.body.selectedDate).endOf('week')}
+                    year: parseInt(Moment(req.body.selectedDate).format('YYYY')), weekRange: Moment(req.body.selectedDate).startOf('week').format("MMM Do")+' - '+ Moment(req.body.selectedDate).endOf('week').format("MMM Do")}
             Daily.findByIdAndUpdate(dailyId, newDaily, {
                     new: true
                 })
@@ -255,24 +240,6 @@ export default {
         User.findById({ _id: req.user._id })
             .populate('weekly')
             .then(function (data) {
-                Daily.aggregate(
-            [ 
-                {
-        "$group" : {
-           "_id" : { "week": { "$week": "$selectedDate" }, "year": { "$year": "$selectedDate" } },
-        }
-} 
-]).exec(function ( e, d ) {
-    console.log('d',d[1]._id)
-    console.log('d',data.weekly[0].weekID)
-    if (d[1]._id === data.weekly[0].weekID){
-        console.log('hello')
-    }else{
-        console.log('not hello')
-    }
-});
-                // console.log('working',data.weekly[0].weekID)
-
                 res.send(data)
             })
             .catch(function (err) {
@@ -283,19 +250,7 @@ export default {
        
     },
     createWeekly: (req, res, next) => {
-//         Daily.aggregate(
-//             [ 
-//                 {
-//         "$group" : {
-//            "_id" : { "week": { "$week": "$selectedDate" }, "year": { "$year": "$selectedDate" } },
-//            'habits1': {'$addToSet': "$habit1"},
-//            'habits2': {'$addToSet': "$habit2"},
-//            'habits3': {'$addToSet': "$habit3"}
-//         }
-// } 
-// ]).exec(function ( e, d ) {
-//                 var d = d
-// });
+//         
 
         User.findById({_id: req.user._id})
         .populate('weekly')
