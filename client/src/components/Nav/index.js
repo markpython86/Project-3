@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Link } from "react-router-dom";
 import SwipeableTemporaryDrawer from './menuButton';
-
+import Calendar from './../Calendar/Calendar.jsx';
 
 const styles = {
   root: {
@@ -135,6 +135,14 @@ class MenuAppBar extends React.Component {
                   >
                     <AccountCircle />
                   </IconButton>
+                  <IconButton
+                   aria-owns={open ? "menu-appbar" : undefined}
+                    aria-haspopup="true"
+                    onClick={e => this.handleMenu(e)}
+                    id="calendar">
+                    <Calendar/>
+
+                    </IconButton>
                   <Menu
                     id="menu-appbar"
                     anchorEl={this.state.anchorEl}

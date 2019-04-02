@@ -72,7 +72,7 @@ class App extends Component {
   //  console.log("update", update)
     
 
-  
+  //TODO but the slider on the .then
     API.updateDaily(id, update)
       .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
