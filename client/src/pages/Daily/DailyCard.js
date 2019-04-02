@@ -145,6 +145,7 @@ class DailyCard extends React.Component {
     this.setState({ habit1: event.target.value });
   };
 
+
   editMode = () =>{
     console.log('props in edit mode',this.props)
     this.setState({
@@ -974,7 +975,7 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState)} size="small" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => {props.props.updatedDaily(props.props.index, props.newState)}} size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}

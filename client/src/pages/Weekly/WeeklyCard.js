@@ -171,6 +171,14 @@ class WeeklyCard extends React.Component {
     })
   }
 
+  handleClickAway = () => {
+    if (!this.state.isInEditMode){
+    this.setState({
+      isHidden: true,
+    });
+    }
+  };
+
   render() {
     const {
       props,
@@ -189,6 +197,9 @@ class WeeklyCard extends React.Component {
 
 
     return (
+
+      <ClickAwayListener onClickAway={this.handleClickAway}>
+
       <Grid item>
   {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
 
@@ -592,6 +603,8 @@ class WeeklyCard extends React.Component {
         </CardContent>
       </Card>
     </Grid>
+    </ClickAwayListener>
+
     );
   }
 }
@@ -605,10 +618,8 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => props.props.updatedWeekly(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
@@ -619,7 +630,7 @@ const Child = (props) => (
   </Grid>
 
   <Grid item xs={4}>
-    <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+    <Fab   onClick={() => props.props.deleteWeekly(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>

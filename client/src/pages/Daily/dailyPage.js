@@ -55,7 +55,7 @@ class App extends Component {
   };
   updateDailies(id, update) {
       API.updateDaily(id, update)
-      .then(()=>  window.location.reload(true))
+      .then(console.log("worked"))
       .catch(err => console.log(err));
   }; 
 
