@@ -71,6 +71,7 @@ function FAB(props) {
   const { classes } = props;
 
   return (
+
     <Grid container className={classes.mainConatinerStyle}>
       
         {props.page === "daily" ? 
@@ -82,6 +83,7 @@ function FAB(props) {
           style={{position: 'fixed'}}
           component={Link}
           to="/weekly"
+          
           >
           <ArrowBackIosIcon id="backArrow"/>
           </Fab>
@@ -93,6 +95,7 @@ function FAB(props) {
           style={{ position: 'fixed' }}
           component={Link}
           to="/daily"
+          
           >
           <ArrowForwardIosIcon id="forwardArrow" />
           </Fab>
@@ -100,7 +103,7 @@ function FAB(props) {
         }
       
 
-        <SimpleModalWrapped />
+        <SimpleModalWrapped submit={props.submit}/>
 
 
 

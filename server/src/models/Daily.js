@@ -8,6 +8,11 @@ import mongoose from 'mongoose';
     negative: { type: String },
     wakeup: { type: String },
     sleep: { type: String },
+    habit1: { type: String },
+    habit2: { type: String },
+    habit3: { type: String },
+    selectedDate: { type: String },
+    
   })
 // add association later
 

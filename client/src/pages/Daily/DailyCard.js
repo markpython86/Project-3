@@ -102,13 +102,12 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
-      editMode: false,
       dailyHighlight: '',
       positive: '',
       negative: '',
-      selectedTime1: new Date(),
-      selectedTime2: new Date(),
-      selectedDate: new Date(),
+      selectedTime1:  '',
+      selectedTime2: '',
+      selectedDate: '',
       habit1: '',
       habit2: '',
       habit3: '',
@@ -147,13 +146,18 @@ class DailyCard extends React.Component {
   };
 
   editMode = () =>{
-    
+    console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
       negative: this.props.negative,
       selectedTime1: this.props.wakeup,
       selectedTime2: this.props.sleep,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+      // isHidden: true,
       isInEditMode: true,
 
       
@@ -175,29 +179,33 @@ class DailyCard extends React.Component {
   }
 
   handleClickAway = () => {
+    if (!this.state.isInEditMode){
     this.setState({
       isHidden: true,
     });
+    }
   };
 
   render() {
     const {
       props,
     } = this;
-
     const { classes } = props;
-    // console.log('props',classes)
-    // console.log(this.state)
-    const { selectedTime1 } = this.state;
-    const { selectedTime2 } = this.state;
-    const { selectedDate } = this.state;
+    // const { selectedTime1 } = this.state;
+    // const { selectedTime2 } = this.state;
+    // const { selectedDate } = this.state;
     const newState = {
       highlights: this.state.dailyHighlight,
       positive: this.state.positive,
       negative: this.state.negative,
       sleep: this.state.selectedTime2,
-      wakeup: this.state.selectedTime1
+      wakeup: this.state.selectedTime1,
+      habit1: this.state.habit1,
+      habit2: this.state.habit2,
+      habit3: this.state.habit3,
+      selectedDate: this.state.selectedDate,
     }
+    console.log(newState)
    
 
 
@@ -221,7 +229,7 @@ class DailyCard extends React.Component {
                   margin="normal"
                   // label="Morning"
                   disabled={true}
-                  value={this.props.wakeup}
+                  value={props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -236,7 +244,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Date"
                     disabled={true}
-                    value={selectedDate}
+                    value={props.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -251,7 +259,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Evening"
                     disabled={true}
-                    value={this.props.sleep}
+                    value={props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -268,7 +276,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={this.props.wakeup}
+                  value={this.state.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -282,7 +290,7 @@ class DailyCard extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={selectedDate}
+                    value={this.state.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -296,7 +304,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={this.props.sleep}
+                    value={this.state.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -476,7 +484,7 @@ class DailyCard extends React.Component {
                 <Select
                   classes={{ select: "habitIcon"}}
                   // name={this.state.habit1}
-                  value={this.state.habit1}
+                  value={props.habit1}
                   onChange={this.handleHabitChange1}
                   disabled={true}
                   IconComponent={classes.hide}
@@ -552,7 +560,6 @@ class DailyCard extends React.Component {
             <FormControl className={classes.formControl} >
               <Select
                 classes={{ select: "habitIcon"}}
-                // name={this.state.habit1}
                 value={this.state.habit1}
                 onChange={this.handleHabitChange1}
                 IconComponent={classes.hide}
@@ -634,7 +641,7 @@ class DailyCard extends React.Component {
                 <Select
                   classes={{ select: "habitIcon"}}
                   // name={this.state.habit2}
-                  value={this.state.habit2}
+                  value={props.habit2}
                   onChange={this.handleHabitChange2}
                   disabled={true}
                   IconComponent={classes.hide}
@@ -792,7 +799,7 @@ class DailyCard extends React.Component {
                 <Select
                   classes={{ select: "habitIcon"}}
                   // name={this.state.habit3}
-                  value={this.state.habit3}
+                  value={props.habit3}
                   onChange={this.handleHabitChange3}
                   disabled={true}
                   IconComponent={classes.hide}
@@ -967,29 +974,22 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState).then(this.setState({
-        isHidden: true,
-      }))
-      } fontSize="small">check_icon</Icon> 
+    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState)} size="small" id="saveButton" aria-label="Check" color='secondary'>
+      <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon onClick={() => {props.editMode().then(this.setState({
-        isHidden: true,
-      })); console.log("clicked")}} fontSize="small">edit_icon</Icon>
+    <Fab onClick={() => {props.editMode()}}  size="small" id="editButton" aria-label="Edit" color='primary'>
+      <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon  onClick={() => props.props.deleteDaily(props.props.index).then(this.setState({
-        isHidden: true,
-      }))} fontSize="small">delete_icon</Icon>
+    <Fab onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+      <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 

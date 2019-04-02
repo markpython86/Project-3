@@ -1,6 +1,7 @@
 import token from '../services/token';
 import User from '../models/user';
 import Daily from '../models/Daily';
+import Weekly from '../models/Weekly';
 // import dailyController from './dailyController'
 
 
@@ -110,42 +111,61 @@ export default {
                 .catch(next)
         })
     },
+    // Daily functions
     getDaily: (req,res,next) =>{
+        User.aggregate( [ (
+            { $match: {'_id': req.user._id}},
+            { $unwind: "$daily" },
+            { $group: {'id':"$daily",count: { $sum: 1 }}})
+        ]).exec(function ( e, d ) {
+    console.log( 'd',d ) 
+    // Daily.aggregate([(
+        
+    //     { $match: {'_id': d[0]._id}},
+    //     { '$habbit1': '$habiit1'}
+    // )]) .exec(function ( e, d ) {
+    // console.log( 'd',d ) }); 
+    });         
+
         User.findById({ _id: req.user._id })
             .populate('daily')
             .then(function (data) {
                 console.log('working')
+                
+                
                 res.send(data)
             })
             .catch(function (err) {
                 // If an error occurred, send it to the client
                 res.json(err);
             });
-        // console.log('==========',req)
-        // console.log('==========',req.Daily)
-        // Daily.find({})
-        
-        // .then(data => 
-        //     res.send(data)
-        // )
-        // .catch(next)
+       
     },
     createDaily: (req, res, next) => {
          const {
-            highlight,
-            pos,
-            neg,
-            wake,
-            sleep
+            highlights,
+            positive,
+            negative,
+            wakeup,
+            sleep,
+            habit1,
+            habit2,
+            habit3,
+            selectedDate
+
         } = req.body;
-        // console.log('user request', req.daily)
+        
 
         const daily = new Daily({
-                    highlights: highlight,
-                    positive: pos,
-                    negative: neg,
-                    wakeup: wake,
-                    sleep:sleep
+                    highlights: highlights,
+                    positive: positive,
+                    negative: negative,
+                    wakeup: wakeup,
+                    sleep:sleep,
+                    habit1: habit1,
+                    habit2: habit2,
+                    habit3: habit3,
+                    selectedDate: selectedDate
                 })
 
                 daily.save(function (err, savedDaily) {
@@ -184,14 +204,6 @@ export default {
             const dailyId = req.params.id;
             console.log('update request', req.body)
             const newDaily = req.body
-            // const newDaily = {
-            //         highlights: req.body.highlight,
-            //         positive: req.body.pos,
-            //         negative: req.body.neg,
-            //         wakeup: req.body.wake,
-            //         sleep: req.body.sleep
-            // };
-           
             Daily.findByIdAndUpdate(dailyId, newDaily, {
                     new: true
                 })
@@ -200,7 +212,89 @@ export default {
                 })
                 .catch(next)
     },
+    // Weekly functions
 
+    getWeekly: (req,res,next) =>{
+        console.log("weekly", req)
+                
+        
+        User.findById({ _id: req.user._id })
+            .populate('weekly')
+            .then(function (data) {
+                console.log('working',data)
+                res.send(data)
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+            // Daily.aggregate( [ { $group : { _id : "$habbit1" } } ] ).then(data=> console.log("data", data))
+       
+    },
+    createWeekly: (req, res, next) => {
+        User.findById({_id: req.user._id})
+        .populate('daily')
+        .then(daily => {
+            console.log()
+        })
+         const {
+            best,
+            worst,
+            nextWeek,
+        } = req.body;
+        // console.log('user request', req.daily)
+
+        const weekly = new Weekly({
+                    best: best,
+                    worst: worst,
+                    nextWeek: nextWeek
+                })
+
+                weekly.save(function (err, savedWeekly) {
+                    if (err) {
+                        return next(err)
+                    }
+                }).then(newWeekly => {
+                    console.log('-=-=-=-=--=',newWeekly._id)
+                    User.findByIdAndUpdate({_id:req.user._id},{ $push: {weekly: newWeekly._id}})
+                    .then((data)=> res.sendStatus(200))
+                    .catch(err=>console.log(err))
+
+                    // console.log(newDaily)
+                    res.sendStatus(200);
+                })
+                .catch(next)
+    },
+
+    deleteWeekly: (req, res, next) => {
+        const weeklyID = req.params.id
+        User.update({_id: req.user._id}, { $pull: { weekly: { $in:  [weeklyID]}}})
+
+        .then(Weekly.findByIdAndRemove(weeklyID, function(err, data){
+            if (err) return res.status(500).send(err);
+           
+            console.log('after delete', data)
+            res.sendStatus(200)
+        }))
+        .catch(next)
+        },
+        
+    
+    updateWeekly: (req, res, next) => {
+        
+            const weeklyId = req.params.id;
+            console.log('update request', req.body)
+            const newWeekly = req.body
+           
+           
+            Weekly.findByIdAndUpdate(weeklyId, newWeekly, {
+                    new: true
+                })
+                .then(newWeekly => {
+                    res.sendStatus(200);
+                })
+                .catch(next)
+    }
     
 
 

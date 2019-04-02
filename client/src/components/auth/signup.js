@@ -38,7 +38,8 @@ class Signup extends Component {
                         Create a Minimalist account.
                     </h3>
                         <div className="card-body">
-                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>  
+                    {/*  */}
                         <div className="form-group">
                             {/* <label>First name:</label> */}
                             <Field
@@ -87,6 +88,7 @@ class Signup extends Component {
                                 required
                                
                             />
+                            
                         </div>
                         
                         <div className="form-group">

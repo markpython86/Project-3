@@ -3,7 +3,7 @@ import {reduxForm, Field} from 'redux-form';
 import { connect } from 'react-redux';
 import {signUserIn} from '../../actions';
 import CenterCard363 from '../centerCard363';
-import Input from '@material-ui/core/Input';
+// import Input from '@material-ui/core/Input';
 
 import './style.css';
 
@@ -43,7 +43,7 @@ class Signin extends Component {
                                     placeholder="your email"
                                     required
                                     /> */}
-                                  <Input
+                                  <Field
                                     type= 'email'
                                     name="email"
                                     component="input"
@@ -58,7 +58,7 @@ class Signin extends Component {
 
                             <div className="form-group">
                                 {/* <label>Password:</label> */}
-                                <Input
+                                <Field
                                     type= 'password'
                                     name="password"
                                     component="input"
