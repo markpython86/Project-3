@@ -21,7 +21,7 @@ class App extends Component {
     super();
     this.state = {
       weeklies: [],
-    //   value: "initial value",
+      value: "initial value",
       
     }
   }
@@ -56,9 +56,8 @@ class App extends Component {
   }; 
 
     handleFormSubmit(data) {
-        API.saveWeekly(data)
-        .then(()=>  window.location.reload(true))
-        .catch(err => console.log(err));        
+      this.props.postWeekly(data)
+        
     };
 
 
@@ -66,14 +65,54 @@ class App extends Component {
     const {handleSubmit} = this.props;
     return (
       <Palette>
+      {/* <Nav /> */}
       <Wrapper>
         <Container spacing="0">
-        
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="best"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="worst"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    <div className="form-group">
+                        <label>First name:</label>
+                        <Field
+                            name="nextWeek"
+                            type='text'
+                            component="input"
+                            className="form-control form-control-lg"
+                            placeholder="First Name"
+                            required/>
+                    </div>
+                    
+                
+          <button type="submit">Post Up</button>
+        </form>
           <Container spacing="16">
+
+          {/* // Add edit button to this page
+          // Add onClick to button to change to edit mode */}
+          {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.weeklies.map((person, index) => (
               <Item xs='12' sm='3'key={person._id}>
               
+
                 <WeeklyCard 
                   key={person._id}
                   index={person._id}
@@ -94,7 +133,7 @@ class App extends Component {
               </Item>
           </Container>
           </Container>
-      <FAB page="weekly" submit={this.handleFormSubmit} />
+      <FAB />
       </Wrapper>
       </Palette>
     )

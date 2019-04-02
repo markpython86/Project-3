@@ -26,44 +26,66 @@ class App extends Component {
     }
   }
 
-
   componentDidMount() {
     
     // this.props.tryConnect();
     this.loadDailies();
   }
-
-
+  // componentWillMount(){
+  //   this.loadDailies();
+  // }
 
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadDailies() {
+  loadDailies = () => {
     API.getDailies()
       .then(res => {
         
         this.setState({ dailies: res.data.daily })
-        console.log(res.data.daily)
+        // console.log(res.data.daily)
       })
       .catch(err => console.log(err));
   }
 
-  deleteDailies(id){
+  loadDaily = () => {
+    API.getDailies()
+    .then(res => {
+        console.log('ressssss', res.data.daily);
+        this.setState({ dailies: res.data.daily })
+        // console.log(res.data.daily)
+      })
+    .catch(err => console.log(err))
+  }
+
+  deleteDailies = (id) => {
     API.deleteDaily(id)
      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
-  updateDailies(id, update) {
+  updateDailies = (id, update) => {
+    console.log('update',update)
+    // this.setState({ dailies: update })
       API.updateDaily(id, update)
-      .then(console.log("worked"))
+      .then()
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit(data) {
+    handleFormSubmit = (data) => {
+      console.log(data)
+      if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
+        console.log("User exists. Go to the login page");
+      } else {
+        console.log("User doesn't exists. Show error message");
+      }
       // console.log(data)
-      API.saveDaily(data)
-      .then(()=>  window.location.reload(true))
-      .catch(err => console.log(err));
+      // API.saveDaily(data)
+      // .then()
+      // .catch(err => {
+      //   // res.end()
+      //   if(err) throw err
+        
+      //   });
 
       
         
@@ -96,6 +118,7 @@ class App extends Component {
                   habit2={person.habit2}
                   habit3={person.habit3}
                   selectedDate={person.selectedDate}
+                  loadDailies={this.loadDaily}
                   
                 />
               

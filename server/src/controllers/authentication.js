@@ -2,6 +2,7 @@ import token from '../services/token';
 import User from '../models/user';
 import Daily from '../models/Daily';
 import Weekly from '../models/Weekly';
+const Moment = require('moment');
 // import dailyController from './dailyController'
 
 
@@ -113,24 +114,10 @@ export default {
     },
     // Daily functions
     getDaily: (req,res,next) =>{
-        User.aggregate( [ (
-            { $match: {'_id': req.user._id}},
-            { $unwind: "$daily" },
-            { $group: {'id':"$daily",count: { $sum: 1 }}})
-        ]).exec(function ( e, d ) {
-    console.log( 'd',d ) 
-    // Daily.aggregate([(
-        
-    //     { $match: {'_id': d[0]._id}},
-    //     { '$habbit1': '$habiit1'}
-    // )]) .exec(function ( e, d ) {
-    // console.log( 'd',d ) }); 
-    });         
-
         User.findById({ _id: req.user._id })
             .populate('daily')
             .then(function (data) {
-                console.log('working')
+                // console.log('working')
                 
                 
                 res.send(data)
@@ -142,30 +129,53 @@ export default {
        
     },
     createDaily: (req, res, next) => {
-         const {
-            highlights,
-            positive,
-            negative,
-            wakeup,
-            sleep,
-            habit1,
-            habit2,
-            habit3,
-            selectedDate
+        // console.log('-=-=-=--=-=-=-=-=-==-=-',req)
+        const formattedDate = Moment(req.body.selectedDate).format('MM-DD-YYYY')
+        Daily
+            .findOne({
+                user_id: req.user._id,
+                fullDate: formattedDate
 
-        } = req.body;
-        
+            }, function (err, existingRecord) {
+                if (err) return res.status(422).send(err);
+                if (existingRecord) {
+                    return res
+                        .status(422)
+                        .send({
+                            error: 'Record already created'
+                        }).end();
+                }
+                const {
+                    highlights,
+                    positive,
+                    negative,
+                    wakeup,
+                    sleep,
+                    habit1,
+                    habit2,
+                    habit3,
+                    selectedDate
 
-        const daily = new Daily({
+                } = req.body;
+                // console.log('90909009-----------',req.user._id)
+
+
+                const daily = new Daily({
                     highlights: highlights,
                     positive: positive,
                     negative: negative,
                     wakeup: wakeup,
-                    sleep:sleep,
+                    sleep: sleep,
                     habit1: habit1,
                     habit2: habit2,
                     habit3: habit3,
-                    selectedDate: selectedDate
+                    selectedDate: selectedDate,
+                    user_id: req.user._id,
+                    week: parseInt(Moment(selectedDate).format('w') - 1),
+                    year: parseInt(Moment(selectedDate).format('YYYY')),
+                    fullDate: Moment(selectedDate).format('MM-DD-YYYY')
+
+
                 })
 
                 daily.save(function (err, savedDaily) {
@@ -173,15 +183,22 @@ export default {
                         return next(err)
                     }
                 }).then(newDaily => {
-                    console.log('-=-=-=-=--=',newDaily._id)
-                    User.findByIdAndUpdate({_id:req.user._id},{ $push: {daily: newDaily._id}})
-                    .then((data)=> res.sendStatus(200))
-                    .catch(err=>console.log(err))
+                    // console.log('-=-=-=-=--=',newDaily)
 
+                    User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
+                        .then((data) => {
+                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: newDaily.habit1 } })
+                                .then(d => console.log(d))
+                                .catch(err => console.log(err))
+                            console.log('----------------data', newDaily)
+                            res.sendStatus(200)
+                        })
+                        .catch(err => console.log(err))
                     // console.log(newDaily)
                     res.sendStatus(200);
                 })
-                .catch(next)
+                    .catch(next)
+            })
     },
 
     deleteDaily: (req, res, next) => {
@@ -202,8 +219,10 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
-            console.log('update request', req.body)
-            const newDaily = req.body
+            // console.log('update request', req.body)
+            const newDaily = {
+                ...req.body, week: parseInt(Moment(req.body.selectedDate).format('w')-1),
+                    year: parseInt(Moment(req.body.selectedDate).format('YYYY')), weekRange: Moment(req.body.selectedDate).startOf('week').format("MMM Do")+' - '+ Moment(req.body.selectedDate).endOf('week').format("MMM Do")}
             Daily.findByIdAndUpdate(dailyId, newDaily, {
                     new: true
                 })
@@ -215,13 +234,12 @@ export default {
     // Weekly functions
 
     getWeekly: (req,res,next) =>{
-        console.log("weekly", req)
+        // console.log("weekly", req)
                 
         
         User.findById({ _id: req.user._id })
             .populate('weekly')
             .then(function (data) {
-                console.log('working',data)
                 res.send(data)
             })
             .catch(function (err) {
@@ -232,22 +250,34 @@ export default {
        
     },
     createWeekly: (req, res, next) => {
+//         
+
         User.findById({_id: req.user._id})
-        .populate('daily')
-        .then(daily => {
-            console.log()
+        .populate('weekly')
+        .then(weekly => {
+             
+            // let newDate = new Date()
+            // let a = {"_id" : { "week": { "$week": newDate }, "year": { "$year": newDate } }}
+            console.log(weekly)
         })
          const {
             best,
             worst,
             nextWeek,
         } = req.body;
+        let newDate = new Date()
+        // console.log(d)
         // console.log('user request', req.daily)
 
         const weekly = new Weekly({
-                    best: best,
-                    worst: worst,
-                    nextWeek: nextWeek
+           
+            week:  parseInt(Moment(newDate).format('w') - 1),
+            year: parseInt(Moment(newDate).format('YYYY')),
+            best: best,
+            worst: worst,
+            nextWeek: nextWeek,
+            user_id: req.user._id
+                    // habbits: d
                 })
 
                 weekly.save(function (err, savedWeekly) {
