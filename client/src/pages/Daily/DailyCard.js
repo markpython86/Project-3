@@ -111,7 +111,8 @@ class DailyCard extends React.Component {
       habit1: '',
       habit2: '',
       habit3: '',
-      isInEditMode: false
+      isInEditMode: false,
+      oldValues:{}
     };
   }
 
@@ -224,8 +225,30 @@ class DailyCard extends React.Component {
       habit2: this.state.habit2,
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate,
+      oldValues:{
+        highlights: this.props.dailyHighlight,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      sleep: this.props.selectedTime2,
+      wakeup: this.props.selectedTime1,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+      }
     }
-    console.log(newState)
+    const oldValues = {
+      highlights: this.props.dailyHighlight,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      sleep: this.props.selectedTime2,
+      wakeup: this.props.selectedTime1,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+    }
+    // console.log(newState)
    
 
 
@@ -1018,7 +1041,11 @@ const Child = (props) => (
   </Grid>
 
   <Grid item xs={4}>
-    <Fab onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+    <Fab onClick={() => {
+      props.props.deleteDaily(props.props.index)
+      props.props.loadDailies();
+      props.hideIcons();
+      }} size="small" id="deleteButton" aria-label="Delete">
       <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
