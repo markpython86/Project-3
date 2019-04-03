@@ -111,7 +111,8 @@ class DailyCard extends React.Component {
       habit1: '',
       habit2: '',
       habit3: '',
-      isInEditMode: false
+      isInEditMode: false,
+      oldValues:{}
     };
   }
 
@@ -144,9 +145,23 @@ class DailyCard extends React.Component {
   handleHabitChange1 = event => {
     this.setState({ habit1: event.target.value });
   };
+  notEditMode = () => {
+    this.setState({
+      isInEditMode: false,
+      // dailyHighlight: this.props.Highlights,
+      // positive: this.props.positive,
+      // negative: this.props.negative,
+      // selectedTime1: this.props.wakeup,
+      // selectedTime2: this.props.sleep,
+      // habit1: this.props.habit1,
+      // habit2: this.props.habit2,
+      // habit3: this.props.habit3,
+      // selectedDate: this.props.selectedDate,
+      })
+  }
 
   editMode = () =>{
-    console.log('props in edit mode',this.props)
+    // console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
@@ -178,6 +193,12 @@ class DailyCard extends React.Component {
     })
   }
 
+  hideIcons = () =>{
+    this.setState({
+      isHidden: true,
+    });
+  }
+
   handleClickAway = () => {
     if (!this.state.isInEditMode){
     this.setState({
@@ -204,8 +225,30 @@ class DailyCard extends React.Component {
       habit2: this.state.habit2,
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate,
+      oldValues:{
+        highlights: this.props.dailyHighlight,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      sleep: this.props.selectedTime2,
+      wakeup: this.props.selectedTime1,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+      }
     }
-    console.log(newState)
+    const oldValues = {
+      highlights: this.props.dailyHighlight,
+      positive: this.props.positive,
+      negative: this.props.negative,
+      sleep: this.props.selectedTime2,
+      wakeup: this.props.selectedTime1,
+      habit1: this.props.habit1,
+      habit2: this.props.habit2,
+      habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+    }
+    // console.log(newState)
    
 
 
@@ -214,7 +257,7 @@ class DailyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} hideIcons={this.hideIcons} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -786,6 +829,10 @@ class DailyCard extends React.Component {
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
+
+
+
+                
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
                   <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
                   <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
@@ -953,7 +1000,13 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState)} size="small" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => {
+      props.notEditMode();
+      props.props.updatedDaily(props.props.index, props.newState);
+      props.props.loadDailies();
+      props.hideIcons();
+    }} 
+    size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
@@ -967,7 +1020,11 @@ const Child = (props) => (
   </Grid>
 
   <Grid item xs={4}>
-    <Fab onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+    <Fab onClick={() => {
+      props.props.deleteDaily(props.props.index)
+      props.props.loadDailies();
+      props.hideIcons();
+      }} size="small" id="deleteButton" aria-label="Delete">
       <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
