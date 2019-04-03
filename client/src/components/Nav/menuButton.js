@@ -11,7 +11,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link } from "react-router-dom";
 import IconButton from '@material-ui/core/IconButton';
-
+import "./Nav.css";
+import Palette from "../../pages/Grid/Palette"
 
 
 
@@ -43,38 +44,44 @@ class SwipeableTemporaryDrawer extends React.Component {
 
     const sideList = (
       <div className={classes.list}>
+        <Palette>
+        <List>
+          <ListItem key="Logo">
+            <img id="logo" src="../utils/favicon/ML3.png"/>
+          </ListItem>
+
+          <ListItem button key="About" component={Link} to="/about">
+                <ListItemText primary="About Minimalist v.1.0"/>
+          </ListItem>
+        </List>
+        <Divider />
         <List>
           {/* {['About', 'Daily', 'Weekly'].map((text, index) => ( */}
-            <ListItem button key="About">
-              <Link to="/about" >
-                <ListItemText primary="About"/>
-              </Link>
+  
+            <ListItem button key="Daily" component={Link} to="/daily">
+                <ListItemText primary="Daily"/>
             </ListItem>
-          <ListItem button key="Daily">
-            <Link to="/daily" >
-              <ListItemText primary="Daily" />
-            </Link>
-          </ListItem>
-          <ListItem button key="Weekly">
-            <Link to="/weekly" >
-              <ListItemText primary="Weekly" />
-            </Link>
-          </ListItem>
+
+            <ListItem button key="Weekly" component={Link} to="/weekly">
+                <ListItemText primary="Weekly"/>
+            </ListItem>
+
           {/* ))} */}
         </List>
         <Divider />
         <List>
           {/* {['Account', 'Login', 'Create Account'].map((text, index) => ( */}
-            <ListItem button key="Account">
-              <ListItemText primary="Account" />
+            <ListItem button key="Account" component={Link} to="/account">
+                <ListItemText primary="Account Dashboard"/>
             </ListItem>
-          <ListItem button key="Login">
-            <Link to="/signin" >
-            <ListItemText primary="Login" />
-            </Link>
-          </ListItem>
+
+          <ListItem button key="Login" component={Link} to="/signin">
+                <ListItemText primary="Login"/>
+            </ListItem>
+
           {/* ))} */}
         </List>
+        </Palette>
       </div>
     )
 

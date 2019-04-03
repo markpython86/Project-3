@@ -51,6 +51,11 @@ const theme = createMuiTheme({
         backgroundColor: '#c4b6af',
       },
     },
+    MuiMobileStepper: {
+      root: {      
+        background: '#e1e2e1',
+      },
+    },
     MuiPickersToolbarButton: {
       toolbarBtn: {
         color: '#808E95',
