@@ -1,8 +1,10 @@
 import axios from "axios";
 
-// Adding Daily functions
 export default {
-    // Gets all dailys
+
+// ======= Daily Sections ======= // 
+
+    // Gets all dailies
     getDailies: function() {
       return axios.get("/api/daily");
     },
@@ -17,12 +19,36 @@ export default {
     },
 
     updateDaily: function(id, dailyData) {
-      console.log('daily data', dailyData)
       return axios.put("/api/daily/" + id, dailyData);
 
     },
     // Saves a daily to the database
     saveDaily: function(dailyData) {
-      return axios.post("/api/daily", dailyData);
+      return axios.post("/api/daily/new", dailyData);
+    },
+
+// ======= Weekly Section ======= //
+
+    // Gets all Weeklies
+    getWeeklies: function() {
+
+      return axios.get("/api/weekly");
+    },
+    // Gets the weekly with the given id
+    getWeekly: function(id) {
+      return axios.get("/weekly/" + id);
+    },
+    // Deletes the weekly with the given id
+    deleteWeekly: function(id) {
+      return axios.delete("/api/weekly/" + id);
+    },
+
+    updateWeekly: function(id, weeklyData) {
+      return axios.put("/api/weekly/" + id, weeklyData);
+
+    },
+    // Saves a weekly to the database
+    saveWeekly: function(weeklyData) {
+      return axios.post("/api/weekly", weeklyData);
     }
   };

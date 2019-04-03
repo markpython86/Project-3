@@ -19,8 +19,6 @@
 
 #textIcon {
     padding-top: 25px;
-    padding-left: 5px;
-    padding-right: 5px;
 }
 
 #textSection {
@@ -60,14 +58,6 @@
     padding-bottom: 5px;
     background-color: #808e95;
     font-weight: bold;
-    text-align: center;
-    justify-content: center;
-}
-
-.headerText {
-    text-align: center;
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
 }
 
 #timeRow {
@@ -89,11 +79,11 @@
 #footer {
     padding-top: 10px;
     padding-bottom: 10px;
-    text-align: center !important;
 }
 
 .habitIcon {
     padding-right: 0px !important;
+    border-bottom-style: none !important;
 }
 
 .habitIcon:focus {

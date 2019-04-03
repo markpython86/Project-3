@@ -3,7 +3,12 @@ import {reduxForm, Field} from 'redux-form';
 import { connect } from 'react-redux';
 import {signUserIn} from '../../actions';
 import CenterCard363 from '../centerCard363';
+// import Input from '@material-ui/core/Input';
+
+import './style.css';
+
 class Signin extends Component {
+  
     renderAlert(){
         if(this.props.errorMsg) {
             return (
@@ -21,25 +26,38 @@ class Signin extends Component {
         const {handleSubmit} = this.props;
         return (
                 <CenterCard363>
-                    <div className='card'>
-                    <h4 className="card-header">
-                        Sign In
-                    </h4>
+                    <div className='card-wrapper'>
+                      <div className='card'>
+                        <h3 className="card-header">
+                            Login to Minimalist
+                        </h3>
                         <div className="card-body">
                         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                             <div className="form-group">
-                                <label>Email:</label>
-                                <Field
+                                {/* <label>Email:</label> */}
+                                {/* <Field
                                     type= 'email'
                                     name="email"
                                     component="input"
                                     className="form-control form-control-lg"
-                                    placeholder="email@email.com"
+                                    placeholder="your email"
                                     required
-                                    />
+                                    /> */}
+                                  <Field
+                                    type= 'email'
+                                    name="email"
+                                    component="input"
+                                    className="form-control form-control-lg"
+                                    placeholder="your email"
+                                    required
+                                    inputProps={{
+                                    'aria-label': 'Description',
+                                    }}
+                                  />
                             </div>
+
                             <div className="form-group">
-                                <label>Password:</label>
+                                {/* <label>Password:</label> */}
                                 <Field
                                     type= 'password'
                                     name="password"
@@ -47,14 +65,18 @@ class Signin extends Component {
                                     className="form-control form-control-lg"
                                     placeholder="your password"
                                     required
+                                    inputProps={{
+                                      'aria-label': 'Description',
+                                      }}
                                     />
                             </div>
                             {this.renderAlert()}
                             <div style={{'paddingTop': '30px'}}>
-                                <button type="submit" className="btn btn-lg btn-light btn-block">Sign in</button>
+                                <button type="submit" className="btn btn-lg btn-light btn-block submit">Sign in</button>
                             </div>
                         </form>
                         </div>
+                      </div>
                     </div>
                 </CenterCard363>
         );

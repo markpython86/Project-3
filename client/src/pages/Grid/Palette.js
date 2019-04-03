@@ -1,6 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { FormControl } from '@material-ui/core';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -51,9 +51,14 @@ const theme = createMuiTheme({
         backgroundColor: '#c4b6af',
       },
     },
+    MuiMobileStepper: {
+      root: {      
+        background: '#e1e2e1',
+      },
+    },
     MuiPickersToolbarButton: {
       toolbarBtn: {
-        color: 'black',
+        color: '#808E95',
       },
       toolbarBtnSelected: {
         color: 'black',

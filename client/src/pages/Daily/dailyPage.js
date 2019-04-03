@@ -11,7 +11,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../Nav/Nav";
+// import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 
@@ -21,7 +21,7 @@ class App extends Component {
     super();
     this.state = {
       dailies: [],
-      value: "initial value",
+      // value: "initial value",
       
     }
   }
@@ -38,141 +38,47 @@ class App extends Component {
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
   loadDailies() {
-    console.log('hello from the other side',this.state.update)
     API.getDailies()
       .then(res => {
         
         this.setState({ dailies: res.data.daily })
-        // console.log(this.props)
-        console.log('dailies from updated state', res.data)
+        console.log(res.data.daily)
       })
       .catch(err => console.log(err));
   }
 
   deleteDailies(id){
-    // this.props.deleteDaily(id)
-    console.log(id)
-    // console.log('deleted '+id)
     API.deleteDaily(id)
      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
   updateDailies(id, update) {
-    API.updateDaily(id, update)
+      API.updateDaily(id, update)
       .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit(data) {
-       
-       this.props.postDaily(data)
+      // console.log(data)
+      API.saveDaily(data)
+      .then(()=>  window.location.reload(true))
+      .catch(err => console.log(err));
+
+      
         
     };
 
 
   render() {
-    const {handleSubmit} = this.props;
+    // const {handleSubmit} = this.props;
     return (
       <Palette>
-      <Nav />
       <Wrapper>
-        <Container spacing="32">
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="highlight"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="pos"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="neg"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="wake"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="sleep"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="habit1"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="habit2"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="habit3"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-          
-          <button type="submit">Post Up</button>
-        </form> 
-        
-        
+        {/* <Container spacing="0"> */}
           <Container spacing="16">
-
-          {/* // Add edit button to this page
-          // Add onClick to button to change to edit mode */}
-          {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
-
             {this.state.dailies.map((person, index) => (
-              <Item xs='12' sm='3'>
+              <Item xs='12' sm='3' key={person._id}>
               
-
                 <DailyCard 
                   key={person._id}
                   index={person._id}
@@ -188,17 +94,17 @@ class App extends Component {
                   habit1={person.habit1}
                   habit2={person.habit2}
                   habit3={person.habit3}
+                  selectedDate={person.selectedDate}
+                  
                 />
               
               </Item>
               
             ))}
-            <Item xs='12' sm='3'>
-                
-              </Item>
+           
           </Container>
-          </Container>
-      <FAB />
+          {/* </Container> */}
+      <FAB page="daily" submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )
@@ -212,6 +118,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postDaily})(reduxForm({
+export default connect(mapStateToProps,{ postDaily })(reduxForm({
     form: 'postDaily'
 })(App));

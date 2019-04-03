@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
@@ -56,6 +54,8 @@ const styles = theme => ({
     padding: 0,
     color: '#808e95',
     fontWeight: '500',
+    bottomBorderStyle: 'none',
+
   },
 
   footerActive: {
@@ -74,6 +74,7 @@ const styles = theme => ({
   habitRoot: {
     textAlign: 'center',
     minwidth: 0,
+    bottomBorderStyle: 'none',
   },
 
   menu: {
@@ -89,38 +90,6 @@ const styles = theme => ({
     textAlign: 'center',
   },
 
-// // function DailyCard(props) {
-// //   const allProps = {
-// //     highlight: props.Highlights,
-// //     positive: props.positive,
-// //     negative: props.negative,
-// //     wakeup: props.wakeup,
-// //     sleep: props.sleep, 
-// //   };
-//   const { classes } = props;
-//   // console.log('props', props)
-//   return (
-//     <Grid item>
-
-//     <Grid container className={classes.container}> 
-//     <Grid item xs={4}>
-//       <Fab onClick={() => props.updatedDaily(props.index, allProps)} size="small" id="saveButton" aria-label="Check" className={classes.fab} color='secondary'>
-//         <Icon fontSize="small">check_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab  size="small" id="editButton" aria-label="Edit" className={classes.fab} color='primary'>
-//         <Icon fontSize="small">edit_icon</Icon>
-//       </Fab>
-//     </Grid>
-
-//     <Grid item xs={4}>
-//       <Fab size="small" id="deleteButton" aria-label="Delete" className={classes.fab}>
-//         <Icon  onClick={() => props.deleteDaily(props.index)} fontSize="small">delete_icon</Icon>
-//       </Fab>
-//     </Grid>
-//     </Grid>
   hide: {
     display: 'none',
   }
@@ -133,13 +102,12 @@ class DailyCard extends React.Component {
     super(props);
     this.state = {
       isHidden: true,
-      editMode: false,
       dailyHighlight: '',
       positive: '',
       negative: '',
-      selectedTime1: new Date(),
-      selectedTime2: new Date(),
-      selectedDate: new Date(),
+      selectedTime1:  '',
+      selectedTime2: '',
+      selectedDate: '',
       habit1: '',
       habit2: '',
       habit3: '',
@@ -178,7 +146,7 @@ class DailyCard extends React.Component {
   };
 
   editMode = () =>{
-    
+    console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
@@ -188,6 +156,8 @@ class DailyCard extends React.Component {
       habit1: this.props.habit1,
       habit2: this.props.habit2,
       habit3: this.props.habit3,
+      selectedDate: this.props.selectedDate,
+      // isHidden: true,
       isInEditMode: true,
 
       
@@ -209,22 +179,21 @@ class DailyCard extends React.Component {
   }
 
   handleClickAway = () => {
+    if (!this.state.isInEditMode){
     this.setState({
       isHidden: true,
     });
+    }
   };
 
   render() {
     const {
       props,
     } = this;
-
     const { classes } = props;
-    // console.log('props',classes)
-    // console.log(this.state)
-    const { selectedTime1 } = this.state;
-    const { selectedTime2 } = this.state;
-    const { selectedDate } = this.state;
+    // const { selectedTime1 } = this.state;
+    // const { selectedTime2 } = this.state;
+    // const { selectedDate } = this.state;
     const newState = {
       highlights: this.state.dailyHighlight,
       positive: this.state.positive,
@@ -234,7 +203,9 @@ class DailyCard extends React.Component {
       habit1: this.state.habit1,
       habit2: this.state.habit2,
       habit3: this.state.habit3,
+      selectedDate: this.state.selectedDate,
     }
+    console.log(newState)
    
 
 
@@ -258,7 +229,7 @@ class DailyCard extends React.Component {
                   margin="normal"
                   // label="Morning"
                   disabled={true}
-                  value={this.props.wakeup}
+                  value={props.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -273,7 +244,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Date"
                     disabled={true}
-                    value={selectedDate}
+                    value={props.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -288,7 +259,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Evening"
                     disabled={true}
-                    value={this.props.sleep}
+                    value={props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -305,7 +276,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={this.props.wakeup}
+                  value={this.state.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -319,7 +290,7 @@ class DailyCard extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={selectedDate}
+                    value={this.state.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -333,7 +304,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={this.props.sleep}
+                    value={this.state.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -362,7 +333,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.highlights}
             onChange={this.handleChangeDailyHighlight('dailyHighlight')}
@@ -384,7 +354,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangePositive}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.positive}
             onChange={this.handleChangePositive('positive')}
@@ -405,7 +374,6 @@ class DailyCard extends React.Component {
             onChange={this.handleChangeNegative}
             className={classes.textField}
             margin="normal"
-            disableUnderline={true}
             disabled
             value={props.negative}
             onChange={this.handleChangeNegative('negative')}
@@ -486,18 +454,6 @@ class DailyCard extends React.Component {
       
   }
 
-          {/* <Typography id="text">
-            <Flag id="icon"/> Daily Highlight {props.Highlights}
-          </Typography>
-          <Typography component="p" id="text">
-            <ArrowUpward id="icon"/> Positive
-            {props.positive}
-          </Typography>
-          <Typography component="p" id="text">
-            <ArrowDownward id="icon"/> Negative
-            {props.negative}
-          </Typography> */}
-
   {/* End of daily three section. */}
 
   {/* Beginning of habit section. */}
@@ -515,71 +471,70 @@ class DailyCard extends React.Component {
                   // name={this.state.habit1}
                   value={props.habit1}
                   onChange={this.handleHabitChange1}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+                  <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
                 </Select>
               </FormControl>
               </form>
@@ -589,75 +544,73 @@ class DailyCard extends React.Component {
             <FormControl className={classes.formControl} >
               <Select
                 classes={{ select: "habitIcon"}}
-                // name={this.state.habit1}
                 value={this.state.habit1}
                 onChange={this.handleHabitChange1}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color}  
+                disableUnderline  
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-
-                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-              </Select>
+                <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
+                </Select>
             </FormControl>
             </form>
             }
@@ -673,72 +626,70 @@ class DailyCard extends React.Component {
                   // name={this.state.habit2}
                   value={props.habit2}
                   onChange={this.handleHabitChange2}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+                  <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
                 </Select>
               </FormControl>
               </form>
@@ -751,72 +702,71 @@ class DailyCard extends React.Component {
                 // name={this.state.habit2}
                 value={this.state.habit2}
                 onChange={this.handleHabitChange2}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color} 
+                disableUnderline     
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-
-                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-              </Select>
+                <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
+                </Select>
             </FormControl>
             </form>
             }
@@ -832,72 +782,70 @@ class DailyCard extends React.Component {
                   // name={this.state.habit3}
                   value={props.habit3}
                   onChange={this.handleHabitChange3}
-                  disableUnderline={true}
                   disabled={true}
                   IconComponent={classes.hide}
                   className={classes.color}    
                 >
                   <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
+                  <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
                 </Select>
               </FormControl>
               </form>
@@ -910,72 +858,71 @@ class DailyCard extends React.Component {
                 // name={this.state.habit3}
                 value={this.state.habit3}
                 onChange={this.handleHabitChange3}
-                disableUnderline={true}
                 IconComponent={classes.hide}
-                className={classes.color}    
+                className={classes.color}   
+                disableUnderline   
               >
                 <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-
-                <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-              </Select>
+                <MenuItem className={classes.menu} value="fitness_center"><FitnessCenter /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_run"><DirectionsRun /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bike"><DirectionsBike /></MenuItem>
+                  <MenuItem className={classes.menu} value="rowing"><Rowing /></MenuItem>
+                  <MenuItem className={classes.menu} value="pool"><Pool /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_cafe"><LocalCafe /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_dining"><LocalDining /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_drink"><LocalDrink /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_bar"><LocalBar /></MenuItem>
+                  <MenuItem className={classes.menu} value="free_breakfast"><FreeBreakfast /></MenuItem>
+                  <MenuItem className={classes.menu} value="kitchen"><Kitchen /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_atm"><LocalAtm /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_hotel"><LocalHotel /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_car_wash"><LocalCarWash /></MenuItem>
+                  <MenuItem className={classes.menu} value="book"><Book /></MenuItem>
+                  <MenuItem className={classes.menu} value="alarm_on"><AlarmOn /></MenuItem>
+                  <MenuItem className={classes.menu} value="timer"><Timer /></MenuItem>
+                  <MenuItem className={classes.menu} value="build"><Build /></MenuItem>
+                  <MenuItem className={classes.menu} value="code"><Code /></MenuItem>
+                  <MenuItem className={classes.menu} value="event_seat"><EventSeat /></MenuItem>
+                  <MenuItem className={classes.menu} value="explore"><Explore /></MenuItem>
+                  <MenuItem className={classes.menu} value="motorcycle"><Motorcycle /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_bus"><DirectionsBus /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_car"><DirectionsCar /></MenuItem>
+                  <MenuItem className={classes.menu} value="directions_railway"><DirectionsRailway /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_laundry_service"><LocalLaundryService /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_activity"><LocalActivity /></MenuItem>
+                  <MenuItem className={classes.menu} value="accessibility_new"><AccessibilityNew /></MenuItem>
+                  <MenuItem className={classes.menu} value="pets"><Pets /></MenuItem>
+                  <MenuItem className={classes.menu} value="question_answer"><QuestionAnswer /></MenuItem>
+                  <MenuItem className={classes.menu} value="shopping_cart"><ShoppingCart /></MenuItem>
+                  <MenuItem className={classes.menu} value="search"><Search /></MenuItem>
+                  <MenuItem className={classes.menu} value="today"><Today /></MenuItem>
+                  <MenuItem className={classes.menu} value="swap_vert"><SwapVert /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch_later"><WatchLater /></MenuItem>
+                  <MenuItem className={classes.menu} value="work"><Work /></MenuItem>
+                  <MenuItem className={classes.menu} value="mic"><Mic /></MenuItem>
+                  <MenuItem className={classes.menu} value="movie"><Movie /></MenuItem>
+                  <MenuItem className={classes.menu} value="call"><Call /></MenuItem>
+                  <MenuItem className={classes.menu} value="email"><Email /></MenuItem>
+                  <MenuItem className={classes.menu} value="sentiment_satisfied"><SentimentSatisfied /></MenuItem>
+                  <MenuItem className={classes.menu} value="waves"><Waves /></MenuItem>
+                  <MenuItem className={classes.menu} value="weekend"><Weekend /></MenuItem>
+                  <MenuItem className={classes.menu} value="attach_money"><AttachMoney /></MenuItem>
+                  <MenuItem className={classes.menu} value="headset"><Headset /></MenuItem>
+                  <MenuItem className={classes.menu} value="color_lens"><ColorLens /></MenuItem>
+                  <MenuItem className={classes.menu} value="camera"><Camera /></MenuItem>
+                  <MenuItem className={classes.menu} value="linked_camera"><LinkedCamera /></MenuItem>
+                  <MenuItem className={classes.menu} value="edit"><Edit /></MenuItem>
+                  <MenuItem className={classes.menu} value="brush"><Brush /></MenuItem>
+                  <MenuItem className={classes.menu} value="landscape"><Landscape /></MenuItem>
+                  <MenuItem className={classes.menu} value="child_friendly"><ChildFriendly /></MenuItem>
+                  <MenuItem className={classes.menu} value="spa"><Spa /></MenuItem>
+                  <MenuItem className={classes.menu} value="smoke_free"><SmokeFree /></MenuItem>
+                  <MenuItem className={classes.menu} value="golf_course"><GolfCourse /></MenuItem>
+                  <MenuItem className={classes.menu} value="casino"><Casino /></MenuItem>
+                  <MenuItem className={classes.menu} value="school"><School /></MenuItem>
+                  <MenuItem className={classes.menu} value="local_library"><LocalLibrary /></MenuItem>
+                  <MenuItem className={classes.menu} value="watch"><Watch /></MenuItem>
+                </Select>
             </FormControl>
             </form>
             }
@@ -1006,22 +953,22 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={4}>
-    <Fab size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon onClick={() => props.props.updatedDaily(props.props.index, props.newState) } fontSize="small">check_icon</Icon> 
+    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState)} size="small" id="saveButton" aria-label="Check" color='secondary'>
+      <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon onClick={() => {props.editMode(); console.log("clicked")}} fontSize="small">edit_icon</Icon>
+    <Fab onClick={() => {props.editMode()}}  size="small" id="editButton" aria-label="Edit" color='primary'>
+      <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
   <Grid item xs={4}>
-    <Fab size="small" id="deleteButton" aria-label="Delete">
-      <Icon  onClick={() => props.props.deleteDaily(props.props.index)} fontSize="small">delete_icon</Icon>
+    <Fab onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+      <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
   </Grid>
 

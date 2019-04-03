@@ -3,6 +3,10 @@ import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import {signUserUp} from '../../actions';
 import CenterCard363 from '../centerCard363';
+import Input from '@material-ui/core/Input';
+import './style.css';
+import Palette from "../../pages/Grid/Palette";
+
 
 class Signup extends Component {
     renderAlert(error) {
@@ -26,73 +30,89 @@ class Signup extends Component {
     render() {
         const {handleSubmit} = this.props;
         return (
+            <Palette>
             <CenterCard363>
-                <div className='card'>
-                <h4 className="card-header">
-                    Sign Up
-                </h4>
-                    <div className="card-body">
-                <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="firstName"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
+                <div className='card-wrapper'>
+                    <div className='card'>
+                    <h3 id="title" className="card-header">
+                        Create a Minimalist account.
+                    </h3>
+                        <div className="card-body">
+                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>  
+                    {/*  */}
+                        <div className="form-group">
+                            {/* <label>First name:</label> */}
+                            <Field
+                                name="firstName"
+                                type='text'
+                                component="input"
+                                className="input form-control form-control-lg"
+                                placeholder="First Name"
+                                required
+                                
+                                />
+                        </div>
+                        <div className="form-group">
+                            {/* <label>Last name:</label> */}
+                            <Field
+                           
+                                name="lastName"
+                                type='text'
+                                component="input"
+                                className="input form-control form-control-lg"
+                                placeholder="Last Name"
+                                required
+                                
+                            />
+                        </div>
+                        <div className="form-group">
+                            {/* <label>Email:</label> */}
+                            <Field
+                                name="email"
+                                type='email'
+                                component="input"
+                                className="input form-control form-control-lg"
+                                placeholder="sample@email.com"
+                                required
+                                
+                            />
+                        </div>
+                        <div className="form-group">
+                            {/* <label>Password:</label> */}
+                            <Field
+                                type='password'
+                                name="password"
+                                component="input"
+                                className="input form-control form-control-lg"
+                                placeholder="your password"
+                                required
+                               
+                            />
+                            
+                        </div>
+                        
+                        <div className="form-group">
+                            {/* <label>Comfirm Password:</label> */}
+                            <Field
+                                type='password'
+                                name="password2"
+                                component="input"
+                                className="input form-control form-control-lg"
+                                placeholder="confirm password"
+                                required
+                                
+                            />
+                        </div>
+                        {this.renderAlert()}
+                        <div style={{'paddingTop': '30px'}}>
+                            <button type="submit" className="btn btn-lg btn-light btn-block submit">Sign Up</button>
+                        </div>
+                    </form>
                     </div>
-                    <div className="form-group">
-                        <label>Last name:</label>
-                        <Field
-                            name="lastName"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="Last Name"
-                            required/>
                     </div>
-                    <div className="form-group">
-                        <label>Email:</label>
-                        <Field
-                            name="email"
-                            type='email'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="sample@email.com"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>Password:</label>
-                        <Field
-                            type='password'
-                            name="password"
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="your password"
-                            required
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Comfirm Password:</label>
-                        <Field
-                            type='password'
-                            name="password2"
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="your password again"
-                            required/>
-                    </div>
-                    {this.renderAlert()}
-                    <div style={{'paddingTop': '30px'}}>
-                        <button type="submit" className="btn btn-lg btn-light btn-block">Sign Up</button>
-                    </div>
-                </form>
-                </div>
                 </div>
             </CenterCard363>
+            </Palette>
         );
     }
 }
