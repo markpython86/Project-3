@@ -38,6 +38,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
 },
 });
 
