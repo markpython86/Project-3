@@ -124,6 +124,7 @@ class MenuAppBar extends React.Component {
               >
                 Minimalist
               </Typography>
+
               {auth && (
                 <div>
                   <IconButton

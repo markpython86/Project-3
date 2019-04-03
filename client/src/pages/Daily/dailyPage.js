@@ -26,66 +26,47 @@ class App extends Component {
     }
   }
 
+
   componentDidMount() {
-    
     // this.props.tryConnect();
     this.loadDailies();
   }
-  // componentWillMount(){
-  //   this.loadDailies();
-  // }
+
+
 
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadDailies = () => {
+  loadDailies() {
     API.getDailies()
       .then(res => {
         
         this.setState({ dailies: res.data.daily })
-        // console.log(res.data.daily)
+        console.log(res.data.daily)
       })
       .catch(err => console.log(err));
   }
+  
 
-  loadDaily = () => {
-    API.getDailies()
-    .then(res => {
-        console.log('ressssss', res.data.daily);
-        this.setState({ dailies: res.data.daily })
-        // console.log(res.data.daily)
-      })
-    .catch(err => console.log(err))
-  }
-
-  deleteDailies = (id) => {
-    // console.log(this.state.dailies.find(user => user._id == id))
+  deleteDailies(id){
     API.deleteDaily(id)
-     .then()
+     .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   };
-  updateDailies = (id, update) => {
-    console.log('update',update)
-    // console.log('old', oldValues)
-    
-    // this.setState({ dailies: update })
+  updateDailies(id, update) {
       API.updateDaily(id, update)
-      .then()
+      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit = (data) => {
-      console.log(data)
-      // if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
-      //   alert("User exists. Go to the login page");
+    handleFormSubmit(data) {
+      // console.log(data)
+      API.saveDaily(data)
+      .then(()=>  window.location.reload(true))
+      .catch(err => console.log(err));
 
-
-      // } else {
-        // console.log("User doesn't exists. Show error message");
-        API.saveDaily(data)
-          .then()
-          .catch(err => console.log(err));
-      // }
+      
+        
     };
 
 
@@ -94,7 +75,7 @@ class App extends Component {
     return (
       <Palette>
       <Wrapper>
-        <Container spacing="0">
+        {/* <Container spacing="0"> */}
           <Container spacing="16">
             {this.state.dailies.map((person, index) => (
               <Item xs='12' sm='3' key={person._id}>
@@ -106,7 +87,7 @@ class App extends Component {
                   updatedDaily={this.updateDailies}
                   preUpdate={this.updateDailies}
                   updates={person}
-                  Highlights={person.highlights}
+                  highlights={person.highlights}
                   positive={person.positive}
                   negative={person.negative}
                   wakeup={person.wakeup}
@@ -115,7 +96,6 @@ class App extends Component {
                   habit2={person.habit2}
                   habit3={person.habit3}
                   selectedDate={person.selectedDate}
-                  loadDailies={this.loadDaily}
                   
                 />
               
@@ -124,8 +104,8 @@ class App extends Component {
             ))}
            
           </Container>
-          </Container>
-      <FAB page="daily" submit={this.handleFormSubmit} loadDailies={this.loadDaily}/>
+          {/* </Container> */}
+      <FAB page="daily" submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )
