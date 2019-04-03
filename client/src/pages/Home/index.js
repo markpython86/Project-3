@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Palette from "../../pages/Grid/Palette"
+import { Link } from "react-router-dom";
 
 
 
@@ -54,20 +55,20 @@ class Home extends Component {
 
 
           <Grid item s={12} m={4}>
-          <Button variant="contained" size="large" color="primary" className={classes.button}>
+          <Button variant="contained" size="large" color="primary" className={classes.button} component={Link} to="/signup">
           Sign Up
           </Button>
           </Grid>
 
           <Grid item s={12} m={4}>
-          <Button variant="contained" size="large" color="primary" className={classes.button}>
+          <Button variant="contained" size="large" color="primary" className={classes.button} component={Link} to="/signin">
           Login
           </Button>
           </Grid>
 
 
           <Grid item s={12} m={4}>
-          <Button variant="contained" size="large" color="primary" className={classes.button}>
+          <Button variant="contained" size="large" color="primary" className={classes.button} component={Link} to="/about">
           Learn More
           </Button>
           </Grid>
