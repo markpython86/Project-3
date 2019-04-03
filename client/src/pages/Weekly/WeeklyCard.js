@@ -191,7 +191,7 @@ class WeeklyCard extends React.Component {
     } = this;
 
     const { classes } = props;
-    const habits = ["add", "local_atm", "local_dining", "add", "local_airport"];
+    const habits = ["add", "local_atm", "local_dining", "add", "local_airport", ""].filter(String);
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
