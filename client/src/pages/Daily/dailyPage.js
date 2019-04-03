@@ -59,12 +59,15 @@ class App extends Component {
   }
 
   deleteDailies = (id) => {
+    // console.log(this.state.dailies.find(user => user._id == id))
     API.deleteDaily(id)
-     .then(()=>  window.location.reload(true))
+     .then()
       .catch(err => console.log(err));
   };
   updateDailies = (id, update) => {
     console.log('update',update)
+    // console.log('old', oldValues)
+    
     // this.setState({ dailies: update })
       API.updateDaily(id, update)
       .then()
@@ -73,22 +76,16 @@ class App extends Component {
 
     handleFormSubmit = (data) => {
       console.log(data)
-      if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
-        console.log("User exists. Go to the login page");
-      } else {
-        console.log("User doesn't exists. Show error message");
-      }
-      // console.log(data)
-      // API.saveDaily(data)
-      // .then()
-      // .catch(err => {
-      //   // res.end()
-      //   if(err) throw err
-        
-      //   });
+      // if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
+      //   alert("User exists. Go to the login page");
 
-      
-        
+
+      // } else {
+        // console.log("User doesn't exists. Show error message");
+        API.saveDaily(data)
+          .then()
+          .catch(err => console.log(err));
+      // }
     };
 
 
@@ -128,7 +125,7 @@ class App extends Component {
            
           </Container>
           </Container>
-      <FAB page="daily" submit={this.handleFormSubmit}/>
+      <FAB page="daily" submit={this.handleFormSubmit} loadDailies={this.loadDaily}/>
       </Wrapper>
       </Palette>
     )

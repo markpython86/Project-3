@@ -103,7 +103,7 @@ function FAB(props) {
         }
       
 
-        <SimpleModalWrapped submit={props.submit}/>
+        <SimpleModalWrapped submit={props.submit} loadDailies={props.loadDailies} hello={'hello'}/>
 
 
 

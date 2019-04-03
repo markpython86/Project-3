@@ -130,21 +130,8 @@ export default {
     },
     createDaily: (req, res, next) => {
         // console.log('-=-=-=--=-=-=-=-=-==-=-',req)
-        const formattedDate = Moment(req.body.selectedDate).format('MM-DD-YYYY')
-        Daily
-            .findOne({
-                user_id: req.user._id,
-                fullDate: formattedDate
-
-            }, function (err, existingRecord) {
-                if (err) return res.status(422).send(err);
-                if (existingRecord) {
-                    return res
-                        .status(422)
-                        .send({
-                            error: 'Record already created'
-                        }).end();
-                }
+        // const formattedDate = Moment(req.body.selectedDate).format('MM-DD-YYYY')
+       
                 const {
                     highlights,
                     positive,
@@ -187,8 +174,33 @@ export default {
 
                     User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
                         .then((data) => {
-                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: newDaily.habit1 } })
-                                .then(d => console.log(d))
+                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: { $each: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]}} })
+                                .then(d => {
+                                    if (d == null) {
+                                        const weekly = new Weekly({
+
+                                            week: newDaily.week,
+                                            year: newDaily.year,
+                                            user_id: req.user._id
+                                        })
+
+                                        weekly.save(function (err, savedWeekly) {
+                                            if (err) {
+                                                return next(err)
+                                            }
+                                        }).then(newWeekly => {
+                                            console.log('-=-=-=-=--=', newWeekly._id)
+                                            User.findByIdAndUpdate({ _id: req.user._id }, { $push: { weekly: newWeekly._id } })
+                                                .then()
+                                                .catch(err => console.log(err))
+
+                                            // console.log(newDaily)
+                                            // res.sendStatus(200);
+                                        })
+                                            .catch(next)
+                                    } 
+
+                                })
                                 .catch(err => console.log(err))
                             console.log('----------------data', newDaily)
                             res.sendStatus(200)
@@ -198,7 +210,7 @@ export default {
                     res.sendStatus(200);
                 })
                     .catch(next)
-            })
+            
     },
 
     deleteDaily: (req, res, next) => {
@@ -219,14 +231,48 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
-            // console.log('update request', req.body)
+            // console.log('update request', req)
             const newDaily = {
-                ...req.body, week: parseInt(Moment(req.body.selectedDate).format('w')-1),
-                    year: parseInt(Moment(req.body.selectedDate).format('YYYY')), weekRange: Moment(req.body.selectedDate).startOf('week').format("MMM Do")+' - '+ Moment(req.body.selectedDate).endOf('week').format("MMM Do")}
+                ...req.body,
+                week: parseInt(Moment(req.body.selectedDate).format('w')-1),
+                year: parseInt(Moment(req.body.selectedDate).format('YYYY'))}
             Daily.findByIdAndUpdate(dailyId, newDaily, {
                     new: true
                 })
                 .then(newDaily => {
+                    console.log('req h1', req.body.oldValues.habit1)
+                    console.log('req h2', req.body.oldValues.habit2)
+                    // console.log('req h3', req)
+
+                    Weekly.findOneAndUpdate({user_id: req.user._id, week: newDaily.week, year: newDaily.year}
+                    )
+                    // , {habits: [req.body.oldValues.habit1, req.body.oldValues.habit2, req.body.oldValues.habit3]},
+                    // { $set :  { "habits.$": [req.body.habit1, req.body.habit2, req.body.habit3]  }})
+                    .then(err => {
+                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit1},{ $set: { "habits.$" : req.body.habit1} })
+                        .then(err => console.log('data', err))
+                                 .catch(err => console.log('err', err))
+                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit2},{ $set: { "habits.$" : req.body.habit2} })
+                        .then(err => console.log('data', err))
+                                 .catch(err => console.log('err', err))
+                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit3},{ $set: { "habits.$" : req.body.habit3} })
+                        .then(err => console.log('data', err))
+                                 .catch(err => console.log('err', err))
+// //                         err.update(
+//    { },
+//    { $set: { "habits.$[element]" : req.body.habit1 } },
+//    { multi: true,
+//      arrayFilters: [ { "element": { $elemMatch: req.body.oldValues.habit1 } } ]
+//    }
+// )
+                        console.log('data', err)})
+                    .catch(err => console.log('err', err))  
+      
+                
+                    // Weekly.updateOne({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: {$each: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]}} })
+                    //             .then()
+                    //             .catch()
+
                     res.sendStatus(200);
                 })
                 .catch(next)
