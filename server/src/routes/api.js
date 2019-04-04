@@ -1,8 +1,6 @@
 import Authentication from '../controllers/authentication';
 
 const router = require('express').Router();
-<<<<<<< HEAD
-=======
 const dailyRoutes = require("../controllers/dailyController");
 // const weeklyRoutes = require("../controllers/weeklyController");
 // const monthlyRoutes = require("../controllers/monthlyController");
@@ -17,7 +15,6 @@ const dailyRoutes = require("../controllers/dailyController");
 
 // Monthly routes
 // router.use("/monthly", monthlyRoutes);
->>>>>>> master
 
 router.get('/', (req, res)=>{
     res.send('connected');

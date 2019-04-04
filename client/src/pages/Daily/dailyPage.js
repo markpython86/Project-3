@@ -104,13 +104,8 @@ class App extends Component {
             ))}
            
           </Container>
-<<<<<<< HEAD
-          {/* </Container> */}
-      <FAB page="daily" submit={this.handleFormSubmit}/>
-=======
         
       <FAB page="daily" submit={this.handleFormSubmit} loadDailies={this.loadDaily}/>
->>>>>>> master
       </Wrapper>
       </Palette>
     )
