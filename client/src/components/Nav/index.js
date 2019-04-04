@@ -15,6 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Link } from "react-router-dom";
 import SwipeableTemporaryDrawer from './menuButton';
+import getUserProfile from '../../actions/';
+
 
 
 const styles = {
@@ -45,7 +47,21 @@ class MenuAppBar extends React.Component {
       auth: true,
       anchorEl: null,
       menu: null,
+      account: null
     };
+  }
+  
+
+  componentWillMount() {
+    const token = localStorage.getItem("auth_jwt_token");
+
+    // this.setState({
+    //   account: token
+    // })
+
+		console.log("CONSOLE:: MenuAppBar -> componentWillMount -> token", token);
+    
+
   }
 
 
@@ -56,8 +72,10 @@ class MenuAppBar extends React.Component {
   handleMenu(event) {
     this.setState({ 
       anchorEl: event.currentTarget,
-      menu: event.currentTarget.id
+      menu: event.currentTarget.id,
+      account: localStorage.getItem("auth_jwt_token")
      });
+
   }
 
   handleClose() {
@@ -72,51 +90,12 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
-          {/* <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={()=>this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup> */}
           <AppBar position="static">
             <Toolbar>
 
               <SwipeableTemporaryDrawer/>
 
-              {/* <div>
-                <IconButton
-                  aria-owns={open ? "menu-appbar" : undefined}
-                  aria-haspopup="true"
-                  onClick={e => this.handleMenu(e)}
-                  color="inherit"
-                  id="main-menu"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={this.state.anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  open={open}
-                  onClose={this.handleClose.bind(this)}
-                >
-                  <MenuItem onClick={() => this.handleClose}>
-                    Daily
-                  </MenuItem>
-                  <MenuItem onClick={() => this.handleClose}>
-                    Weekly
-                  </MenuItem>
-                </Menu>
-              </div> */}
+
               <Typography
                 variant="h6"
                 color="inherit"
@@ -150,17 +129,27 @@ class MenuAppBar extends React.Component {
                     open={open}
                     onClose={this.handleClose.bind(this)}
                   >
-                    <MenuItem
-                      onClick={() => this.handleClose}
-                      component={Link}
-                      to="/signin"
-                     >Login</MenuItem>
-                    
-                    <MenuItem
-                      onClick={() => this.handleClose}
-                      component={Link}
-                      to="/signup"
-                    >Create Account</MenuItem>
+
+                  {this.state.account !== null ? 
+                  (
+                      <MenuItem
+                        onClick={() => this.handleClose}
+                        component={Link}
+                        to="/signout">Logout</MenuItem>
+                  ) : (
+                    <div>
+                      <MenuItem
+                        onClick={() => this.handleClose}
+                        component={Link}
+                        to="/signin">Login</MenuItem>
+                      
+                      <MenuItem
+                        onClick={() => this.handleClose}
+                        component={Link}
+                        to="/signup">Create Account</MenuItem>
+                    </div>
+                  )
+                }
                   </Menu>
                 </div>
               )}
