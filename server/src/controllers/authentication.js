@@ -170,19 +170,22 @@ export default {
                         return next(err)
                     }
                 }).then(newDaily => {
-                    // console.log('-=-=-=-=--=',newDaily)
+                    console.log('-=-=-=-=--=',newDaily)
 
                     User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
                         .then((data) => {
-                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, { $push: { habits: { $each: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]}} })
+                            Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, 
+                            { $push: { habits: { $each: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]}} })
                                 .then(d => {
                                     if (d == null) {
                                         const weekly = new Weekly({
-
+                                           
                                             week: newDaily.week,
                                             year: newDaily.year,
-                                            user_id: req.user._id
+                                            user_id: req.user._id,
+                                            habits: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]
                                         })
+                                        
 
                                         weekly.save(function (err, savedWeekly) {
                                             if (err) {
@@ -248,15 +251,15 @@ export default {
                     )
                     // , {habits: [req.body.oldValues.habit1, req.body.oldValues.habit2, req.body.oldValues.habit3]},
                     // { $set :  { "habits.$": [req.body.habit1, req.body.habit2, req.body.habit3]  }})
-                    .then(err => {
-                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit1},{ $set: { "habits.$" : req.body.habit1} })
-                        .then(err => console.log('data', err))
+                    .then(data => {
+                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit1},{ $set: { "habits.$" : req.body.habit1} })
+                        .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
-                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit2},{ $set: { "habits.$" : req.body.habit2} })
-                        .then(err => console.log('data', err))
+                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit2},{ $set: { "habits.$" : req.body.habit2} })
+                        .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
-                        Weekly.updateOne({_id:err._id, habits:req.body.oldValues.habit3},{ $set: { "habits.$" : req.body.habit3} })
-                        .then(err => console.log('data', err))
+                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit3},{ $set: { "habits.$" : req.body.habit3} })
+                        .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
 // //                         err.update(
 //    { },
