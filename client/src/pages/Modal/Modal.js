@@ -194,6 +194,8 @@ class SimpleModal extends React.Component {
   };
 
 
+
+
   render() {
 
     const {
@@ -246,7 +248,13 @@ class SimpleModal extends React.Component {
  
   
   <Grid item xs={5}>
-    <Fab onClick={() => props.submit(newState) } size="medium" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={(event) => 
+      {
+        (props.submit(newState));
+        props.loadDailies();
+        this.handleClose();
+      }} 
+      size="medium" id="saveButton" aria-label="Check" color='secondary'>
       <Icon fontSize="large">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, props.newState) */}
