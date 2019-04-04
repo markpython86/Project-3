@@ -22,16 +22,16 @@ import '../Daily/DailyCard';
 import './Modal.css';
 import Palette from '../Grid/Palette';
 
-
+const Moment = require('moment')
 
 const styles = theme => ({
 
   newEntry: {
     position: 'absolute',
-    bottom:10,
+    bottom: 10,
     // right:10,
   },
-  
+
   center: {
     display: 'flex', // make us of Flexbox
     alignItems: 'center', // does vertically center the desired content
@@ -55,72 +55,72 @@ const styles = theme => ({
       paddingBottom: 0
     },
     minWidth: 275,
-   },
- 
-   container: {
-     minwidth: 275,
-     textAlign: 'center',
-   },
-   
-   header: {
-     fontSize: 14,
-     textAlign: 'center',
-     padding: 0,
-     color: '#808e95',
-     fontWeight: '500',
-   },
- 
-   headerActive: {
-     fontSize: 14,
-     textAlign: 'center',
-     padding: 0,
-     color: 'black',
-     fontWeight: '500',
-   },
- 
-   footer: {
-     fontSize: 14,
-     textAlign: 'center',
-     padding: 0,
-     color: '#808e95',
-     fontWeight: '500',
-   },
- 
-   footerActive: {
-     fontSize: 14,
-     textAlign: 'center',
-     padding: 0,
-     color: 'black',
-     fontWeight: '500',
-   },
- 
-   pos: {
-     marginBottom: 12,
-   },
- 
- 
-   habitRoot: {
-     textAlign: 'center',
-     minwidth: 0,
-   },
- 
-   menu: {
-     display: 'inline-grid',
-     textAlign: 'center',
-   },
- 
-   color: {
-     backgroundColor: '#808E95',
-     borderRadius: 50,
-     width: 35,
-     height: 35,
-     textAlign: 'center',
-   },
- 
-   hide: {
-     display: 'none',
-   }
-  
+  },
+
+  container: {
+    minwidth: 275,
+    textAlign: 'center',
+  },
+
+  header: {
+    fontSize: 14,
+    textAlign: 'center',
+    padding: 0,
+    color: '#808e95',
+    fontWeight: '500',
+  },
+
+  headerActive: {
+    fontSize: 14,
+    textAlign: 'center',
+    padding: 0,
+    color: 'black',
+    fontWeight: '500',
+  },
+
+  footer: {
+    fontSize: 14,
+    textAlign: 'center',
+    padding: 0,
+    color: '#808e95',
+    fontWeight: '500',
+  },
+
+  footerActive: {
+    fontSize: 14,
+    textAlign: 'center',
+    padding: 0,
+    color: 'black',
+    fontWeight: '500',
+  },
+
+  pos: {
+    marginBottom: 12,
+  },
+
+
+  habitRoot: {
+    textAlign: 'center',
+    minwidth: 0,
+  },
+
+  menu: {
+    display: 'inline-grid',
+    textAlign: 'center',
+  },
+
+  color: {
+    backgroundColor: '#808E95',
+    borderRadius: 50,
+    width: 35,
+    height: 35,
+    textAlign: 'center',
+  },
+
+  hide: {
+    display: 'none',
+  }
+
 });
 
 class SimpleModal extends React.Component {
@@ -135,17 +135,27 @@ class SimpleModal extends React.Component {
     habit1: '',
     habit2: '',
     habit3: '',
+    
   };
 
   handleOpen = () => {
     this.setState({ open: true });
+    
   };
 
   handleClose = () => {
-    this.setState({
-      open: false,
-    });
+    this.setState({ open: false });
+    
   };
+
+  handleClosed = () => {
+    this.setState({ open: false });
+    
+  };
+
+  returnFalse = () => {
+    return false
+  }
 
   handleTimeChange1 = date => {
     this.setState({ selectedTime1: date });
@@ -164,7 +174,7 @@ class SimpleModal extends React.Component {
   };
 
   handleChangePositive = positive => event => {
-    this.setState({ positive: event.target.value});
+    this.setState({ positive: event.target.value });
   };
 
   handleChangeNegative = negative => event => {
@@ -198,6 +208,7 @@ class SimpleModal extends React.Component {
     const { habit2 } = this.state;
     const { habit3 } = this.state;
     const newState = {
+      fullDate: Moment(this.state.selectedDate).format('MM-DD-YYYY'),
       highlights: this.state.dailyHighlight,
       positive: this.state.positive,
       negative: this.state.negative,
@@ -208,17 +219,15 @@ class SimpleModal extends React.Component {
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate
     }
-
-   
-
-
     return (
       
+
       <Palette>
 
       <Fab onClick={this.handleOpen}  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
         <AddIcon />
       </Fab>
+
 
         <Modal
           aria-labelledby="simple-modal-title"
@@ -226,6 +235,7 @@ class SimpleModal extends React.Component {
           open={this.state.open}
         >
           <table className={classes.wrapper}>
+
           <tbody>
             <tr>
               <td>
@@ -648,6 +658,7 @@ class SimpleModal extends React.Component {
     </Palette>
 
     );
+
   }
 }
 
