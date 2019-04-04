@@ -47,7 +47,7 @@ class Signin extends Component {
                                     type= 'email'
                                     name="email"
                                     component="input"
-                                    className="form-control form-control-lg"
+                                    className="input form-control form-control-lg"
                                     placeholder="your email"
                                     required
                                     inputProps={{
@@ -62,7 +62,7 @@ class Signin extends Component {
                                     type= 'password'
                                     name="password"
                                     component="input"
-                                    className="form-control form-control-lg"
+                                    className=" input form-control form-control-lg"
                                     placeholder="your password"
                                     required
                                     inputProps={{

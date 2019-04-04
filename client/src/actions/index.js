@@ -83,7 +83,7 @@ export function getUserProfile() {
             .get(`/api/userProfile`)
             .then(res => {
 
-                window.location = '/#daily';
+                window.location = '/#account';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
