@@ -123,7 +123,7 @@ class App extends Component {
             ))}
            
           </Container>
-          </Container>
+        
       <FAB page="daily" submit={this.handleFormSubmit} loadDailies={this.loadDaily}/>
       </Wrapper>
       </Palette>
