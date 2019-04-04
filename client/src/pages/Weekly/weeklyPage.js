@@ -21,7 +21,6 @@ class App extends Component {
     super();
     this.state = {
       weeklies: [],
-      value: "initial value",
       
     }
   }
@@ -39,6 +38,7 @@ class App extends Component {
   loadWeeklies() {
     API.getWeeklies()
       .then(res => {
+        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.weekly)
         this.setState({ weeklies: res.data.weekly })
       })
       .catch(err => console.log(err));
@@ -68,41 +68,6 @@ class App extends Component {
       {/* <Nav /> */}
       <Wrapper>
         <Container spacing="0">
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="best"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="worst"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    <div className="form-group">
-                        <label>First name:</label>
-                        <Field
-                            name="nextWeek"
-                            type='text'
-                            component="input"
-                            className="form-control form-control-lg"
-                            placeholder="First Name"
-                            required/>
-                    </div>
-                    
-                
-          <button type="submit">Post Up</button>
-        </form>
           <Container spacing="16">
 
           {/* // Add edit button to this page

@@ -170,20 +170,24 @@ export default {
                         return next(err)
                     }
                 }).then(newDaily => {
-                    console.log('-=-=-=-=--=',newDaily)
+                    console.log('-=-=-=-=--=',req.body)
 
                     User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
                         .then((data) => {
                             Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }, 
                             { $push: { habits: { $each: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]}} })
                                 .then(d => {
+                                    const habits = []
+                                    habits.push(newDaily.habit1 , newDaily.habit2 , newDaily.habit3)
+                                    console.log(habits)
                                     if (d == null) {
                                         const weekly = new Weekly({
-                                           
+                                           weekStart:Moment(req.body.selectedDate).startOf('week').format('MMM Do'),
+                                           weekEnd:Moment(req.body.selectedDate).endOf('week').format('MMM Do'),
                                             week: newDaily.week,
                                             year: newDaily.year,
                                             user_id: req.user._id,
-                                            habits: [newDaily.habit1 , newDaily.habit2 , newDaily.habit3]
+                                            habits: habits
                                         })
                                         
 
@@ -239,6 +243,7 @@ export default {
                 ...req.body,
                 week: parseInt(Moment(req.body.selectedDate).format('w')-1),
                 year: parseInt(Moment(req.body.selectedDate).format('YYYY'))}
+                
             Daily.findByIdAndUpdate(dailyId, newDaily, {
                     new: true
                 })
@@ -252,13 +257,13 @@ export default {
                     // , {habits: [req.body.oldValues.habit1, req.body.oldValues.habit2, req.body.oldValues.habit3]},
                     // { $set :  { "habits.$": [req.body.habit1, req.body.habit2, req.body.habit3]  }})
                     .then(data => {
-                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit1},{ $set: { "habits.$" : req.body.habit1} })
+                        Weekly.updateOne({_id: data._id, habits:req.body.oldValues.habit1},{ $set: { "habits.$" : req.body.habit1} })
                         .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
-                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit2},{ $set: { "habits.$" : req.body.habit2} })
+                        Weekly.updateOne({_id: data._id, habits:req.body.oldValues.habit2},{ $set: { "habits.$" : req.body.habit2} })
                         .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
-                        Weekly.updateOne({_id:data._id, habits:req.body.oldValues.habit3},{ $set: { "habits.$" : req.body.habit3} })
+                        Weekly.updateOne({_id: data._id, habits:req.body.oldValues.habit3},{ $set: { "habits.$" : req.body.habit3} })
                         .then(data => console.log('data', data))
                                  .catch(err => console.log('err', err))
 // //                         err.update(
@@ -268,7 +273,7 @@ export default {
 //      arrayFilters: [ { "element": { $elemMatch: req.body.oldValues.habit1 } } ]
 //    }
 // )
-                        console.log('data', err)})
+                        console.log('data', data)})
                     .catch(err => console.log('err', err))  
       
                 
@@ -379,3 +384,5 @@ export default {
 
 
 }
+
+
