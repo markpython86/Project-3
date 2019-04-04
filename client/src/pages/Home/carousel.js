@@ -9,8 +9,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import Palette from "../Grid/Palette";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const tutorialSteps = [
   {
@@ -37,37 +38,37 @@ const tutorialSteps = [
     label: "6",
     imgPath: "./../../utils/Tutorials/Minimalist.006.png"
   },
-  {
-    label: "7",
-    imgPath: "./../../utils/Tutorials/Minimalist.007.png"
-  },
-  {
-    label: "8",
-    imgPath: "./../../utils/Tutorials/Minimalist.008.png"
-  },
-  {
-    label: "9",
-    imgPath: "./../../utils/Tutorials/Minimalist.009.png"
-  }
+  // {
+  //   label: "7",
+  //   imgPath: "./../../utils/Tutorials/Minimalist.007.png"
+  // },
+  // {
+  //   label: "8",
+  //   imgPath: "./../../utils/Tutorials/Minimalist.008.png"
+  // },
+  // {
+  //   label: "9",
+  //   imgPath: "./../../utils/Tutorials/Minimalist.009.png"
+  // }
 ];
 
 const styles = theme => ({
   root: {
-    maxWidth: 450,
+    maxWidth: 768,
     flexGrow: 1
     
   },
   header: {
-    display: "flex",
+    display: "none",
     alignItems: "center",
     height: 50,
     paddingLeft: theme.spacing.unit * 4,
     backgroundColor: theme.palette.background.default
   },
   img: {
-    height: 290,
+    maxHeight: 432,
     display: "block",
-    maxWidth: 450,
+    maxWidth: 768,
     overflow: "hidden",
     width: "100%"
   }
@@ -100,11 +101,12 @@ class SwipeableTextMobileStepper extends React.Component {
     const maxSteps = tutorialSteps.length;
 
     return (
+      <Palette>
       <div className={classes.root}>
         <Paper square elevation={0} className={classes.header}>
           <Typography>{tutorialSteps[activeStep].label}</Typography>
         </Paper>
-        <AutoPlaySwipeableViews
+        <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
           onChangeIndex={this.handleStepChange}
@@ -121,7 +123,7 @@ class SwipeableTextMobileStepper extends React.Component {
               ) : null}
             </div>
           ))}
-        </AutoPlaySwipeableViews>
+        </SwipeableViews>
         <MobileStepper
           steps={maxSteps}
           position="static"
@@ -157,6 +159,7 @@ class SwipeableTextMobileStepper extends React.Component {
           }
         />
       </div>
+      </Palette>
     );
   }
 }

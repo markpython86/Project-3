@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
@@ -69,15 +70,27 @@ const styles = theme => ({
     marginBottom: 12,
   },
 
+  margin: {
+    margin: theme.spacing.unit * 1,
+  },
 
   habitRoot: {
-    textAlign: 'center',
-    minwidth: 0,
+    width: 360,
+    display: 'grid',
+    justifyContent: 'space-evenly',
+    gridTemplateColumns: '50px 50px 50px 50px', /*Make the grid smaller than the container*/
+    gridGap: 10,
+    // backgroundColor: '#808E95',
+    padding: 5,
   },
 
   menu: {
-    display: 'inline-grid',
+    backgroundColor: '#808E95',
+    borderRadius: 50,
     textAlign: 'center',
+    padding: 5,
+    fontSize: 25,
+    marginBottom: 5,
   },
 
   color: {
@@ -87,6 +100,7 @@ const styles = theme => ({
     height: 35,
     textAlign: 'center',
   },
+
   hide: {
     display: 'none',
   }
@@ -192,6 +206,7 @@ class WeeklyCard extends React.Component {
     } = this;
 
     const { classes } = props;
+    const habits = ["add", "local_atm", "local_dining", "add", "local_airport", ""].filter(String);
     const { selectedTime1 } = this.state;
     const { selectedTime2 } = this.state;
     const { selectedDate } = this.state;
@@ -201,6 +216,55 @@ class WeeklyCard extends React.Component {
       nextWeek: this.state.nextWeek,
     }
    
+
+
+    function compressArray(original) {
+ 
+      var compressed = [];
+      // make a copy of the input array
+      var copy = original.slice(0);
+     
+      // first loop goes over every element
+      for (var i = 0; i < original.length; i++) {
+     
+        var myCount = 0;	
+        // loop over every element in the copy and see if it's the same
+        for (var w = 0; w < copy.length; w++) {
+          if (original[i] == copy[w]) {
+            // increase amount of times duplicate is found
+            myCount++;
+            // sets item to undefined
+            delete copy[w];
+          }
+        }
+     
+        if (myCount > 0) {
+          var a = new Object();
+          a.value = original[i];
+          a.count = myCount;
+          compressed.push(a);
+        }
+      }
+     
+      return compressed;
+    };
+    
+    // It should go something like this:
+    
+    // var habitCounter = new Array("dog", "dog", "cat", "buffalo", "wolf", "cat", "tiger", "cat");
+    var habitCounter = compressArray(habits);
+    // console.log(habitCounter);
+    /*
+    console: [
+      Object { value="dog", count=2}, 
+      Object { value="cat", count=3}, 
+      Object { value="buffalo", count=1}, 
+      Object { value="wolf", count=1}, 
+      Object { value="tiger", count=1}
+    ]
+    */
+
+
 
 
     return (
@@ -214,19 +278,46 @@ class WeeklyCard extends React.Component {
         <CardContent className={classes.root}>
           
   
+{/* Begginning of time section. */}
+          <Grid container spacing={0} id="header">
+            <Grid item xs={3} >
+            <Typography className="headerText" variant="h6">
+                Date1
+              </Typography>
+            </Grid>
+
+
+            <Grid item xs={5}>
+              <Typography className="headerText" variant="h6">
+                Weekly Summary
+              </Typography>
+            </Grid>
+
+            <Grid item xs={3}>
+            <Typography className="headerText" variant="h6">
+                Date2
+              </Typography>
+            </Grid>
+
+          </Grid>
+  
+  {/* End of time section. */}
+
+
+
   {/* Beginning of weekly three. */}
 {!this.state.isInEditMode ? 
       <form  noValidate autoComplete="off" id="textSection">
       
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <Flag />
+            <Icon>stars</Icon>
           </Grid>
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="best"
-            placeholder="Weekly Best"
+            label="Best"
+            placeholder="Best"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -242,13 +333,13 @@ class WeeklyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowUpward />
+          <Icon>cancel</Icon>
           </Grid>
           <Grid item>
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Weekly Worst"
+            placeholder="Worst"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -262,13 +353,13 @@ class WeeklyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowDownward />
+          <Icon>next_week</Icon>
           </Grid>
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="Next Week"
-            placeholder="Next Week"
+            label="Next"
+            placeholder="Next"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -344,265 +435,22 @@ class WeeklyCard extends React.Component {
             
           </Grid>
         </Grid>
-       
-
-      </form>
-      
-      
+      </form>      
       }
-
-          {/* <Typography id="text">
-            <Flag id="icon"/> Daily Highlight {props.Highlights}
-          </Typography>
-
-          <Typography component="p" id="text">
-            <ArrowUpward id="icon"/> Positive
-            {props.positive}
-          </Typography>
-
-          <Typography component="p" id="text">
-            <ArrowDownward id="icon"/> Negative
-            {props.negative}
-          </Typography> */}
 
   {/* End of daily three section. */}
 
   {/* Beginning of habit section. */}
-        {/* <MuiThemeProvider theme={theme}> */}
-          <Grid id="footer" container spacing={0}>
-   
-            <Grid item xs={4}>
-              <form className={classes.habitRoot} autoComplete="off">
-              <FormControl className={classes.formControl} >
-                <Select
-                  classes={{ select: "habitIcon"}}
-                  // name={this.state.habit1}
-                  value={this.state.habit1}
-                  onChange={this.handleHabitChange1}
-                  disableUnderline
-                  IconComponent={classes.hide}
-                  className={classes.color}    
-                >
-                  <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
+          <Grid id="footer" className={classes.habitRoot} container spacing={0}>
+             
+              {habitCounter.map(({value, count}, index)=>(
+                <Badge key={index} className={classes.margin} badgeContent={count} color="primary">
+                  <Icon className={classes.menu}>{value}</Icon>
+                </Badge>
+              ))
+              }
 
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-                </Select>
-              </FormControl>
-              </form>
-            </Grid>
-
-            <Grid item xs={4}>
-              <form className={classes.habitRoot} autoComplete="off">
-              <FormControl className={classes.formControl}>
-                <Select
-                  classes={{ select: "habitIcon"}}
-                  value={this.state.habit2}
-                  onChange={this.handleHabitChange2}
-                  disableUnderline
-                  IconComponent={classes.hide}
-                  className={classes.color}
-                >
-                  <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-                </Select>
-              </FormControl>
-              </form>
-            </Grid>
-
-            <Grid item xs={4}>
-              <form className={classes.habitRoot} autoComplete="off">
-              <FormControl className={classes.formControl}>
-                <Select
-                  classes={{ select: "habitIcon"}}
-                  value={this.state.habit3}
-                  onChange={this.handleHabitChange3}
-                  disableUnderline 
-                  IconComponent={classes.hide}
-                  className={classes.color}
-                >
-                  <MenuItem className={classes.menu} value=""><em>None</em></MenuItem>
-                  <MenuItem className={classes.menu} value="FitnessCenter"><FitnessCenter /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRun"><DirectionsRun /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBike"><DirectionsBike /></MenuItem>
-                  <MenuItem className={classes.menu} value="Rowing"><Rowing /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pool"><Pool /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCafe"><LocalCafe /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDining"><LocalDining /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalDrink"><LocalDrink /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalBar"><LocalBar /></MenuItem>
-                  <MenuItem className={classes.menu} value="FreeBreakfast"><FreeBreakfast /></MenuItem>
-                  <MenuItem className={classes.menu} value="Kitchen"><Kitchen /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalAtm"><LocalAtm /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalHotel"><LocalHotel /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalCarWash"><LocalCarWash /></MenuItem>
-                  <MenuItem className={classes.menu} value="Book"><Book /></MenuItem>
-                  <MenuItem className={classes.menu} value="AlarmOn"><AlarmOn /></MenuItem>
-                  <MenuItem className={classes.menu} value="Timer"><Timer /></MenuItem>
-                  <MenuItem className={classes.menu} value="Build"><Build /></MenuItem>
-                  <MenuItem className={classes.menu} value="Code"><Code /></MenuItem>
-                  <MenuItem className={classes.menu} value="EventSeat"><EventSeat /></MenuItem>
-                  <MenuItem className={classes.menu} value="Explore"><Explore /></MenuItem>
-                  <MenuItem className={classes.menu} value="Motorcycle"><Motorcycle /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsBus"><DirectionsBus /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsCar"><DirectionsCar /></MenuItem>
-                  <MenuItem className={classes.menu} value="DirectionsRailway"><DirectionsRailway /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLaundryService"><LocalLaundryService /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalActivity"><LocalActivity /></MenuItem>
-                  <MenuItem className={classes.menu} value="AccessibilityNew"><AccessibilityNew /></MenuItem>
-                  <MenuItem className={classes.menu} value="Pets"><Pets /></MenuItem>
-                  <MenuItem className={classes.menu} value="QuestionAnswer"><QuestionAnswer /></MenuItem>
-                  <MenuItem className={classes.menu} value="ShoppingCart"><ShoppingCart /></MenuItem>
-                  <MenuItem className={classes.menu} value="Search"><Search /></MenuItem>
-                  <MenuItem className={classes.menu} value="Today"><Today /></MenuItem>
-                  <MenuItem className={classes.menu} value="SwapVert"><SwapVert /></MenuItem>
-                  <MenuItem className={classes.menu} value="WatchLater"><WatchLater /></MenuItem>
-                  <MenuItem className={classes.menu} value="Work"><Work /></MenuItem>
-                  <MenuItem className={classes.menu} value="Mic"><Mic /></MenuItem>
-                  <MenuItem className={classes.menu} value="Movie"><Movie /></MenuItem>
-                  <MenuItem className={classes.menu} value="Call"><Call /></MenuItem>
-                  <MenuItem className={classes.menu} value="Email"><Email /></MenuItem>
-                  <MenuItem className={classes.menu} value="SentimentSatisfied"><SentimentSatisfied /></MenuItem>
-                  <MenuItem className={classes.menu} value="Waves"><Waves /></MenuItem>
-                  <MenuItem className={classes.menu} value="Weekend"><Weekend /></MenuItem>
-                  <MenuItem className={classes.menu} value="AttachMoney"><AttachMoney /></MenuItem>
-                  <MenuItem className={classes.menu} value="Headset"><Headset /></MenuItem>
-                  <MenuItem className={classes.menu} value="ColorLens"><ColorLens /></MenuItem>
-                  <MenuItem className={classes.menu} value="Camera"><Camera /></MenuItem>
-                  <MenuItem className={classes.menu} value="LinkedCamera"><LinkedCamera /></MenuItem>
-                  <MenuItem className={classes.menu} value="Edit"><Edit /></MenuItem>
-                  <MenuItem className={classes.menu} value="Brush"><Brush /></MenuItem>
-                  <MenuItem className={classes.menu} value="Landscape"><Landscape /></MenuItem>
-                  <MenuItem className={classes.menu} value="ChildFriendly"><ChildFriendly /></MenuItem>
-                  <MenuItem className={classes.menu} value="Spa"><Spa /></MenuItem>
-                  <MenuItem className={classes.menu} value="SmokeFree"><SmokeFree /></MenuItem>
-                  <MenuItem className={classes.menu} value="GolfCourse"><GolfCourse /></MenuItem>
-                  <MenuItem className={classes.menu} value="Casino"><Casino /></MenuItem>
-                  <MenuItem className={classes.menu} value="School"><School /></MenuItem>
-                  <MenuItem className={classes.menu} value="LocalLibrary"><LocalLibrary /></MenuItem>
-                  <MenuItem className={classes.menu} value="Watch"><Watch /></MenuItem>
-                </Select>
-              </FormControl>
-              </form>
-            </Grid>
-      
           </Grid>
-        {/* </MuiThemeProvider> */}
 
 
   {/* End of habit section. */}
