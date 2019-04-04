@@ -1023,8 +1023,8 @@ const Child = (props) => (
   <Grid item xs={4}>
     <Fab onClick={() => {
       props.props.deleteDaily(props.props.index)
-      props.props.loadDailies();
       props.hideIcons();
+      props.props.loadDailies();
       }} size="small" id="deleteButton" aria-label="Delete">
       <Icon   fontSize="small">delete_icon</Icon>
     </Fab>
