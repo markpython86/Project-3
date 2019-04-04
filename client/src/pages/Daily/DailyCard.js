@@ -377,7 +377,8 @@ class DailyCard extends React.Component {
             className={classes.textField}
             margin="normal"
             disabled
-            value={props.highlights}
+            // value={this.state.dailyHighlight}
+            value={props.Highlights}
             onChange={this.handleChangeDailyHighlight('dailyHighlight')}
             />
            
