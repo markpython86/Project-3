@@ -19,6 +19,7 @@ class Account extends Component {
   }
   render() {
     let {status, profile} = this.props;
+    console.log("PROFILE from account page " + profile);
     return (
       <CenterCard363>
         <div className='card border-secondary'>

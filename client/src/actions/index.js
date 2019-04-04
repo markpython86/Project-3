@@ -28,7 +28,7 @@ export function signUserIn(data) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/#account';
+                window.location = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -47,7 +47,7 @@ export function signUserUp(userObj) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/#account';
+                window.location = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -83,7 +83,7 @@ export function getUserProfile() {
             .get(`/api/userProfile`)
             .then(res => {
 
-                window.location = '/#account';
+                window.location = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,

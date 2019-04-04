@@ -31,11 +31,13 @@ class SwipeableTemporaryDrawer extends React.Component {
     left: false,
     bottom: false,
     right: false,
+    account: null
   };
 
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
+      account: localStorage.getItem("auth_jwt_token")
     });
   };
 
@@ -74,10 +76,20 @@ class SwipeableTemporaryDrawer extends React.Component {
             <ListItem button key="Account" component={Link} to="/account">
                 <ListItemText primary="Account Dashboard"/>
             </ListItem>
+            {this.state.account !== null ? 
+            (
+              <ListItem button key="Logout" component={Link} to="/signout">
+                <ListItemText primary="Logout" />
+              </ListItem>
 
-          <ListItem button key="Login" component={Link} to="/signin">
+
+            ) : (
+              <ListItem button key="Login" component={ Link } to="/signin">
                 <ListItemText primary="Login"/>
-            </ListItem>
+              </ListItem>
+
+            )
+            }
 
           {/* ))} */}
         </List>
