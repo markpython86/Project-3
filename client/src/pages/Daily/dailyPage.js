@@ -94,7 +94,7 @@ class App extends Component {
     return (
       <Palette>
       <Wrapper>
-        <Container spacing="0">
+        
           <Container spacing="16">
             {this.state.dailies.map((person, index) => (
               <Item xs='12' sm='3' key={person._id}>
@@ -124,7 +124,7 @@ class App extends Component {
             ))}
            
           </Container>
-          </Container>
+        
       <FAB page="daily" submit={this.handleFormSubmit} loadDailies={this.loadDaily}/>
       </Wrapper>
       </Palette>

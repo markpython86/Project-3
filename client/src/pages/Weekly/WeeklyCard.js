@@ -8,6 +8,7 @@ import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from 'material-ui-pickers';
 import 'date-fns';
@@ -185,6 +186,20 @@ class WeeklyCard extends React.Component {
     })
   }
 
+  hideIcons = () =>{
+    this.setState({
+      isHidden: true,
+    });
+  }
+
+  handleClickAway = () => {
+    if (!this.state.isInEditMode){
+    this.setState({
+      isHidden: true,
+    });
+    }
+  };
+
   render() {
     const {
       props,
@@ -253,6 +268,9 @@ class WeeklyCard extends React.Component {
 
 
     return (
+
+      <ClickAwayListener onClickAway={this.handleClickAway}>
+
       <Grid item>
   {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
 
@@ -440,6 +458,9 @@ class WeeklyCard extends React.Component {
         </CardContent>
       </Card>
     </Grid>
+
+    </ClickAwayListener>
+
     );
   }
 }
