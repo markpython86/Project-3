@@ -21,8 +21,14 @@ import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Buil
 import '../Daily/DailyCard';
 import './Modal.css';
 import Palette from '../Grid/Palette';
+import Tooltip from "@material-ui/core/Tooltip";
+
 
 const Moment = require('moment')
+
+const WrappedFab = props => <Fab {...props} />;
+WrappedFab.muiName = "Fab";
+
 
 const styles = theme => ({
 
@@ -225,10 +231,11 @@ class SimpleModal extends React.Component {
 
       <Palette>
 
-      <Fab onClick={this.handleOpen}  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
-        <AddIcon />
-      </Fab>
-
+        <Tooltip disableFocusListener title="Add a new entry">
+          <WrappedFab onClick={this.handleOpen}  color="secondary" aria-label="Add" className={classes.newEntry} style={{position: 'fixed'}}>
+            <AddIcon />
+          </WrappedFab>
+        </Tooltip>
 
         <Modal
           aria-labelledby="simple-modal-title"
@@ -247,27 +254,31 @@ class SimpleModal extends React.Component {
  
   
   <Grid item xs={5}>
-    <Fab onClick={() => 
-      {
-        this.props.submit(newState),
-        this.handleClose(),
-        this.props.loadDailies();
-        
-      }} 
-      size="medium" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon fontSize="large">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, props.newState) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
-    </Fab>
+    <Tooltip disableFocusListener title="Save">
+      <WrappedFab onClick={() => 
+        {
+          this.props.submit(newState),
+          this.handleClose(),
+          this.props.loadDailies();
+          
+        }} 
+        size="medium" id="saveButton" aria-label="Check" color='secondary'>
+        <Icon fontSize="large">check_icon</Icon> 
+        {/* props.props.updatedDaily(props.props.index, ) */}
+        {/* props.props.updatedDaily(props.props.index, props.newState) */}
+        {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
+      </WrappedFab>
+    </Tooltip>
   </Grid>
 
 
 
   <Grid item xs={5}>
-    <Fab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
-      <Icon  fontSize="large">exit_to_app_icon</Icon>
-    </Fab>
+    <Tooltip disableFocusListener title="Cancel">
+      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
+        <Icon  fontSize="large">exit_to_app_icon</Icon>
+      </WrappedFab>
+    </Tooltip>
   </Grid>
 
 
