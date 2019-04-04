@@ -129,8 +129,8 @@ class SimpleModal extends React.Component {
     dailyHighlight: '',
     positive: '',
     negative: '',
-    selectedTime1: new Date(),
-    selectedTime2: new Date(),
+    selectedTime1: '',
+    selectedTime2: '',
     selectedDate: new Date(),
     habit1: '',
     habit2: '',
@@ -148,8 +148,8 @@ class SimpleModal extends React.Component {
     
   };
 
-  handleClosed = () => {
-    this.setState({ open: false });
+  handleClosed = (modalClose) => {
+    this.setState({ open: modalClose });
     
   };
 
@@ -246,7 +246,10 @@ class SimpleModal extends React.Component {
  
   
   <Grid item xs={5}>
-    <Fab onClick={() => props.submit(newState) } size="medium" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => {
+      props.submit(newState) 
+      this.handleClosed(false)
+      }} size="medium" id="saveButton" aria-label="Check" color='secondary'>
       <Icon fontSize="large">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, props.newState) */}

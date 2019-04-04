@@ -26,10 +26,10 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     
     // this.props.tryConnect();
-    this.loadDailies();
+    this.loadDaily();
   }
   // componentWillMount(){
   //   this.loadDailies();
@@ -38,15 +38,15 @@ class App extends Component {
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadDailies = () => {
-    API.getDailies()
-      .then(res => {
+  // loadDailies = () => {
+  //   API.getDailies()
+  //     .then(res => {
         
-        this.setState({ dailies: res.data.daily })
-        // console.log(res.data.daily)
-      })
-      .catch(err => console.log(err));
-  }
+  //       this.setState({ dailies: res.data.daily })
+  //       // console.log(res.data.daily)
+  //     })
+  //     .catch(err => console.log(err));
+  // }
 
   loadDaily = () => {
     API.getDailies()
@@ -59,9 +59,9 @@ class App extends Component {
   }
 
   deleteDailies = (id) => {
-    // console.log(this.state.dailies.find(user => user._id == id))
+    console.log('id',id)
     API.deleteDaily(id)
-     .then()
+     .then(() => this.loadDaily())
       .catch(err => console.log(err));
   };
   updateDailies = (id, update) => {
@@ -83,7 +83,7 @@ class App extends Component {
       // } else {
         // console.log("User doesn't exists. Show error message");
         API.saveDaily(data)
-          .then()
+          .then(() => this.loadDaily())
           .catch(err => console.log(err));
       // }
     };
