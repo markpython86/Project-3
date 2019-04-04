@@ -1007,7 +1007,7 @@ const Child = (props) => (
       props.props.loadDailies();
       props.hideIcons();
     }} 
-    size="small" id="saveButton" aria-label="Check" color='secondary'>
+    size="small" id="checkButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
@@ -1022,8 +1022,8 @@ const Child = (props) => (
 
   <Grid item xs={4}>
     <Fab onClick={() => {
-      props.props.deleteDaily(props.props.index)
-      props.hideIcons();
+      props.props.deleteDaily(props.props.index),
+      props.hideIcons(),
       props.props.loadDailies();
       }} size="small" id="deleteButton" aria-label="Delete">
       <Icon   fontSize="small">delete_icon</Icon>
@@ -1033,6 +1033,14 @@ const Child = (props) => (
   </Grid>
 
 )
+
+// onClick={() => 
+//   {
+//     this.props.submit(newState),
+//     this.handleClose(),
+//     this.props.loadDailies();
+    
+//   }}
 
 // End of hidden FAB buttons.
 

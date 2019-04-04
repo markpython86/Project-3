@@ -195,7 +195,6 @@ class SimpleModal extends React.Component {
 
 
 
-
   render() {
 
     const {
@@ -248,11 +247,12 @@ class SimpleModal extends React.Component {
  
   
   <Grid item xs={5}>
-    <Fab onClick={(event) => 
+    <Fab onClick={() => 
       {
-        (props.submit(newState));
-        props.loadDailies();
-        this.handleClose();
+        this.props.submit(newState),
+        this.handleClose(),
+        this.props.loadDailies();
+        
       }} 
       size="medium" id="saveButton" aria-label="Check" color='secondary'>
       <Icon fontSize="large">check_icon</Icon> 
