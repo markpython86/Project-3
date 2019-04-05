@@ -182,8 +182,8 @@ export default {
                             console.log(habits)
                             if (d == null) {
                                 const weekly = new Weekly({
-                                    weekStart: Moment(req.body.selectedDate).startOf('week').format('MMM Do'),
-                                    weekEnd: Moment(req.body.selectedDate).endOf('week').format('MMM Do'),
+                                    weekStart: Moment(req.body.selectedDate).startOf('week').format('MM-DD'),
+                                    weekEnd: Moment(req.body.selectedDate).endOf('week').format('MM-DD'),
                                     week: newDaily.week,
                                     year: newDaily.year,
                                     user_id: req.user._id,

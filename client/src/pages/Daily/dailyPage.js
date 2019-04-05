@@ -198,20 +198,23 @@ class App extends Component {
   }; 
 
     handleFormSubmit = (data) => {
-      console.log(data)
-      // if(this.state.dailies.find(user => user.fullDate === data.fullDate)) {
-      //   alert("User exists. Go to the login page");
+      // console.log(data)
+      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
+        alert("OOps Daily card already exists. try to choose another date");
+        // API.saveDaily(data)
+        //   .then(() => this.loadDaily())
+        //   .catch(err => console.log(err));
 
 
-      // } else {
-        // console.log("User doesn't exists. Show error message");
+      } else {
+        console.log("User doesn't exists. Show error message");
         API.saveDaily(data)
         .then(() => {
           this.loadDaily()
           this.savedMessage()
         })
           .catch(err => console.log(err));
-      // }
+      }
     };
 
 

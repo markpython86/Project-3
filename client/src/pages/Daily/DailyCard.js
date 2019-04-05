@@ -253,7 +253,7 @@ class DailyCard extends React.Component {
 
     return (
       
-      // <ClickAwayListener onClickAway={this.handleClickAway}>
+      <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
   {!this.state.isHidden && <Child props={props} loadDailies={this.loadDailies} deleteDaily={this.deleteDaily} hideIcons={this.hideIcons} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
@@ -985,7 +985,7 @@ class DailyCard extends React.Component {
       </Card>
     </Grid>
 
-    // </ClickAwayListener>
+  </ClickAwayListener>
 
     );
   }
