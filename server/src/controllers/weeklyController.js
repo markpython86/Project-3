@@ -13,7 +13,7 @@ export default {
                 
         
         User.findById({ _id: req.user._id })
-            .populate({path: 'weekly', options: { sort: { 'fullDate': 1 } } })
+            .populate({path: 'weekly', options: { sort: { 'week': 1 } } })
             .populate('daily')
             .then(function (data) {
                 res.send(data)
@@ -29,12 +29,12 @@ export default {
 //         
 
         User.findById({_id: req.user._id})
-        .populate('weekly')
+        .populate({path: 'weekly', options: { sort: { 'week': 1 } } })
         .then(weekly => {
              
             // let newDate = new Date()
             // let a = {"_id" : { "week": { "$week": newDate }, "year": { "$year": newDate } }}
-            console.log(weekly)
+            // console.log(weekly)
         })
          const {
             best,
