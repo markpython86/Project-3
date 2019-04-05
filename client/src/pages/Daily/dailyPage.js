@@ -330,9 +330,9 @@ function mapStateToProps({auth}) {
 }
 
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// App.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 
 export default connect(mapStateToProps,{ postDaily })(reduxForm({
