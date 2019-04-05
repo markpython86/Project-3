@@ -125,7 +125,11 @@ const styles = theme => ({
 
   hide: {
     display: 'none',
-  }
+  },
+
+  fab: {
+    marginBottom: 10,
+  },
 
 });
 
@@ -154,8 +158,8 @@ class SimpleModal extends React.Component {
     
   };
 
-  handleClosed = () => {
-    this.setState({ open: false });
+  handleClosed = (modalClose) => {
+    this.setState({ open: modalClose });
     
   };
 
@@ -247,26 +251,17 @@ class SimpleModal extends React.Component {
           <tbody>
             <tr>
               <td>
-            
-
-
             <Grid container className={classes.center}>
  
   
   <Grid item xs={5}>
     <Tooltip disableFocusListener title="Save">
-      <WrappedFab onClick={() => 
-        {
-          this.props.submit(newState),
-          this.handleClose(),
-          this.props.loadDailies();
-          
-        }} 
-        size="medium" id="saveButton" aria-label="Check" color='secondary'>
-        <Icon fontSize="large">check_icon</Icon> 
-        {/* props.props.updatedDaily(props.props.index, ) */}
-        {/* props.props.updatedDaily(props.props.index, props.newState) */}
-        {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
+      <WrappedFab onClick={() => {
+      props.submit(newState) 
+      this.handleClosed(false)
+      }} 
+        size="medium" id="saveButton" aria-label="Check" color='secondary' className={classes.fab}>
+        <Icon fontSize="large">check_icon</Icon>
       </WrappedFab>
     </Tooltip>
   </Grid>
@@ -275,7 +270,7 @@ class SimpleModal extends React.Component {
 
   <Grid item xs={5}>
     <Tooltip disableFocusListener title="Cancel">
-      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
+      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete" className={classes.fab}>
         <Icon  fontSize="large">exit_to_app_icon</Icon>
       </WrappedFab>
     </Tooltip>
@@ -299,7 +294,7 @@ class SimpleModal extends React.Component {
                   margin="normal"
                   // label="Morning"
                   // value={this.props.wakeup}
-                  value={selectedTime1}
+                  value={newState.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -313,7 +308,7 @@ class SimpleModal extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={selectedDate}
+                    value={newState.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -328,7 +323,7 @@ class SimpleModal extends React.Component {
                     margin="normal"
                     // label="Evening"
                     // value={this.props.sleep}
-                    value={selectedTime2}
+                    value={newState.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />

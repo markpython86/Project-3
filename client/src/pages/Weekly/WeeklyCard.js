@@ -116,29 +116,23 @@ class WeeklyCard extends React.Component {
       best: '',
       worst: '',
       nextWeek: '',
-      selectedTime1: new Date(),
-      selectedTime2: new Date(),
-      selectedDate: new Date(),
-      habit1: '',
-      habit2: '',
-      habit3: '',
+      selectedDate: '',
+      weekStart: '',
+      weekEnd: '',
+      habits: '',
       isInEditMode: false
     };
   }
 
+  notEditMode = () => {
+    this.setState({
+      isInEditMode: false,
+      })
+  }
+
   
 
-  handleTimeChange1 = date => {
-    this.setState({ selectedTime1: date });
-  };
-
-  handleTimeChange2 = date => {
-    this.setState({ selectedTime2: date });
-  };
-
-  handleDateChange = date => {
-    this.setState({ selectedDate: date });
-  };
+  
 
  
 
@@ -154,9 +148,7 @@ class WeeklyCard extends React.Component {
     this.setState({ [nextWeek]: event.target.value });
   };
 
-  handleHabitChange1 = event => {
-    this.setState({ habit1: event.target.value });
-  };
+  
 
   editMode = () =>{
     
@@ -164,25 +156,17 @@ class WeeklyCard extends React.Component {
       best: this.props.best,
       worst: this.props.worst,
       nextWeek: this.props.nextWeek,
-      selectedTime1: this.props.wakeup,
-      selectedTime2: this.props.sleep,
+      // selectedDate: this.props.selectedDate,
       isInEditMode: true,
 
       
     })
   }
 
-  handleHabitChange2 = event => {
-    this.setState({ habit2: event.target.value });
-  };
-
-  handleHabitChange3 = event => {
-    this.setState({ habit3: event.target.value });
-  };
 
   toggleHidden () {
     this.setState({
-      isHidden: !this.state.isHidden
+      isHidden: false,
     })
   }
 
@@ -204,12 +188,11 @@ class WeeklyCard extends React.Component {
     const {
       props,
     } = this;
-
+      // console.log('props',props.updates)
     const { classes } = props;
-    const habits = ["add", "local_atm", "local_dining", "add", "local_airport", ""].filter(String);
-    const { selectedTime1 } = this.state;
-    const { selectedTime2 } = this.state;
-    const { selectedDate } = this.state;
+    const habits = props.updates.habits.filter(String);
+    const weekStart = props.updates.weekStart
+    const weekEnd = props.updates.weekEnd
     const newState = {
       best: this.state.best,
       worst: this.state.worst,
@@ -272,7 +255,7 @@ class WeeklyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -282,7 +265,7 @@ class WeeklyCard extends React.Component {
           <Grid container spacing={0} id="header">
             <Grid item xs={3} >
             <Typography className="headerText" variant="h6">
-                Date1
+                {weekStart}
               </Typography>
             </Grid>
 
@@ -295,7 +278,7 @@ class WeeklyCard extends React.Component {
 
             <Grid item xs={3}>
             <Typography className="headerText" variant="h6">
-                Date2
+               {weekEnd}
               </Typography>
             </Grid>
 
@@ -317,7 +300,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Best"
-            placeholder="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -339,7 +322,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -359,7 +342,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Next"
-            placeholder="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -384,8 +367,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="best"
-            placeholder="Weekly Best"
+            label="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -405,7 +388,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Weekly Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -423,8 +406,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="Next Week"
-            placeholder="Next Week"
+            label="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -473,25 +456,31 @@ const Child = (props) => (
 
   <Grid container className="fab"> 
   
-  <Grid item xs={4}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+  <Grid item xs={6}>
+    <Fab onClick={() => {
+      console.log(props.props.index)
+      console.log(props.newState)
+      props.props.updatedWeekly(props.props.index, props.newState)
+      props.notEditMode();
+      // props.props.updateWeekly(props.props.index, props.newState)
+      } } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
-  <Grid item xs={4}>
+  <Grid item xs={6}>
     <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
-  <Grid item xs={4}>
+  {/* <Grid item xs={4}>
     <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid>
+  </Grid> */}
 
   </Grid>
 )

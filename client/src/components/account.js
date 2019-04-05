@@ -7,12 +7,14 @@ import {tryConnect, getUserProfile, updateUserProfile} from '../actions';
 import CenterCard363 from './centerCard363';
 import IconButton from "@material-ui/core/IconButton";
 import {Edit} from '@material-ui/icons';
+import "./account.css";
+import Palette from "../pages/Grid/Palette";
 
 class Account extends Component {
   constructor(){
     super();
     this.state = {
-      editting: false
+      editing: false
     }
   }
   componentWillMount() {
@@ -22,38 +24,50 @@ class Account extends Component {
   render() {
     let {status, profile} = this.props;
     return (
-      <CenterCard363>
-        <div className='card border-secondary'>
-        <h4 className="card-header">
-          Account Information
-        </h4>
-        <div className='card-body'>
-        {/* <p className="text-muted">Server status: {status} ☀</p> */}
-          {profile && this.renderProfileForm()}
-        </div>
-        </div>
-      </CenterCard363>
+      <Palette>
+        <CenterCard363>
+          <div className="card border-secondary">
+            <h4 className="card-header">Account Information</h4>
+            <div className="card-body">
+              {/* <p className="text-muted">Server status: {status} ☀</p> */}
+              {profile && this.renderProfileForm()}
+            </div>
+          </div>
+        </CenterCard363>
+      </Palette>
     );
   }
   handleFormSubmit(d){
     this.props.updateUserProfile(d)
   }
-  switchEditting() {
-    this.setState({editting: !this.state.editting})
+  switchEditing() {
+    this.setState({editing: !this.state.editing})
   }
   cancelForm(){
-    this.switchEditting();
+    this.switchEditing();
     this.props.reset();
   }
   renderButtons() {
     const {submitting, dirty} = this.props;
-    if(this.state.editting){
+    if(this.state.editing){
       return (
-      <div className="form-group">
-        <button disabled={!dirty} type="submit" className="btn-lg btn btn-light btn-block">Save Change</button>
-        <button disabled={submitting} className="btn-lg btn btn-secondary btn-block" onClick={this.cancelForm.bind(this)}>Cancel</button>
-      </div>
-      )
+        <div className="form-group margin">
+          <IconButton
+            disabled={!dirty}
+            type="submit"
+            className="btn-lg btn btn-light btn-block"
+          >
+            Save Change
+          </IconButton>
+          <button
+            disabled={submitting}
+            className="btn-lg btn btn-secondary btn-block"
+            onClick={this.cancelForm.bind(this)}
+          >
+            Cancel
+          </button>
+        </div>
+      );
     }else{
       return (
         // <button
@@ -61,7 +75,7 @@ class Account extends Component {
         //   onClick={this.switchEditting.bind(this)}
         // >
           <IconButton
-            onClick={this.switchEditting.bind(this)}
+            onClick={this.switchEditing.bind(this)}
             color="inherit"
           >
             <Edit />
@@ -69,16 +83,26 @@ class Account extends Component {
         // </button>
       );
     }
+
+    //     if(this.state.editing){
+    //   return (<div className="form-group margin">
+    //     <Button disabled={!dirty} type="submit" variant="contained" color="primary" className="button" >Save Change</Button>
+    //     <Button disabled={submitting} variant="contained" color="primary" className="button"  onClick={this.cancelForm.bind(this)}>Cancel</Button>
+    //   </div>)
+    // }else{
+    //   return (<Button variant="contained" color="primary" className="button" onClick={this.switchEditing.bind(this)}>Update Information</Button>)
+    // }
+
   }
   renderProfileForm(){
-    const {editting} = this.state;
+    const {editing} = this.state;
     const {handleSubmit, dirty, updateProfileFailMsg} = this.props;
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <div className="form-group">
+        <div className="form-group margin">
           <label>First Name:</label>
           <Field
-            disabled={!editting}
+            disabled={!editing}
             type= 'text'
             name="firstName"
             component="input"
@@ -88,10 +112,10 @@ class Account extends Component {
             />
       </div>
 
-      <div className="form-group">
+      <div className="form-group margin">
         <label>Last Name:</label>
         <Field
-          disabled={!editting}
+          disabled={!editing}
           type= 'text'
           name="lastName"
           component="input"
@@ -101,7 +125,7 @@ class Account extends Component {
         />
       </div>
 
-      <div className="form-group">
+      <div className="form-group margin">
         <label>Email:</label>
         <Field
             disabled
@@ -114,7 +138,7 @@ class Account extends Component {
             required
             />
       </div>
-      {dirty && <div className="form-group">
+      {dirty && <div className="form-group margin">
         <label>Password:</label>
         <Field
           type= 'password'

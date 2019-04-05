@@ -35,9 +35,9 @@ export default {
       return axios.get("/api/weekly");
     },
     // Gets the weekly with the given id
-    getWeekly: function(id) {
-      return axios.get("/weekly/" + id);
-    },
+    // getWeekly: function(id) {
+    //   return axios.get("/weekly/" + id);
+    // },
     // Deletes the weekly with the given id
     deleteWeekly: function(id) {
       return axios.delete("/api/weekly/" + id);
