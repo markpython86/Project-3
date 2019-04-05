@@ -125,7 +125,11 @@ const styles = theme => ({
 
   hide: {
     display: 'none',
-  }
+  },
+
+  fab: {
+    marginBottom: 10,
+  },
 
 });
 
@@ -259,7 +263,7 @@ class SimpleModal extends React.Component {
       props.submit(newState) 
       this.handleClosed(false)
       }} 
-        size="medium" id="saveButton" aria-label="Check" color='secondary'>
+        size="medium" id="saveButton" aria-label="Check" color='secondary' className={classes.fab}>
         <Icon fontSize="large">check_icon</Icon>
       </WrappedFab>
     </Tooltip>
@@ -269,7 +273,7 @@ class SimpleModal extends React.Component {
 
   <Grid item xs={5}>
     <Tooltip disableFocusListener title="Cancel">
-      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
+      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete" className={classes.fab}>
         <Icon  fontSize="large">exit_to_app_icon</Icon>
       </WrappedFab>
     </Tooltip>
