@@ -16,6 +16,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Build, Code, EventSeat, Explore, Motorcycle, Pets, QuestionAnswer, Rowing, ShoppingCart, Search, Today, SwapVert, WatchLater, Work, Mic, Movie, Call, Email, SentimentSatisfied, Waves, Weekend, AttachMoney, Headset, ColorLens, Brush, Camera, Edit, Landscape, LinkedCamera, Timer, DirectionsBike, DirectionsBus, DirectionsCar, DirectionsRun, DirectionsRailway, LocalLaundryService, LocalActivity, LocalAtm, LocalBar, LocalCafe, LocalCarWash, LocalDining, LocalDrink, LocalHotel, ChildFriendly, Pool, Spa, SmokeFree, FreeBreakfast, GolfCourse, Casino, FitnessCenter, Kitchen, School, LocalLibrary, Watch, } from '@material-ui/icons/';
 import "./DailyCard.css";
+import Tooltip from "@material-ui/core/Tooltip";
+
 
 const styles = theme => ({
   
@@ -993,46 +995,70 @@ class DailyCard extends React.Component {
 }
 
 
+const WrappedFab = props => <Fab {...props} />;
+WrappedFab.muiName = "Fab";
+
+
 // Beginning of hidden FAB buttons.
 
-const Child = (props) => (
-  
+const Child = props => (
+  <Grid container className="fab">
+    <Grid item xs={4}>
+      <Tooltip disableFocusListener title="Save" placement="top">
+        <WrappedFab
+          onClick={() => {
+            props.notEditMode();
+            props.props.updatedDaily(props.props.index, props.newState);
+            props.props.loadDailies();
+            props.hideIcons();
+          }}
+          size="small"
+          id="checkButton"
+          aria-label="Check"
+          color="secondary"
+        >
+          <Icon fontSize="small">check_icon</Icon>
+          {/* props.props.updatedDaily(props.props.index, ) */}
+          {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
+        </WrappedFab>
+      </Tooltip>
+    </Grid>
 
-  <Grid container className="fab"> 
-  
-  <Grid item xs={4}>
-    <Fab onClick={() => {
-      props.notEditMode();
-      props.props.updatedDaily(props.props.index, props.newState);
-      props.props.loadDailies();
-      props.hideIcons();
-    }} 
-    size="small" id="checkButton" aria-label="Check" color='secondary'>
-      <Icon  fontSize="small">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
-    </Fab>
+    <Grid item xs={4}>
+      <Tooltip disableFocusListener title="Edit" placement="top">
+        <WrappedFab
+          onClick={() => {
+            props.editMode();
+          }}
+          size="small"
+          id="editButton"
+          aria-label="Edit"
+          color="primary"
+        >
+          <Icon fontSize="small">edit_icon</Icon>
+        </WrappedFab>
+      </Tooltip>
+    </Grid>
+
+    <Grid item xs={4}>
+     <Tooltip disableFocusListener title="Delete" placement="top">
+
+      <WrappedFab
+        onClick={() => {
+          props.props.deleteDaily(props.props.index),
+            props.hideIcons(),
+            props.props.loadDailies();
+        }}
+        size="small"
+        id="deleteButton"
+        aria-label="Delete"
+      >
+        <Icon fontSize="small">delete_icon</Icon>
+      </WrappedFab>
+      </Tooltip>
+    </Grid>
   </Grid>
-
-  <Grid item xs={4}>
-    <Fab onClick={() => {props.editMode()}}  size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon  fontSize="small">edit_icon</Icon>
-    </Fab>
-  </Grid>
-
-  <Grid item xs={4}>
-    <Fab onClick={() => {
-      props.props.deleteDaily(props.props.index),
-      props.hideIcons(),
-      props.props.loadDailies();
-      }} size="small" id="deleteButton" aria-label="Delete">
-      <Icon   fontSize="small">delete_icon</Icon>
-    </Fab>
-  </Grid>
-
-  </Grid>
-
-)
+);
 
 // onClick={() => 
 //   {

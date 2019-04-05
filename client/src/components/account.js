@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {tryConnect, getUserProfile, updateUserProfile} from '../actions';
 import CenterCard363 from './centerCard363';
+import IconButton from "@material-ui/core/IconButton";
+import {Edit} from '@material-ui/icons';
 
 class Account extends Component {
   constructor(){
@@ -19,15 +21,14 @@ class Account extends Component {
   }
   render() {
     let {status, profile} = this.props;
-    console.log("PROFILE from account page " + profile);
     return (
       <CenterCard363>
         <div className='card border-secondary'>
         <h4 className="card-header">
-          Account
+          Account Information
         </h4>
         <div className='card-body'>
-        <p className="text-muted">Server status: {status} ☀</p>
+        {/* <p className="text-muted">Server status: {status} ☀</p> */}
           {profile && this.renderProfileForm()}
         </div>
         </div>
@@ -47,12 +48,26 @@ class Account extends Component {
   renderButtons() {
     const {submitting, dirty} = this.props;
     if(this.state.editting){
-      return (<div className="form-group">
+      return (
+      <div className="form-group">
         <button disabled={!dirty} type="submit" className="btn-lg btn btn-light btn-block">Save Change</button>
         <button disabled={submitting} className="btn-lg btn btn-secondary btn-block" onClick={this.cancelForm.bind(this)}>Cancel</button>
-      </div>)
+      </div>
+      )
     }else{
-      return (<button className="btn btn-light btn-lg btn-block" onClick={this.switchEditting.bind(this)}>Update Information</button>)
+      return (
+        // <button
+        //   className="btn btn-light btn-lg btn-block"
+        //   onClick={this.switchEditting.bind(this)}
+        // >
+          <IconButton
+            onClick={this.switchEditting.bind(this)}
+            color="inherit"
+          >
+            <Edit />
+          </IconButton>
+        // </button>
+      );
     }
   }
   renderProfileForm(){
