@@ -20,8 +20,6 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -48,7 +46,7 @@ const styles1 = theme => ({
     backgroundColor: theme.palette.primary.dark,
   },
   warning: {
-    backgroundColor: amber[700],
+    backgroundColor: '#808E95',
   },
   icon: {
     fontSize: 20,
@@ -124,6 +122,7 @@ class App extends Component {
       // value: "initial value",
       savedMessage: false,
       deletedMessage: false,
+      errorMessage: false,
 
     }
   }
@@ -140,6 +139,10 @@ class App extends Component {
 
   savedMessage = () => {
     this.setState({ savedMessage: true });
+  };
+
+  errorMessage = () => {
+    this.setState({ errorMessage: true });
   };
 
   deletedMessage = () => {
@@ -160,6 +163,14 @@ class App extends Component {
     }
 
     this.setState({ savedMessage: false });
+  };
+  
+  handleErrorMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ errorMessage: false });
   };
   
   
@@ -200,7 +211,7 @@ class App extends Component {
     handleFormSubmit = (data) => {
       // console.log(data)
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        alert("OOps Daily card already exists. try to choose another date");
+        this.errorMessage();
         // API.saveDaily(data)
         //   .then(() => this.loadDaily())
         //   .catch(err => console.log(err));
@@ -241,6 +252,24 @@ class App extends Component {
             message="Nice! 👍 Your entry has been saved."
           />
         </Snackbar>
+
+
+        <Snackbar
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+            open={this.state.errorMessage}
+            autoHideDuration={3000}
+            onClose={this.handleErrorMessage}
+          >
+          <MySnackbarContentWrapper
+            onClose={this.handleErrorMessage}
+            variant="warning"
+            message="Oops! 😅 You already have an entry on this date. Just edit that one!"
+          />
+        </Snackbar>
+
           
         <Snackbar
             anchorOrigin={{
