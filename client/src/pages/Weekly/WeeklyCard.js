@@ -296,7 +296,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Best"
-            placeholder="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -318,7 +318,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -338,7 +338,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Next"
-            placeholder="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -363,8 +363,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="best"
-            placeholder="Weekly Best"
+            label="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -384,7 +384,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Weekly Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -402,8 +402,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="Next Week"
-            placeholder="Next Week"
+            label="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
