@@ -13,6 +13,11 @@ import SimpleModalWrapped from '../Modal/Modal';
 // import Icon from '@material-ui/core/Icon';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import NavigationIcon from '@material-ui/icons/Navigation';
+import Tooltip from "@material-ui/core/Tooltip";
+
+
+const WrappedFab = props => <Fab {...props} />;
+WrappedFab.muiName = "Fab";
 
 const styles = theme => ({
   newEntry: {
@@ -77,29 +82,33 @@ function FAB(props) {
       
         {props.page === "daily" ? 
           (
-          <Fab 
-          color="primary" 
-          aria-label="Back" 
-          className={classes.backView} 
-          style={{position: 'fixed'}}
-          component={Link}
-          to="/weekly"
-          
-          >
-          <ArrowBackIosIcon id="backArrow"/>
-          </Fab>
+          <Tooltip disableFocusListener title="Weekly Page">
+            <WrappedFab 
+            color="primary" 
+            aria-label="Back" 
+            className={classes.backView} 
+            style={{position: 'fixed'}}
+            component={Link}
+            to="/weekly"
+            
+            >
+            <ArrowBackIosIcon id="backArrow"/>
+            </WrappedFab>
+          </Tooltip>
           ) : (
-          <Fab
-          color="primary"
-          aria-label="Forward"
-          className={classes.forwardView}
-          style={{ position: 'fixed' }}
-          component={Link}
-          to="/daily"
-          
-          >
-          <ArrowForwardIosIcon id="forwardArrow" />
-          </Fab>
+          <Tooltip disableFocusListener title="Daily Page">
+            <WrappedFab
+            color="primary"
+            aria-label="Forward"
+            className={classes.forwardView}
+            style={{ position: 'fixed' }}
+            component={Link}
+            to="/daily"
+            
+            >
+            <ArrowForwardIosIcon id="forwardArrow" />
+            </WrappedFab>
+          </Tooltip>
           )
         }
       

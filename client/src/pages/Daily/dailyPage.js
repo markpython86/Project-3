@@ -53,9 +53,9 @@ class App extends Component {
     API.deleteDaily(id)
      .then(() => {
        this.loadDaily()
-       setTimeout(() => {
-         alert('woops you deleted the card')
-       }, 1000);
+      //  setTimeout(() => {
+      //    show
+      //  }, 1000);
        })
       .catch(err => console.log(err));
   };

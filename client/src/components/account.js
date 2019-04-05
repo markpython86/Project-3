@@ -19,6 +19,7 @@ class Account extends Component {
   }
   render() {
     let {status, profile} = this.props;
+    console.log("PROFILE from account page " + profile);
     return (
       <CenterCard363>
         <div className='card border-secondary'>
@@ -66,7 +67,7 @@ class Account extends Component {
             type= 'text'
             name="firstName"
             component="input"
-            className="form-control form-control-lg"
+            className=" input form-control form-control-lg"
             placeholder="First Name"
             required
             />
@@ -79,7 +80,7 @@ class Account extends Component {
           type= 'text'
           name="lastName"
           component="input"
-          className="form-control form-control-lg"
+          className="input form-control form-control-lg"
           placeholder="Last Name"
           required
         />
@@ -93,7 +94,7 @@ class Account extends Component {
             type= 'email'
             name="email"
             component="input"
-            className="form-control form-control-lg"
+            className="input form-control form-control-lg"
             placeholder="sample@email.com"
             required
             />
@@ -104,7 +105,7 @@ class Account extends Component {
           type= 'password'
           name="password"
           component="input"
-          className={(updateProfileFailMsg)?"form-control form-control-lg is-invalid":"form-control form-control-lg"}
+          className={(updateProfileFailMsg)?"input form-control form-control-lg is-invalid":"input form-control form-control-lg"}
           placeholder="your password"
           required
         />
