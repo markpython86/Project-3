@@ -135,8 +135,8 @@ class SimpleModal extends React.Component {
     dailyHighlight: '',
     positive: '',
     negative: '',
-    selectedTime1: '',
-    selectedTime2: '',
+    selectedTime1: new Date(),
+    selectedTime2: new Date(),
     selectedDate: new Date(),
     habit1: '',
     habit2: '',
@@ -293,7 +293,7 @@ class SimpleModal extends React.Component {
                   margin="normal"
                   // label="Morning"
                   // value={this.props.wakeup}
-                  value={selectedTime1}
+                  value={newState.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -307,7 +307,7 @@ class SimpleModal extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={selectedDate}
+                    value={newState.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -322,7 +322,7 @@ class SimpleModal extends React.Component {
                     margin="normal"
                     // label="Evening"
                     // value={this.props.sleep}
-                    value={selectedTime2}
+                    value={newState.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
