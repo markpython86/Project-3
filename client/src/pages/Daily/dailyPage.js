@@ -36,17 +36,7 @@ class App extends Component {
   // }
 
 
-  //edit section==========================================================
-  //function to load them and set state of daily ,weekly, or monthly
-  // loadDailies = () => {
-  //   API.getDailies()
-  //     .then(res => {
-        
-  //       this.setState({ dailies: res.data.daily })
-  //       // console.log(res.data.daily)
-  //     })
-  //     .catch(err => console.log(err));
-  // }
+  
 
   loadDaily = () => {
     API.getDailies()
@@ -61,7 +51,12 @@ class App extends Component {
   deleteDailies = (id) => {
     console.log('id',id)
     API.deleteDaily(id)
-     .then(() => this.loadDaily())
+     .then(() => {
+       this.loadDaily()
+       setTimeout(() => {
+         alert('woops you deleted the card')
+       }, 1000);
+       })
       .catch(err => console.log(err));
   };
   updateDailies = (id, update) => {
@@ -70,7 +65,7 @@ class App extends Component {
     
     // this.setState({ dailies: update })
       API.updateDaily(id, update)
-      .then()
+      .then(() => this.loadDaily())
       .catch(err => console.log(err));
   }; 
 

@@ -105,7 +105,7 @@ class DailyCard extends React.Component {
       dailyHighlight: '',
       positive: '',
       negative: '',
-      selectedTime1:  '',
+      selectedTime1: '',
       selectedTime2: '',
       selectedDate: '',
       habit1: '',
@@ -235,7 +235,7 @@ class DailyCard extends React.Component {
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate,
       oldValues:{
-        highlights: this.props.dailyHighlight,
+      highlights: this.props.dailyHighlight,
       positive: this.props.positive,
       negative: this.props.negative,
       sleep: this.props.selectedTime2,
@@ -301,7 +301,7 @@ class DailyCard extends React.Component {
                     margin="normal"
                     // label="Evening"
                     disabled={true}
-                    value={this.state.sleep}
+                    value={props.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -318,7 +318,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                   margin="normal"
                   // label="Morning"
-                  value={props.wakeup}
+                  value={newState.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -332,7 +332,7 @@ class DailyCard extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={props.selectedDate}
+                    value={this.state.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -346,7 +346,7 @@ class DailyCard extends React.Component {
                   <TimePicker
                     margin="normal"
                     // label="Evening"
-                    value={props.sleep}
+                    value={newState.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -1003,7 +1003,6 @@ const Child = (props) => (
     <Fab onClick={() => {
       props.notEditMode();
       props.props.updatedDaily(props.props.index, props.newState);
-      // props.props.loadDailies();
       props.hideIcons();
     }} 
     size="small" id="saveButton" aria-label="Check" color='secondary'>

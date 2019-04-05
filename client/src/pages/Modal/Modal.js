@@ -251,9 +251,6 @@ class SimpleModal extends React.Component {
       this.handleClosed(false)
       }} size="medium" id="saveButton" aria-label="Check" color='secondary'>
       <Icon fontSize="large">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, props.newState) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
