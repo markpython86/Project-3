@@ -124,7 +124,11 @@ class WeeklyCard extends React.Component {
     };
   }
 
-  
+  notEditMode = () => {
+    this.setState({
+      isInEditMode: false,
+      })
+  }
 
   
 
@@ -251,7 +255,7 @@ class WeeklyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -453,7 +457,13 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={6}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => {
+      console.log(props.props.index)
+      console.log(props.newState)
+      props.props.updatedWeekly(props.props.index, props.newState)
+      props.notEditMode();
+      // props.props.updateWeekly(props.props.index, props.newState)
+      } } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}

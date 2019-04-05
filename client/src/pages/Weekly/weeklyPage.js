@@ -21,12 +21,13 @@ class App extends Component {
     super();
     this.state = {
       weeklies: [],
+      dailies:[],
       
     }
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
     this.loadWeeklies();
   }
 
@@ -38,8 +39,11 @@ class App extends Component {
   loadWeeklies() {
     API.getWeeklies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.weekly)
-        this.setState({ weeklies: res.data.weekly })
+        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data)
+        this.setState({ 
+          weeklies: res.data.weekly,
+          dailies: res.data.daily
+           })
       })
       .catch(err => console.log(err));
   }
@@ -49,15 +53,32 @@ class App extends Component {
   //    .then(()=>  window.location.reload(true))
   //     .catch(err => console.log(err));
   // };
-  updateWeeklies(id, update) {
+  updateWeeklies = (id, update) => {
+    console.log(id)
+    console.log(update)
       API.updateWeekly(id, update)
-      .then(()=>  window.location.reload(true))
+      .then(() => {
+        this.loadWeeklies()
+        console.log(this.state)
+        })
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit(data) {
-      this.props.postWeekly(data)
-        
+    handleFormSubmit = (data) => {
+      console.log(this.state.weeklies)
+      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
+        alert("OOps Daily card already exists. try to choose another date");
+        // API.saveDaily(data)
+        //   .then(() => this.loadDaily())
+        //   .catch(err => console.log(err));
+
+
+      } else {
+        console.log("User doesn't exists. Show error message");
+        API.saveDaily(data)
+          .then(() => this.loadWeeklies())
+          .catch(err => console.log(err));
+      }
     };
 
 
@@ -83,7 +104,7 @@ class App extends Component {
                   index={person._id}
                   // deleteWeekly = {this.deleteWeeklies}
                   updatedWeekly={this.updateWeeklies}
-                  preUpdate={this.updateWeeklies}
+                  // preUpdate={this.updateWeeklies}
                   updates={person}
                   best={person.best}
                   worst={person.worst}
@@ -98,7 +119,7 @@ class App extends Component {
               </Item>
           </Container>
           {/* </Container> */}
-      <FAB />
+      <FAB  submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )

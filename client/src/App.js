@@ -7,7 +7,6 @@ import reduxThunk from 'redux-thunk';
 // import App1 from './pages/Daily/daily';
 import App from './components/app';
 import Home from './pages/Home';
-import Public from './components/public';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
 // import Monthly from './pages/monthlyPage';
@@ -30,6 +29,7 @@ const token = localStorage.getItem('auth_jwt_token');
 if (token) {
   store.dispatch({type: AUTH_USER})
 }
+
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter hashType="noslash">
