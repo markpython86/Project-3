@@ -1,0 +1,11 @@
+.margin {
+  margin: 10px;
+};
+
+.input {
+  margin-left: 10px !important;
+};
+
+.button {
+  margin: 10px !important;
+};
