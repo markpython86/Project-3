@@ -44,11 +44,11 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  deleteWeeklies(id){
-    API.deleteWeekly(id)
-     .then(()=>  window.location.reload(true))
-      .catch(err => console.log(err));
-  };
+  // deleteWeeklies(id){
+  //   API.deleteWeekly(id)
+  //    .then(()=>  window.location.reload(true))
+  //     .catch(err => console.log(err));
+  // };
   updateWeeklies(id, update) {
       API.updateWeekly(id, update)
       .then(()=>  window.location.reload(true))
@@ -67,7 +67,7 @@ class App extends Component {
       <Palette>
       {/* <Nav /> */}
       <Wrapper>
-        <Container spacing="0">
+        {/* <Container spacing="0"> */}
           <Container spacing="16">
 
           {/* // Add edit button to this page
@@ -81,7 +81,7 @@ class App extends Component {
                 <WeeklyCard 
                   key={person._id}
                   index={person._id}
-                  deleteWeekly = {this.deleteWeeklies}
+                  // deleteWeekly = {this.deleteWeeklies}
                   updatedWeekly={this.updateWeeklies}
                   preUpdate={this.updateWeeklies}
                   updates={person}
@@ -97,7 +97,7 @@ class App extends Component {
                 
               </Item>
           </Container>
-          </Container>
+          {/* </Container> */}
       <FAB />
       </Wrapper>
       </Palette>

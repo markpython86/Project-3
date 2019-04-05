@@ -162,7 +162,7 @@ class WeeklyCard extends React.Component {
 
   toggleHidden () {
     this.setState({
-      isHidden: !this.state.isHidden
+      isHidden: false,
     })
   }
 
@@ -184,7 +184,7 @@ class WeeklyCard extends React.Component {
     const {
       props,
     } = this;
-      console.log('props',props.updates)
+      // console.log('props',props.updates)
     const { classes } = props;
     const habits = props.updates.habits.filter(String);
     const weekStart = props.updates.weekStart
@@ -452,7 +452,7 @@ const Child = (props) => (
 
   <Grid container className="fab"> 
   
-  <Grid item xs={4}>
+  <Grid item xs={6}>
     <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
@@ -460,17 +460,17 @@ const Child = (props) => (
     </Fab>
   </Grid>
 
-  <Grid item xs={4}>
+  <Grid item xs={6}>
     <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
-  <Grid item xs={4}>
+  {/* <Grid item xs={4}>
     <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid>
+  </Grid> */}
 
   </Grid>
 )
