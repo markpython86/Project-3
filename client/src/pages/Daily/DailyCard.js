@@ -148,15 +148,6 @@ class DailyCard extends React.Component {
   notEditMode = () => {
     this.setState({
       isInEditMode: false,
-      // dailyHighlight: this.props.Highlights,
-      // positive: this.props.positive,
-      // negative: this.props.negative,
-      // selectedTime1: this.props.wakeup,
-      // selectedTime2: this.props.sleep,
-      // habit1: this.props.habit1,
-      // habit2: this.props.habit2,
-      // habit3: this.props.habit3,
-      // selectedDate: this.props.selectedDate,
       })
   }
 
@@ -172,7 +163,6 @@ class DailyCard extends React.Component {
       habit2: this.props.habit2,
       habit3: this.props.habit3,
       selectedDate: this.props.selectedDate,
-      // isHidden: true,
       isInEditMode: true,
 
       

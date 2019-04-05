@@ -247,9 +247,6 @@ class SimpleModal extends React.Component {
           <tbody>
             <tr>
               <td>
-            
-
-
             <Grid container className={classes.center}>
  
   
