@@ -51,9 +51,9 @@ class Signin extends Component {
                                     className="input form-control form-control-lg"
                                     placeholder="Email"
                                     required
-                                    inputProps={{
-                                    'aria-label': 'Description',
-                                    }}
+                                    // inputProps={{
+                                    // 'aria-label': 'Description',
+                                    // }}
                                   />
                             </div>
 
@@ -66,9 +66,9 @@ class Signin extends Component {
                                     className=" input form-control form-control-lg"
                                     placeholder="Password"
                                     required
-                                    inputProps={{
-                                      'aria-label': 'Description',
-                                      }}
+                                    // inputProps={{
+                                    //   'aria-label': 'Description',
+                                    //   }}
                                     />
                             </div>
                             {this.renderAlert()}
