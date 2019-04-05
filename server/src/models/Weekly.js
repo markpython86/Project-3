@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 // import bcrypt from 'bcrypt-nodejs';
 
 const weeklySchema = new mongoose.Schema({
@@ -10,7 +11,9 @@ const weeklySchema = new mongoose.Schema({
   year: {type: Number},
   week: {type: Number},
   habits: {type: Array},
-  user_id: {type: String }
+  user_id: {type: String },
+  weekStart:{type: String },
+  weekEnd:{type: String }
 })
 // add association later
 

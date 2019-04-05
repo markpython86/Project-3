@@ -116,29 +116,19 @@ class WeeklyCard extends React.Component {
       best: '',
       worst: '',
       nextWeek: '',
-      selectedTime1: new Date(),
-      selectedTime2: new Date(),
-      selectedDate: new Date(),
-      habit1: '',
-      habit2: '',
-      habit3: '',
+      selectedDate: '',
+      weekStart: '',
+      weekEnd: '',
+      habits: '',
       isInEditMode: false
     };
   }
 
   
 
-  handleTimeChange1 = date => {
-    this.setState({ selectedTime1: date });
-  };
+  
 
-  handleTimeChange2 = date => {
-    this.setState({ selectedTime2: date });
-  };
-
-  handleDateChange = date => {
-    this.setState({ selectedDate: date });
-  };
+  
 
  
 
@@ -154,9 +144,7 @@ class WeeklyCard extends React.Component {
     this.setState({ [nextWeek]: event.target.value });
   };
 
-  handleHabitChange1 = event => {
-    this.setState({ habit1: event.target.value });
-  };
+  
 
   editMode = () =>{
     
@@ -164,21 +152,13 @@ class WeeklyCard extends React.Component {
       best: this.props.best,
       worst: this.props.worst,
       nextWeek: this.props.nextWeek,
-      selectedTime1: this.props.wakeup,
-      selectedTime2: this.props.sleep,
+      // selectedDate: this.props.selectedDate,
       isInEditMode: true,
 
       
     })
   }
 
-  handleHabitChange2 = event => {
-    this.setState({ habit2: event.target.value });
-  };
-
-  handleHabitChange3 = event => {
-    this.setState({ habit3: event.target.value });
-  };
 
   toggleHidden () {
     this.setState({
@@ -204,12 +184,11 @@ class WeeklyCard extends React.Component {
     const {
       props,
     } = this;
-
+      console.log('props',props.updates)
     const { classes } = props;
-    const habits = ["add", "local_atm", "local_dining", "add", "local_airport", ""].filter(String);
-    const { selectedTime1 } = this.state;
-    const { selectedTime2 } = this.state;
-    const { selectedDate } = this.state;
+    const habits = props.updates.habits.filter(String);
+    const weekStart = props.updates.weekStart
+    const weekEnd = props.updates.weekEnd
     const newState = {
       best: this.state.best,
       worst: this.state.worst,
@@ -282,7 +261,7 @@ class WeeklyCard extends React.Component {
           <Grid container spacing={0} id="header">
             <Grid item xs={3} >
             <Typography className="headerText" variant="h6">
-                Date1
+                {weekStart}
               </Typography>
             </Grid>
 
@@ -295,7 +274,7 @@ class WeeklyCard extends React.Component {
 
             <Grid item xs={3}>
             <Typography className="headerText" variant="h6">
-                Date2
+               {weekEnd}
               </Typography>
             </Grid>
 
