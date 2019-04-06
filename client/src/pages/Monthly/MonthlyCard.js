@@ -157,7 +157,7 @@ class MonthlyCard extends React.Component {
   }
 
 
-  toggleHidden () {
+  toggleHidden = () => {
     this.setState({
       isHidden: false,
     })

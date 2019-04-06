@@ -195,6 +195,14 @@ loadDaily = () => {
       .catch(err => console.log(err));
   }
 
+deleteMonthlies = (id) => {
+    API.deleteMonthly(id)
+     .then(() =>  {
+       this.loadMonthlies()
+       this.deletedMessage()
+       })
+      .catch(err => console.log(err));
+  };
  
   updateMonthlies = (id, update) => {
       API.updateMonthly(id, update)
@@ -290,7 +298,7 @@ loadDaily = () => {
                 <MonthlyCard 
                   key={person._id}
                   index={person._id}
-                  // deleteWeekly = {this.deleteWeeklies}
+                  deleteMonthly = {this.deleteMonthlies}
                   updatedMonthly={this.updateMonthlies}
                   preUpdate={this.updateMonthlies}
                   updates={person}
