@@ -357,7 +357,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Daily Highlight"
-            placeholder=""
+            placeholder="What is one thing that needs to happen today?"
             multiline
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
@@ -379,7 +379,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Positive"
-            placeholder=""
+            placeholder="What is something good from today?"
             multiline
             onChange={this.handleChangePositive}
             className={classes.textField}
@@ -399,7 +399,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Negative"
-            placeholder=""
+            placeholder="What is something bad from today?"
             multiline
             onChange={this.handleChangeNegative}
             className={classes.textField}

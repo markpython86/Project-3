@@ -223,7 +223,7 @@ deleteMonthlies = (id) => {
       API.saveDaily(data)
         .then(()=>{
           this.loadMonthlies()
-          this.loadDailies()
+          
         })
         .catch(err => console.log(err))
       }
