@@ -47,19 +47,19 @@ class SwipeableTemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <Palette>
-          <List>
-            <ListItem key="Logo">
-              <img id="logo" src="../utils/favicon/ML3.png" />
-            </ListItem>
+        <List>
+          <ListItem key="Logo" component={Link} to="/">
+            <img id="logo" src="../utils/favicon/ML3.png"/>
+          </ListItem>
 
-            <ListItem button key="About" component={Link} to="/about">
-              <ListItemText primary="About Minimalist v.1.0" />
-            </ListItem>
-          </List>
-          <Divider />
-          <List>
-            {/* {['About', 'Daily', 'Weekly'].map((text, index) => ( */}
-
+          <ListItem button key="About" component={Link} to="/about">
+                <ListItemText primary="About Minimalist v.1.0"/>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          {/* {['About', 'Daily', 'Weekly'].map((text, index) => ( */}
+  
             <ListItem button key="Daily" component={Link} to="/daily">
               <ListItemText primary="Daily" />
             </ListItem>
@@ -72,11 +72,12 @@ class SwipeableTemporaryDrawer extends React.Component {
               <ListItemText primary="Monthly" />
             </ListItem>
 
-            {/* ))} */}
-          </List>
-          <Divider />
-          <List>
-            {/* {['Account', 'Login', 'Create Account'].map((text, index) => ( */}
+           
+          {/* ))} */}
+        </List>
+        <Divider />
+        <List>
+          {/* {['Account', 'Login', 'Create Account'].map((text, index) => ( */}
             <ListItem button key="Account" component={Link} to="/account">
               <ListItemText primary="Account Dashboard" />
             </ListItem>

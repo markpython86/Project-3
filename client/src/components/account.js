@@ -174,6 +174,8 @@ class Account extends Component {
         console.log("ressssss", res.data.daily);
         this.setState({
           daily: res.data.daily,
+          weekly: res.data.weekly,
+          monthly: res.data.monthly,
         });
         this.getHabitStats()
       })

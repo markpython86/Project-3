@@ -31,7 +31,6 @@ export default {
         .then(Monthly.findByIdAndRemove(monthlyID, function(err, data){
             if (err) return res.status(500).send(err);
            
-            console.log('after delete', data)
             res.sendStatus(200)
         }))
         .catch(next)
@@ -41,8 +40,6 @@ export default {
     updateMonthly: (req, res, next) => {
         
             const monthlyId = req.params.id;
-            console.log('update request', req)
-            console.log('update id', req.params.id)
             const newMonthly = {...req.body}
            
            

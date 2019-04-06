@@ -38,14 +38,14 @@ const tutorialSteps = [
     label: "6",
     imgPath: "./../../utils/Tutorials/Minimalist.006.png"
   },
-  // {
-  //   label: "7",
-  //   imgPath: "./../../utils/Tutorials/Minimalist.007.png"
-  // },
-  // {
-  //   label: "8",
-  //   imgPath: "./../../utils/Tutorials/Minimalist.008.png"
-  // },
+  {
+    label: "7",
+    imgPath: "./../../utils/Tutorials/Minimalist.007.png"
+  },
+  {
+    label: "8",
+    imgPath: "./../../utils/Tutorials/Minimalist.008.png"
+  },
   // {
   //   label: "9",
   //   imgPath: "./../../utils/Tutorials/Minimalist.009.png"

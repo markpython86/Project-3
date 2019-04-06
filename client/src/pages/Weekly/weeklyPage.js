@@ -165,10 +165,9 @@ savedMessage = () => {
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadWeeklies() {
+  loadWeeklies = () => {
     API.getWeeklies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data)
         this.setState({ 
           weeklies: res.data.weekly,
           dailies: res.data.daily
@@ -177,32 +176,30 @@ savedMessage = () => {
       .catch(err => console.log(err));
   }
 
-  // deleteWeeklies(id){
-  //   API.deleteWeekly(id)
-  //    .then(()=>  window.location.reload(true))
-  //     .catch(err => console.log(err));
-  // };
+  deleteWeeklies = (id) => {
+    API.deleteWeekly(id)
+     .then(() =>  {
+       this.loadWeeklies()
+       this.deletedMessage()
+       })
+      .catch(err => console.log(err));
+  };
   updateWeeklies = (id, update) => {
-    console.log(id)
-    console.log(update)
+    
       API.updateWeekly(id, update)
       .then(() => {
         this.loadWeeklies()
-        console.log(this.state)
+        this.savedMessage()
         })
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit = (data) => {
-      console.log(this.state.weeklies)
+      
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-this.errorMessage();        // API.saveDaily(data)
-        //   .then(() => this.loadDaily())
-        //   .catch(err => console.log(err));
-
+        this.errorMessage(); 
 
       } else {
-        console.log("User doesn't exists. Show error message");
         API.saveDaily(data)
           .then(() => {
             this.loadWeeklies()
@@ -277,7 +274,7 @@ this.errorMessage();        // API.saveDaily(data)
                 <WeeklyCard
                   key={person._id}
                   index={person._id}
-                  // deleteWeekly = {this.deleteWeeklies}
+                  deleteWeekly = {this.deleteWeeklies}
                   updatedWeekly={this.updateWeeklies}
                   // preUpdate={this.updateWeeklies}
                   updates={person}

@@ -154,7 +154,6 @@ class DailyCard extends React.Component {
   }
 
   editMode = () =>{
-    // console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
@@ -176,7 +175,6 @@ class DailyCard extends React.Component {
   }
 
   deleteDaily = (id) => {
-    // console.log('props in child',this.props)
     this.props.deleteDaily(id)
   }
 
@@ -238,9 +236,6 @@ class DailyCard extends React.Component {
       selectedDate: this.props.selectedDate,
       }
     }
-    
-    // console.log(newState)
-   
 
 
     return (
