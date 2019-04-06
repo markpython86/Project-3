@@ -439,6 +439,8 @@ const Child = (props) => (
     <Fab onClick={() => {
       props.props.updatedMonthly(props.props.index, props.newState)
       props.notEditMode();
+      props.hideIcons()
+
     
     }} size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
