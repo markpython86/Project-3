@@ -363,7 +363,7 @@ habit3: '',
             <TextField
             id="standard-textarea"
             label="Daily Highlight"
-            placeholder="Daily Highlight"
+            placeholder="What needs to be prioritized today?"
             multiline
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
@@ -384,7 +384,7 @@ habit3: '',
             <TextField
             id="standard-textarea"
             label="Positive"
-            placeholder="Positive"
+            placeholder="What is something good from today?"
             multiline
             onChange={this.handleChangePositive}
             className={classes.textField}
@@ -403,7 +403,7 @@ habit3: '',
             <TextField
             id="standard-textarea"
             label="Negative"
-            placeholder="Negative"
+            placeholder="What is something bad from today?"            
             multiline
             onChange={this.handleChangeNegative}
             className={classes.textField}
