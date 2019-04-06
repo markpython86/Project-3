@@ -260,7 +260,7 @@ class App extends Component {
               horizontal: 'center',
             }}
             open={this.state.errorMessage}
-            autoHideDuration={3000}
+            autoHideDuration={5000}
             onClose={this.handleErrorMessage}
           >
           <MySnackbarContentWrapper
