@@ -9,7 +9,7 @@ import App from './components/app';
 import Home from './pages/Home';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
-// import Monthly from './pages/monthlyPage';
+
 import About from './pages/About/About';
 import Monthly from './pages/Monthly/monthlyPage';
 import Weekly from './pages/Weekly/weeklyPage';
