@@ -179,12 +179,10 @@ class Account extends Component {
   loadDaily = () => {
     API.getDailies()
       .then(res => {
-        console.log("ressssss", res.data);
         this.setState({
           daily: res.data.daily,
           weekly: res.data.weekly
         });
-        console.log(res.data.daily);
       })
       .catch(err => console.log(err));
   };
