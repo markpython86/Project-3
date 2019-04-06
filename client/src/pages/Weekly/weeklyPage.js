@@ -177,17 +177,18 @@ savedMessage = () => {
       .catch(err => console.log(err));
   }
 
-  // deleteWeeklies(id){
-  //   API.deleteWeekly(id)
-  //    .then(()=>  window.location.reload(true))
-  //     .catch(err => console.log(err));
-  // };
+  deleteWeeklies(id){
+    API.deleteWeekly(id)
+     .then(()=>  this.loadWeeklies())
+      .catch(err => console.log(err));
+  };
   updateWeeklies = (id, update) => {
     console.log(id)
     console.log(update)
       API.updateWeekly(id, update)
       .then(() => {
         this.loadWeeklies()
+        this.deletedMessage()
         console.log(this.state)
         })
       .catch(err => console.log(err));

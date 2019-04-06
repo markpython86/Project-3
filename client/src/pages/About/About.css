@@ -1,0 +1,31 @@
+#aboutPanel {
+  margin: 20px;
+  /* text-align: center; */
+  justify-content: center;
+  background-color: #E1E2E1 !important;
+}
+
+.panel {
+  background-color: #FFFFFF !important;
+}
+
+#daniel {
+  text-align: center !important;
+  justify-content: center !important;
+  align-content: center !important;
+};
+
+#journal {
+  width: auto;
+  max-width: 200px;
+  height: auto;
+  max-height: 200px;
+  margin: 20px;
+}
+
+.aboutMinimalist {
+
+  margin-bottom: 40px;
+  margin-top: 40px;
+  text-align: center;
+}

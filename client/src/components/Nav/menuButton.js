@@ -48,7 +48,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       <div className={classes.list}>
         <Palette>
         <List>
-          <ListItem key="Logo">
+          <ListItem key="Logo" component={Link} to="/">
             <img id="logo" src="../utils/favicon/ML3.png"/>
           </ListItem>
 

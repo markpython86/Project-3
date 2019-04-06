@@ -1,5 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ExpansionPanel } from '@material-ui/core';
 
 
 const theme = createMuiTheme({
@@ -64,7 +65,27 @@ const theme = createMuiTheme({
         color: 'black',
       },
     },
-
+    MuiExpansionPanel: {
+      root: {
+        background: 'none',
+      },
+      expanded: {
+        backgroundColor: 'none',
+      }
+    },
+    MuiExpansionPanelActions: {
+      root: {
+        background: 'none',
+      },
+    },
+    MuiAvatar: {
+      img: {
+        textAlign: 'center',
+      },
+      root: {
+        textAlign: 'center',
+      },
+    },
   },
 });
 

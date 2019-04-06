@@ -476,11 +476,11 @@ const Child = (props) => (
     </Fab>
   </Grid>
 
-  {/* <Grid item xs={4}>
+  <Grid item xs={4}>
     <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid> */}
+  </Grid>
 
   </Grid>
 )
