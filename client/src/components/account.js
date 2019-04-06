@@ -53,90 +53,103 @@ function AlignItemsList(props) {
   // }
 
   return (
-    <List className={classes.root} className="card">
-      <div className="card-header">
-        <h4>Account Statistics</h4>
-      </div>
-      <div className="card-body">
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
-          </ListItemAvatar>
-          <ListItemText
-            primary="Daily"
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Total Number of Daily Entries: {state.daily.length}
-                </Typography>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
-          </ListItemAvatar>
-          <ListItemText
-            primary="Daily"
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Total Number of Daily Habits: {getHabitStats(state.daily)}
-                </Typography>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
+    <div className="card">
+      <div className="row">
+        <div className="col-sm-8 col-md-6">
+          <List className={classes.root}>
+            <div className="card-header">
+              <h4>Account Statistics</h4>
+            </div>
+            <div className="card-body">
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
+                </ListItemAvatar>
+                <ListItemText
+                
+                  primary="Daily"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        className={classes.inline}
+                        color="textPrimary"
+                      >
+                        Total Number of Daily Entries: {state.daily.length}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <ListItem alignItems="flex-start">
+                {/* <ListItemAvatar>
+                  <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
+                </ListItemAvatar> */}
+                <ListItemText
+                  
+                  inset={true}
+                  primary=""
+                  secondary={ 
+                  <React.Fragment>
+                      <Typography
+                        component="span"
+                        className={classes.inline}
+                        color="textPrimary"
+                      >
+                        Total Number of Daily Habits:   {getHabitStats(state.daily)}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
 
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Weekly" src="../utils/images/weeklyIcon.png" />
-          </ListItemAvatar>
-          <ListItemText
-            primary="Weekly"
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Total Number of Weekly Entries: {state.weekly.length}
-                </Typography>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Monthly" src="../utils/images/monthlyIcon.png" />
-          </ListItemAvatar>
-          <ListItemText
-            primary="Monthly"
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Total Number of Monthly Entries: {state.monthly.length}
-                </Typography>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt="Weekly" src="../utils/images/weeklyIcon.png" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Weekly"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        className={classes.inline}
+                        color="textPrimary"
+                      >
+                        Total Number of Weekly Entries: {state.weekly.length}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Monthly"
+                    src="../utils/images/monthlyIcon.png"
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Monthly"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        className={classes.inline}
+                        color="textPrimary"
+                      >
+                        Total Number of Monthly Entries:{" "}
+                        {state.monthly.length}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            </div>
+          </List>
+        </div>
       </div>
-    </List>
+    </div>
   );
 }
 
@@ -205,23 +218,23 @@ class Account extends Component {
     return (
       <Palette>
         <Wrapper>
-          <CenterCard363>
-            <div className="card border-secondary">
-              <h4 className="card-header">Account Information</h4>
-              <div className="card-body">
-                {/* <p className="text-muted">Server status: {status} ☀</p> */}
-                {profile && this.renderProfileForm()}
+          <div className="row">
+            <CenterCard363>
+              <div className="card border-secondary">
+                <h4 className="card-header">Account Information</h4>
+                <div className="card-body">
+                  {/* <p className="text-muted">Server status: {status} ☀</p> */}
+                  {profile && this.renderProfileForm()}
+                </div>
               </div>
-            </div>
-          </CenterCard363>
+            </CenterCard363>
+          </div>
 
-          <div>
-            <Wrapper>
-              <StatList
-                state={this.state}
-                getHabitStats={this.getHabitStats}
-              />
-            </Wrapper>
+          <div className="row">
+            <StatList
+              state={this.state}
+              getHabitStats={this.getHabitStats}
+            />
           </div>
         </Wrapper>
       </Palette>
