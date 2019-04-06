@@ -15,6 +15,7 @@ import mongoose from 'mongoose';
     user_id:{ type: String },
     year: {type: Number},
     week: {type: Number},
+    month: {type: Number},
     weekRange:{ type: String },
     fullDate:{ type: String }
     

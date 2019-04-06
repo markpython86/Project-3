@@ -34,10 +34,7 @@ export default {
 
       return axios.get("/api/weekly");
     },
-    // Gets the weekly with the given id
-    // getWeekly: function(id) {
-    //   return axios.get("/weekly/" + id);
-    // },
+   
     // Deletes the weekly with the given id
     deleteWeekly: function(id) {
       return axios.delete("/api/weekly/" + id);
@@ -50,5 +47,26 @@ export default {
     // Saves a weekly to the database
     saveWeekly: function(weeklyData) {
       return axios.post("/api/weekly", weeklyData);
+    },
+
+    // ======= Monthly Section ======= //
+
+    // Gets all Monthlies
+    getMonthlies: function() {
+
+      return axios.get("/api/monthly");
+    },
+   
+    deleteMonthly: function(id) {
+      return axios.delete("/api/monthly/" + id);
+    },
+
+    updateMonthly: function(id, monthlyData) {
+      return axios.put("/api/monthly/" + id, monthlyData);
+
+    },
+    // Saves a monthly to the database
+    saveMonthly: function(monthlyData) {
+      return axios.post("/api/monthly", monthlyData);
     }
   };

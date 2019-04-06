@@ -16,6 +16,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Build, Code, EventSeat, Explore, Motorcycle, Pets, QuestionAnswer, Rowing, ShoppingCart, Search, Today, SwapVert, WatchLater, Work, Mic, Movie, Call, Email, SentimentSatisfied, Waves, Weekend, AttachMoney, Headset, ColorLens, Brush, Camera, Edit, Landscape, LinkedCamera, Timer, DirectionsBike, DirectionsBus, DirectionsCar, DirectionsRun, DirectionsRailway, LocalLaundryService, LocalActivity, LocalAtm, LocalBar, LocalCafe, LocalCarWash, LocalDining, LocalDrink, LocalHotel, ChildFriendly, Pool, Spa, SmokeFree, FreeBreakfast, GolfCourse, Casino, FitnessCenter, Kitchen, School, LocalLibrary, Watch, } from '@material-ui/icons/';
+ 
 import "./MonthlyCard.css";
 
 const styles = theme => ({
@@ -116,26 +118,23 @@ class MonthlyCard extends React.Component {
       start: '',
       stop: '',
       selectedDate: '',
-      weekStart: '',
-      weekEnd: '',
+      monthAt: '',
       habits: '',
       isInEditMode: false
     };
   }
 
-  
-
-  
-
-  
-
- 
+  notEditMode = () => {
+    this.setState({
+      isInEditMode: false,
+      })
+  }
 
   handleChangeRemember = remember => event => {
     this.setState({ [remember]: event.target.value});
   };
 
-  handleChangeStart = Start => event => {
+  handleChangeStart = start => event => {
     this.setState({ [start]: event.target.value });
   };
 
@@ -151,7 +150,6 @@ class MonthlyCard extends React.Component {
       remember: this.props.remember,
       start: this.props.start,
       stop: this.props.stop,
-      // selectedDate: this.props.selectedDate,
       isInEditMode: true,
 
       
@@ -186,11 +184,10 @@ class MonthlyCard extends React.Component {
       // console.log('props',props.updates)
     const { classes } = props;
     const habits = props.updates.habits.filter(String);
-    const weekStart = props.updates.weekStart
-    const weekEnd = props.updates.weekEnd
+    const monthAt = props.updates.monthAt
     const newState = {
       remember: this.state.remember,
-      Start: this.state.Start,
+      start: this.state.start,
       stop: this.state.stop,
     }
    
@@ -250,7 +247,7 @@ class MonthlyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -260,7 +257,7 @@ class MonthlyCard extends React.Component {
           <Grid container spacing={0} id="header">
             <Grid item xs={4} >
             <Typography className="headerText" variant="h6">
-                {weekStart}
+                {monthAt}
               </Typography>
             </Grid>
 
@@ -446,7 +443,11 @@ const Child = (props) => (
   <Grid container className="fab"> 
   
   <Grid item xs={6}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+    <Fab onClick={() => {
+      props.props.updatedMonthly(props.props.index, props.newState)
+      props.notEditMode();
+    
+    }} size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
       {/* props.props.updatedDaily(props.props.index, ) */}
       {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
