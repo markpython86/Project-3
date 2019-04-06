@@ -1,11 +1,13 @@
 {
   "name": "mern-stack",
   "version": "2.0.1",
+  "proxy": "http://localhost:3000/",
   "description": "CRUD in MongoDB, Express, React/Redux, Node",
   "main": "index.js",
   "scripts": {
     "test": "eslint --fix src/",
     "precommit": "npm test",
+    "start": "concurrently '\" npm run start '\" cd client npm run dev'\"",
     "prepush": "npm test",
     "heroku:add": "heroku git:remote -a",
     "deploy:heroku": "git subtree push --prefix server heroku master"
