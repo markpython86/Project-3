@@ -186,7 +186,6 @@ loadDaily = () => {
   loadMonthlies = () => {
     API.getMonthlies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.monthly)
         this.setState({ 
           monthlies: res.data.monthly,
           dailies: res.data.daily
@@ -206,7 +205,10 @@ deleteMonthlies = (id) => {
  
   updateMonthlies = (id, update) => {
       API.updateMonthly(id, update)
-      .then(() =>  this.loadMonthlies())
+      .then(() =>  
+      {this.loadMonthlies()
+      this.savedMessage()
+      })
       .catch(err => console.log(err));
   }; 
 
@@ -218,12 +220,11 @@ deleteMonthlies = (id) => {
         
         
               } else {
-                console.log("User doesn't exists. Show error message");
                 
       API.saveDaily(data)
         .then(()=>{
           this.loadMonthlies()
-          
+          this.savedMessage()
         })
         .catch(err => console.log(err))
       }
@@ -316,7 +317,7 @@ deleteMonthlies = (id) => {
               </Item>
           </Container>
           {/* </Container> */}
-      <FAB submit={this.handleFormSubmit}/>
+      <FAB page='monthly' submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )
