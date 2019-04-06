@@ -249,7 +249,7 @@ class MonthlyCard extends React.Component {
 {/* Begginning of time section. */}
           <Grid container spacing={0} id="header">
             <Grid item xs={4} >
-            <Typography className="headerText" variant="h6">
+            <Typography className="headerText1" variant="h6">
                 {monthAt}
               </Typography>
             </Grid>
