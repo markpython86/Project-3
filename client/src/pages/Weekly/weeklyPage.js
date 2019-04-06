@@ -165,7 +165,7 @@ savedMessage = () => {
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadWeeklies() {
+  loadWeeklies = () => {
     API.getWeeklies()
       .then(res => {
         console.log('-=-=-=-==-=-=-=-=-=-=-',res.data)
@@ -177,11 +177,11 @@ savedMessage = () => {
       .catch(err => console.log(err));
   }
 
-  // deleteWeeklies(id){
-  //   API.deleteWeekly(id)
-  //    .then(()=>  window.location.reload(true))
-  //     .catch(err => console.log(err));
-  // };
+  deleteWeeklies = (id) => {
+    API.deleteWeekly(id)
+     .then(() =>  this.loadWeeklies())
+      .catch(err => console.log(err));
+  };
   updateWeeklies = (id, update) => {
     console.log(id)
     console.log(update)
@@ -277,7 +277,7 @@ this.errorMessage();        // API.saveDaily(data)
                 <WeeklyCard
                   key={person._id}
                   index={person._id}
-                  // deleteWeekly = {this.deleteWeeklies}
+                  deleteWeekly = {this.deleteWeeklies}
                   updatedWeekly={this.updateWeeklies}
                   // preUpdate={this.updateWeeklies}
                   updates={person}

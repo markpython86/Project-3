@@ -48,7 +48,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       <div className={classes.list}>
         <Palette>
         <List>
-          <ListItem key="Logo">
+          <ListItem key="Logo" component={Link} to="/">
             <img id="logo" src="../utils/favicon/ML3.png"/>
           </ListItem>
 
@@ -66,6 +66,10 @@ class SwipeableTemporaryDrawer extends React.Component {
 
             <ListItem button key="Weekly" component={Link} to="/weekly">
                 <ListItemText primary="Weekly"/>
+            </ListItem>
+
+            <ListItem button key="Monthly" component={Link} to="/monthly">
+                <ListItemText primary="Monthly"/>
             </ListItem>
 
           {/* ))} */}

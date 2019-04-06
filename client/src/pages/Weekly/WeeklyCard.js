@@ -176,6 +176,9 @@ class WeeklyCard extends React.Component {
     });
   }
 
+  loadWeeklies = () => {
+    this.props.loadWeeklies()
+  }
   handleClickAway = () => {
     if (!this.state.isInEditMode){
     this.setState({
@@ -183,6 +186,11 @@ class WeeklyCard extends React.Component {
     });
     }
   };
+  deleteWeekly = (id) => {
+    // console.log('props in child',this.props)
+    this.props.deleteWeekly(id)
+  }
+
 
   render() {
     const {
@@ -255,7 +263,7 @@ class WeeklyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} loadWeeklies={this.loadWeeklies} notEditMode={this.notEditMode} deleteWeekly={this.deleteWeekly} hideIcons={this.hideIcons} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -456,7 +464,7 @@ const Child = (props) => (
 
   <Grid container className="fab"> 
   
-  <Grid item xs={6}>
+  <Grid item xs={4}>
     <Fab onClick={() => {
       console.log(props.props.index)
       console.log(props.newState)
@@ -470,17 +478,20 @@ const Child = (props) => (
     </Fab>
   </Grid>
 
-  <Grid item xs={6}>
+  <Grid item xs={4}>
     <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
-  {/* <Grid item xs={4}>
-    <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+  <Grid item xs={4}>
+    <Fab onClick={() => {
+      props.props.deleteWeekly(props.props.index)
+      props.hideIcons()
+      }} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid> */}
+  </Grid>
 
   </Grid>
 )
