@@ -4,219 +4,60 @@ import React, { Component } from "react";
 import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import API from "../../utils/API";
-import { postMonthly } from "../../actions";
+import { postWeekly} from "../../actions";
 import Wrapper from "../Grid/Wrapper";
 import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
 import Nav from "../../components/Nav";
-import MonthlyCard from "../Monthly/MonthlyCard";
-
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { withStyles } from '@material-ui/core/styles';
+import MonthlyCard from "../Weekly/MonthlyCard";
 
 
-const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
-};
-
-const styles1 = theme => ({
-  success: {
-    backgroundColor: '#b0c5c2',
-  },
-  error: {
-    backgroundColor: '#ba6b6c',
-  },
-  info: {
-    backgroundColor: theme.palette.primary.dark,
-  },
-  warning: {
-    backgroundColor: '#808E95',
-  },
-  icon: {
-    fontSize: 20,
-    color: 'black',
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing.unit,
-    color: 'black',
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-    color: 'black',
-  },
-});
-
-
-
-function MySnackbarContent(props) {
-  const { classes, className, message, onClose, variant, ...other } = props;
-  const Icon = variantIcon[variant];
-
-  return (
-    <SnackbarContent
-      className={classNames(classes[variant], className)}
-      aria-describedby="client-snackbar"
-      message={
-        <span id="client-snackbar" className={classes.message}>
-          <Icon className={classNames(classes.icon, classes.iconVariant)} />
-          {message}
-        </span>
-      }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
-      ]}
-      {...other}
-    />
-  );
-}
-
-MySnackbarContent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
-  message: PropTypes.node,
-  onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
-};
-
-const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
-
-const styles2 = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
-});
 
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      monthlies: [],
-      dailies:[],
-       savedMessage: false,
-      deletedMessage: false,
-      errorMessage: false,
+      weeklies: [],
       
     }
   }
 
 
   componentDidMount() {
-    this.loadMonthlies();
+    this.loadWeeklies();
   }
-
-
-savedMessage = () => {
-  this.setState({ savedMessage: true });
-};
-
-errorMessage = () => {
-  this.setState({ errorMessage: true });
-};
-deletedMessage = () => {
-  this.setState({ deletedMessage: true });
-};
-
-handleDeleteMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  this.setState({ deletedMessage: false });
-};
-
-handleSaveMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  this.setState({ savedMessage: false });
-};
-
-handleErrorMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  this.setState({ errorMessage: false });
-};
-
-loadDaily = () => {
-  API.getDailies()
-  .then(res => {
-      console.log('ressssss', res.data.daily);
-      // this.setState({ dailies: res.data.daily })
-      // console.log(res.data.daily)
-    })
-  .catch(err => console.log(err))
-}
-
 
 
 
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadMonthlies = () => {
-    API.getMonthlies()
+  loadWeeklies() {
+    API.getWeeklies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.monthly)
-        this.setState({ 
-          monthlies: res.data.monthly,
-          dailies: res.data.daily
-        })
+        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.weekly)
+        this.setState({ weeklies: res.data.weekly })
       })
       .catch(err => console.log(err));
   }
 
- 
-  updateMonthlies = (id, update) => {
-      API.updateMonthly(id, update)
-      .then(() =>  this.loadMonthlies())
+  // deleteWeeklies(id){
+  //   API.deleteWeekly(id)
+  //    .then(()=>  window.location.reload(true))
+  //     .catch(err => console.log(err));
+  // };
+  updateWeeklies(id, update) {
+      API.updateWeekly(id, update)
+      .then(()=>  window.location.reload(true))
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit = (data) => {
-      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();        // API.saveDaily(data)
-                //   .then(() => this.loadDaily())
-                //   .catch(err => console.log(err));
+    handleFormSubmit(data) {
+      this.props.postWeekly(data)
         
-        
-              } else {
-                console.log("User doesn't exists. Show error message");
-                
-      API.saveDaily(data)
-        .then(()=>{
-          this.loadMonthlies()
-          this.loadDailies()
-        })
-        .catch(err => console.log(err))
-      }
     };
 
 
@@ -226,62 +67,14 @@ loadDaily = () => {
       <Palette>
       {/* <Nav /> */}
       <Wrapper>
-      <Snackbar
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-            open={this.state.savedMessage}
-            autoHideDuration={3000}
-            onClose={this.handleSaveMessage}
-          >
-          <MySnackbarContentWrapper
-            onClose={this.handleSaveMessage}
-            variant="success"
-            message="Nice! 👍 Your entry has been saved."
-          />
-        </Snackbar>
-
-
-        <Snackbar
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-            open={this.state.errorMessage}
-            autoHideDuration={3000}
-            onClose={this.handleErrorMessage}
-          >
-          <MySnackbarContentWrapper
-            onClose={this.handleErrorMessage}
-            variant="warning"
-            message="Oops! 😅 You already have an entry on this date. Just edit that one!"
-          />
-        </Snackbar>
-
-          
-        <Snackbar
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-            open={this.state.deletedMessage}
-            autoHideDuration={3000}
-            onClose={this.handleDeleteMessage}
-          >
-          <MySnackbarContentWrapper
-            onClose={this.handleDeleteMessage}
-            variant="error"
-            message="Bye, bye, bye. 👋 Your entry has been deleted."
-          />
-        </Snackbar>
         {/* <Container spacing="0"> */}
           <Container spacing="16">
 
           {/* // Add edit button to this page
+          // Add onClick to button to change to edit mode */}
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
-            {this.state.monthlies.map((person, index) => (
+            {this.state.weeklies.map((person, index) => (
               <Item xs='12' sm='3'key={person._id}>
               
 
@@ -289,13 +82,12 @@ loadDaily = () => {
                   key={person._id}
                   index={person._id}
                   // deleteWeekly = {this.deleteWeeklies}
-                  updatedMonthly={this.updateMonthlies}
-                  preUpdate={this.updateMonthlies}
+                  updatedWeekly={this.updateWeeklies}
+                  preUpdate={this.updateWeeklies}
                   updates={person}
-                  remember={person.remember}
-                  start={person.start}
-                  stop={person.stop}
-                  monthAt={person.monthAt}
+                  best={person.best}
+                  worst={person.worst}
+                  nextWeek={person.nextWeek}
                 />
               
               </Item>
@@ -306,7 +98,7 @@ loadDaily = () => {
               </Item>
           </Container>
           {/* </Container> */}
-      <FAB submit={this.handleFormSubmit}/>
+      <FAB />
       </Wrapper>
       </Palette>
     )
@@ -320,6 +112,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postMonthly })(reduxForm({
-    form: 'postMonthly'
+export default connect(mapStateToProps,{ postWeekly })(reduxForm({
+    form: 'postWeekly'
 })(App));
