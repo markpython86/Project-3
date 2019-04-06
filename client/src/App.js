@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
 // import Monthly from './pages/monthlyPage';
+import About from './pages/About/About';
 import Weekly from './pages/Weekly/weeklyPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
@@ -39,6 +40,7 @@ ReactDOM.render(
           <Route exact path="/" component= {Home} />
           {/* <Route path="/public" component= {Public} /> */}
           <Route path="/account" component= {RequireAuth(Account)} />
+          <Route path="/about" component= {About} />
           <Route path="/signin" component= {Signin} />
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />
