@@ -245,17 +245,6 @@ habit3: '',
       selectedDate: this.state.selectedDate
     }
 
-    // const clearState = {
-    //   dailyHighlight: '',
-    //   positive: '',
-    //   negative: '',
-    //   selectedTime1: new Date(),
-    //   selectedTime2: new Date(),
-    //   selectedDate: new Date(),
-    //   habit1: '',
-    //   habit2: '',
-    //   habit3: '',
-    // }
     return (
       
 
@@ -443,6 +432,7 @@ habit3: '',
               <Select
                 classes={{ select: "habitIcon"}}
                 // name={this.state.habit1}
+                // value={this.state.habit1}
                 value={this.state.habit1}
                 onChange={this.handleHabitChange1}
                 IconComponent={classes.hide}
