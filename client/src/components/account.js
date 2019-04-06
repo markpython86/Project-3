@@ -35,7 +35,7 @@ const styles = theme => ({
 });
 
 function AlignItemsList(props) {
-  const { classes, state, getHabitStats } = props;
+  const { classes, state} = props;
   // const getHabitStats = props.getHabitStats;
 
   // function stats(obj, type) {
@@ -85,7 +85,7 @@ function AlignItemsList(props) {
                         className={classes.inline}
                         color="textPrimary"
                       >
-                        Total Number of Daily Habits:   {getHabitStats(state.daily)}
+                        Total Number of Daily Habits:   {state.allHabits.length}
                       </Typography>
                     </React.Fragment>
                   }
@@ -106,7 +106,7 @@ function AlignItemsList(props) {
                         className={classes.inline}
                         color="textPrimary"
                       >
-                        Total Number of Weekly Entries: {state.weekly.length}
+                        Total Number of Weekly Entries: {}
                       </Typography>
                     </React.Fragment>
                   }
@@ -129,7 +129,7 @@ function AlignItemsList(props) {
                         color="textPrimary"
                       >
                         Total Number of Monthly Entries:{" "}
-                        {state.monthly.length}
+                       
                       </Typography>
                     </React.Fragment>
                   }
@@ -156,53 +156,87 @@ class Account extends Component {
       editing: false,
       daily: [],
       weekly: [],
-      monthly: []
+      monthly: [],
+      allHabits: []
     };
+    
   }
   componentWillMount() {
     this.props.tryConnect();
     this.props.getUserProfile();
-    this.loadDaily();
+    this.loadDaily()
     // this.loadWeekly();
   }
 
   loadDaily = () => {
     API.getDailies()
       .then(res => {
+        console.log("ressssss", res.data.daily);
         this.setState({
           daily: res.data.daily,
-          weekly: res.data.weekly
         });
+        this.getHabitStats()
       })
       .catch(err => console.log(err));
   };
 
 
+  getHabitStats() {
+    let allHabits = [];
+    let counts=[];
 
-      
-   
-  getHabitStats(array) {
-    let value = [];
-
-    for (let i = 0; i < array.length; i ++) {
-      if (array[i].habit1 !== "") {
-        value.push(array[i].habit1);
+    this.state.daily.map((person, index) => {
+      if(person.habit1 !== "") {
+        allHabits.push({ item: person.habit1, total: 1 });
+				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
+      } 
+      if(person.habit2 !== "") {
+        allHabits.push({ item: person.habit2, total: 1 });
+				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
       }
-      if (array[i].habit2 !== "") {
-        value.push(array[i].habit2);
+      if(person.habit3 !== "") {
+        allHabits.push({item: person.habit3, total: 1});
+				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
       }
-      if (array[i].habit3 !== "") {
-        value.push(array[i].habit3);
+
+    }); 
+let habitValues = new Set(allHabits)
+
+    allHabits.map((item, index) => {
+      if (habitValues.has(item))
+      console.log("Here")
+
+      if (counts.item === null) {
+        counts.push({item: item, total:1})
+				console.log("CONSOLE:: Account -> getHabitStats -> counts == -1" , counts);
       }
-      return (value.length)
+
+      if (counts.item !== null) {
+        counts.item.push({item: item, total:+1})
+				console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
+      }
 
 
+    })
+    for (let i = 0; i <= allHabits.length; i++) {
+      if (counts[i] === undefined) {
+        counts.push(allHabits[i]);
+				console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
+      } else if (counts[allHabits[i]] === counts[allHabits[i]]){
+        counts.indexOf(allHabits[i])
+        
+      }
     }
+    
+
+    this.setState({
+      allHabits: allHabits,
+    });
+
   }
 
-
   render() {
-    let { status, profile,  } = this.props;
+    let { status, profile } = this.props;
     return (
       <Palette>
         <Wrapper>
@@ -219,10 +253,7 @@ class Account extends Component {
           </div>
 
           <div className="row">
-            <StatList
-              state={this.state}
-              getHabitStats={this.getHabitStats}
-            />
+            <StatList state={this.state} />
           </div>
         </Wrapper>
       </Palette>
@@ -243,10 +274,26 @@ class Account extends Component {
     if (this.state.editing) {
       return (
         <div className="form-group marginButton">
-                  <Button disabled={!dirty} type="submit" variant="contained" color="primary" className="button" >Save Change</Button>
+          <Button
+            disabled={!dirty}
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="button"
+          >
+            Save Change
+          </Button>
 
-                  <Button disabled={submitting} variant="contained" color="primary" className="button"  onClick={this.cancelForm.bind(this)}>Cancel</Button>
-      </div>
+          <Button
+            disabled={submitting}
+            variant="contained"
+            color="primary"
+            className="button"
+            onClick={this.cancelForm.bind(this)}
+          >
+            Cancel
+          </Button>
+        </div>
       );
     } else {
       return (
@@ -254,7 +301,14 @@ class Account extends Component {
         //   className="btn btn-light btn-lg btn-block"
         //   onClick={this.switchEditting.bind(this)}
         // >
-        <Button variant="contained" color="primary" className="marginButton" onClick={this.switchEditing.bind(this)}>Update Information</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className="marginButton"
+          onClick={this.switchEditing.bind(this)}
+        >
+          Update Information
+        </Button>
         // </button>
       );
     }
