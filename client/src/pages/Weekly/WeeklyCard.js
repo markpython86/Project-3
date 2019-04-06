@@ -130,12 +130,6 @@ class WeeklyCard extends React.Component {
       })
   }
 
-  
-
-  
-
- 
-
   handleChangeBest = best => event => {
     this.setState({ [best]: event.target.value});
   };
@@ -156,7 +150,6 @@ class WeeklyCard extends React.Component {
       best: this.props.best,
       worst: this.props.worst,
       nextWeek: this.props.nextWeek,
-      // selectedDate: this.props.selectedDate,
       isInEditMode: true,
 
       
@@ -187,7 +180,6 @@ class WeeklyCard extends React.Component {
     }
   };
   deleteWeekly = (id) => {
-    // console.log('props in child',this.props)
     this.props.deleteWeekly(id)
   }
 
@@ -196,7 +188,6 @@ class WeeklyCard extends React.Component {
     const {
       props,
     } = this;
-      // console.log('props',props.updates)
     const { classes } = props;
     const habits = props.updates.habits.filter(String);
     const weekStart = props.updates.weekStart
@@ -239,21 +230,8 @@ class WeeklyCard extends React.Component {
      
       return compressed;
     };
-    
-    // It should go something like this:
-    
-    // var habitCounter = new Array("dog", "dog", "cat", "buffalo", "wolf", "cat", "tiger", "cat");
+
     var habitCounter = compressArray(habits);
-    // console.log(habitCounter);
-    /*
-    console: [
-      Object { value="dog", count=2}, 
-      Object { value="cat", count=3}, 
-      Object { value="buffalo", count=1}, 
-      Object { value="wolf", count=1}, 
-      Object { value="tiger", count=1}
-    ]
-    */
 
 
 
@@ -466,15 +444,10 @@ const Child = (props) => (
   
   <Grid item xs={4}>
     <Fab onClick={() => {
-      console.log(props.props.index)
-      console.log(props.newState)
       props.props.updatedWeekly(props.props.index, props.newState)
       props.notEditMode();
-      // props.props.updateWeekly(props.props.index, props.newState)
       } } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 

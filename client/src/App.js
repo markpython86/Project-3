@@ -30,7 +30,6 @@ const token = localStorage.getItem('auth_jwt_token');
 // if we have a token, consider the user to be signed in
 if (token) {
   store.dispatch({type: AUTH_USER})
-  console.log(token)
 }
 
 ReactDOM.render(

@@ -181,7 +181,8 @@ class Account extends Component {
       .then(res => {
         this.setState({
           daily: res.data.daily,
-          weekly: res.data.weekly
+          weekly: res.data.weekly,
+          monthly: res.data.monthly,
         });
       })
       .catch(err => console.log(err));

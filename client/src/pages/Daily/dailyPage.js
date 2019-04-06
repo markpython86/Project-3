@@ -178,15 +178,12 @@ class App extends Component {
   loadDaily = () => {
     API.getDailies()
     .then(res => {
-        console.log('ressssss', res.data.daily);
         this.setState({ dailies: res.data.daily })
-        // console.log(res.data.daily)
       })
     .catch(err => console.log(err))
   }
 
   deleteDailies = (id) => {
-    console.log('id',id)
     API.deleteDaily(id)
      .then(() => {
         this.loadDaily()
@@ -196,10 +193,6 @@ class App extends Component {
       .catch(err => console.log(err));
   };
   updateDailies = (id, update) => {
-    console.log('update',update)
-    // console.log('old', oldValues)
-    
-    // this.setState({ dailies: update })
       API.updateDaily(id, update)
       .then(() => {
         this.loadDaily()
@@ -209,16 +202,9 @@ class App extends Component {
   }; 
 
     handleFormSubmit = (data) => {
-      // console.log(data)
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
         this.errorMessage();
-        // API.saveDaily(data)
-        //   .then(() => this.loadDaily())
-        //   .catch(err => console.log(err));
-
-
       } else {
-        console.log("User doesn't exists. Show error message");
         API.saveDaily(data)
         .then(() => {
           this.loadDaily()

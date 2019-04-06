@@ -169,11 +169,7 @@ handleErrorMessage = (event, reason) => {
 
 loadDaily = () => {
   API.getDailies()
-  .then(res => {
-      console.log('ressssss', res.data.daily);
-      // this.setState({ dailies: res.data.daily })
-      // console.log(res.data.daily)
-    })
+  .then()
   .catch(err => console.log(err))
 }
 
@@ -186,7 +182,6 @@ loadDaily = () => {
   loadMonthlies = () => {
     API.getMonthlies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data.monthly)
         this.setState({ 
           monthlies: res.data.monthly,
           dailies: res.data.daily
@@ -194,28 +189,36 @@ loadDaily = () => {
       })
       .catch(err => console.log(err));
   }
+  deleteMonthlies = (id) => {
+    API.deleteMonthly(id)
+     .then(() =>  {
+       this.loadMonthlies()
+       this.deletedMessage()
+       })
+      .catch(err => console.log(err));
+  };
 
  
   updateMonthlies = (id, update) => {
       API.updateMonthly(id, update)
-      .then(() =>  this.loadMonthlies())
+      .then(() => {
+
+       this.loadMonthlies()
+       this.savedMessage()
+       })
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit = (data) => {
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();        // API.saveDaily(data)
-                //   .then(() => this.loadDaily())
-                //   .catch(err => console.log(err));
-        
-        
+        this.errorMessage();
               } else {
-                console.log("User doesn't exists. Show error message");
                 
       API.saveDaily(data)
         .then(()=>{
           this.loadMonthlies()
           this.loadDailies()
+          this.savedMessage()
         })
         .catch(err => console.log(err))
       }
@@ -290,7 +293,7 @@ loadDaily = () => {
                 <MonthlyCard 
                   key={person._id}
                   index={person._id}
-                  // deleteWeekly = {this.deleteWeeklies}
+                  deleteMonthly = {this.deleteMonthlies}
                   updatedMonthly={this.updateMonthlies}
                   preUpdate={this.updateMonthlies}
                   updates={person}
