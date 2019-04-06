@@ -11,7 +11,6 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-// import MenuAppBar from "../../components/Nav/";
 import DailyCard from "../Daily/DailyCard";
 
 import PropTypes from 'prop-types';

@@ -3,16 +3,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
-import {tryConnect, getUserProfile, updateUserProfile} from '../actions';
-import CenterCard363 from './centerCard363';
+import {tryConnect, getUserProfile, updateUserProfile} from '../../actions';
+import CenterCard363 from '../../components/centerCard363';
 import IconButton from "@material-ui/core/IconButton";
 import {Edit} from '@material-ui/icons';
 import "./account.css";
-import Wrapper from "../pages/Grid/Wrapper";
-import Container from "../pages/Grid/Container";
-import Palette from "../pages/Grid/Palette";
+import Wrapper from "../Grid/Wrapper";
+import Container from "../Grid/Container";
+import Palette from "../Grid/Palette";
 import { Grid } from "@material-ui/core";
-import API from "../utils/API";
+import API from "../../utils/API";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -22,6 +22,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
@@ -36,22 +37,6 @@ const styles = theme => ({
 
 function AlignItemsList(props) {
   const { classes, state} = props;
-  // const getHabitStats = props.getHabitStats;
-
-  // function stats(obj, type) {
-  //   let results = [];
-
-  //   let search = search;
-
-  //   for (var i = 0; i < obj.length; i++) {
-  //     for (key in obj[i]) {
-  //       if (obj[i][key].indexOf(search) != -1) {
-  //         results.push(obj[i]);
-  //       }
-  //     }
-  //   } return results
-
-  // }
 
   return (
     <div className="card">
@@ -60,6 +45,7 @@ function AlignItemsList(props) {
           <List className={classes.root}>
             <div className="card-header">
               <h4>Account Statistics</h4>
+             
             </div>
             <div className="card-body">
               <ListItem alignItems="flex-start">
@@ -91,7 +77,7 @@ function AlignItemsList(props) {
                   }
                 />
               </ListItem>
-              
+              <Divider variant="middle" light={true}/>
 
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
@@ -112,6 +98,7 @@ function AlignItemsList(props) {
                   }
                 />
               </ListItem>
+              <Divider variant="enum" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar

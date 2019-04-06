@@ -197,7 +197,9 @@ class WeeklyCard extends React.Component {
       worst: this.state.worst,
       nextWeek: this.state.nextWeek,
     }
-   
+    
+    console.log("CONSOLE:: WeeklyCard -> render -> habits", habits);
+
 
 
     function compressArray(original) {

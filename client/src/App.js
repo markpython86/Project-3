@@ -7,7 +7,7 @@ import reduxThunk from 'redux-thunk';
 // import App1 from './pages/Daily/daily';
 import App from './components/app';
 import Home from './pages/Home';
-import Account from './components/account';
+import Account from './pages/Account/account';
 import Daily from './pages/Daily/dailyPage';
 
 import About from './pages/About/About';
