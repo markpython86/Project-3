@@ -92,18 +92,6 @@ function FAB(props) {
               <ArrowBackIosIcon id="backArrow" />
             </WrappedFab>
           </Tooltip>
-          <Tooltip disableFocusListener title="Monthly Page">
-            <WrappedFab
-              color="primary"
-              aria-label="Forward"
-              className={classes.forwardView}
-              style={{ position: "fixed" }}
-              component={Link}
-              to="/monthly"
-            >
-              <ArrowForwardIosIcon id="forwardArrow" />
-            </WrappedFab>
-          </Tooltip>
         </div>
       ) : null}
       {props.page === "weekly" ? (
@@ -130,6 +118,22 @@ function FAB(props) {
               to="/monthly"
             >
               <ArrowBackIosIcon id="backArrow" />
+            </WrappedFab>
+          </Tooltip>
+        </div>
+      ) : null}
+      {props.page === "monthly" ? (
+        <div>
+          <Tooltip disableFocusListener title="Weekly Page">
+            <WrappedFab
+              color="primary"
+              aria-label="Forward"
+              className={classes.forwardView}
+              style={{ position: "fixed" }}
+              component={Link}
+              to="/weekly"
+            >
+              <ArrowForwardIosIcon id="forwardArrow" />
             </WrappedFab>
           </Tooltip>
         </div>

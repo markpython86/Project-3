@@ -22,7 +22,6 @@ class Signin extends Component {
         this.props.signUserIn(d)
     }
     render() {
-        // console.log('this.props;: ', this.props);
         const {handleSubmit} = this.props;
         return (
                 <Palette>

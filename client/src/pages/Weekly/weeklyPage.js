@@ -168,7 +168,6 @@ savedMessage = () => {
   loadWeeklies = () => {
     API.getWeeklies()
       .then(res => {
-        console.log('-=-=-=-==-=-=-=-=-=-=-',res.data)
         this.setState({ 
           weeklies: res.data.weekly,
           dailies: res.data.daily
@@ -179,31 +178,28 @@ savedMessage = () => {
 
   deleteWeeklies = (id) => {
     API.deleteWeekly(id)
-     .then(() =>  this.loadWeeklies())
+     .then(() =>  {
+       this.loadWeeklies()
+       this.deletedMessage()
+       })
       .catch(err => console.log(err));
   };
   updateWeeklies = (id, update) => {
-    console.log(id)
-    console.log(update)
+    
       API.updateWeekly(id, update)
       .then(() => {
         this.loadWeeklies()
-        this.deletedMessage()
-        console.log(this.state)
+        this.savedMessage()
         })
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit = (data) => {
-      console.log(this.state.weeklies)
+      
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-this.errorMessage();        // API.saveDaily(data)
-        //   .then(() => this.loadDaily())
-        //   .catch(err => console.log(err));
-
+        this.errorMessage(); 
 
       } else {
-        console.log("User doesn't exists. Show error message");
         API.saveDaily(data)
           .then(() => {
             this.loadWeeklies()

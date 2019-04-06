@@ -161,7 +161,9 @@ class ControlledExpansionPanels extends React.Component {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
+            <Grid container justify="center" alignItems="center" className={classes.root}>
             <Carousel></Carousel>
+            </Grid>
           </ExpansionPanelDetails>
         
         </ExpansionPanel>

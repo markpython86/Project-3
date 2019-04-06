@@ -169,6 +169,13 @@ class MonthlyCard extends React.Component {
     });
   }
 
+  loadMonthlies = () => {
+    this.props.loadMonthlies()
+  }
+  deleteMonthly = (id) => {
+    this.props.deleteMonthly(id)
+  }
+
   handleClickAway = () => {
     if (!this.state.isInEditMode){
     this.setState({
@@ -181,7 +188,6 @@ class MonthlyCard extends React.Component {
     const {
       props,
     } = this;
-      // console.log('props',props.updates)
     const { classes } = props;
     const habits = props.updates.habits.filter(String);
     const monthAt = props.updates.monthAt
@@ -224,21 +230,8 @@ class MonthlyCard extends React.Component {
       return compressed;
     };
     
-    // It should go something like this:
-    
-    // var habitCounter = new Array("dog", "dog", "cat", "buffalo", "wolf", "cat", "tiger", "cat");
+    // It should go something like this: 
     var habitCounter = compressArray(habits);
-    // console.log(habitCounter);
-    /*
-    console: [
-      Object { value="dog", count=2}, 
-      Object { value="cat", count=3}, 
-      Object { value="buffalo", count=1}, 
-      Object { value="wolf", count=1}, 
-      Object { value="tiger", count=1}
-    ]
-    */
-
 
 
 
@@ -247,7 +240,7 @@ class MonthlyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} loadMonthlies={this.loadMonthlies} notEditMode={this.notEditMode} deleteMonthly={this.deleteMonthly} hideIcons={this.hideIcons} newState={newState}  />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -348,7 +341,7 @@ class MonthlyCard extends React.Component {
       
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <Flag />
+          <Icon>history</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -368,7 +361,7 @@ class MonthlyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <Icon>timer</Icon>
+          <Icon>timer</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -387,7 +380,7 @@ class MonthlyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowDownward />
+          <Icon>not_interested</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -442,7 +435,7 @@ const Child = (props) => (
 
   <Grid container className="fab"> 
   
-  <Grid item xs={6}>
+  <Grid item xs={4}>
     <Fab onClick={() => {
       props.props.updatedMonthly(props.props.index, props.newState)
       props.notEditMode();
@@ -454,17 +447,20 @@ const Child = (props) => (
     </Fab>
   </Grid>
 
-  <Grid item xs={6}>
+  <Grid item xs={4}>
     <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
-  {/* <Grid item xs={4}>
-    <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+  <Grid item xs={4}>
+    <Fab   onClick={() => {
+      props.props.deleteMonthly(props.props.index)
+      props.hideIcons()
+      }} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid> */}
+  </Grid>
 
   </Grid>
 )

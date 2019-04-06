@@ -13,7 +13,7 @@ import Item from "../Grid/Item";
 import Nav from "../../components/Nav";
 
 
-import MonthlyCard from "../Monthly/MonthlyCard";
+import MonthlyCard from "./MonthlyCard";
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';

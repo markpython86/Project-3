@@ -154,7 +154,6 @@ class DailyCard extends React.Component {
   }
 
   editMode = () =>{
-    // console.log('props in edit mode',this.props)
     this.setState({
       dailyHighlight: this.props.Highlights,
       positive: this.props.positive,
@@ -176,7 +175,6 @@ class DailyCard extends React.Component {
   }
 
   deleteDaily = (id) => {
-    // console.log('props in child',this.props)
     this.props.deleteDaily(id)
   }
 
@@ -238,9 +236,6 @@ class DailyCard extends React.Component {
       selectedDate: this.props.selectedDate,
       }
     }
-    
-    // console.log(newState)
-   
 
 
     return (
@@ -362,7 +357,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Daily Highlight"
-            placeholder="What is one thing that needs to happen today?"
+            placeholder=""
             multiline
             onChange={this.handleChangeDailyHighlight}
             className={classes.textField}
@@ -384,7 +379,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Positive"
-            placeholder="What is something good from today?"
+            placeholder=""
             multiline
             onChange={this.handleChangePositive}
             className={classes.textField}
@@ -404,7 +399,7 @@ class DailyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Negative"
-            placeholder="What is something bad from today?"
+            placeholder=""
             multiline
             onChange={this.handleChangeNegative}
             className={classes.textField}
