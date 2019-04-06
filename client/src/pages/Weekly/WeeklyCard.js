@@ -348,7 +348,7 @@ class WeeklyCard extends React.Component {
       
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <Flag />
+          <Icon>stars</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -368,7 +368,7 @@ class WeeklyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowUpward />
+          <Icon>cancel</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -387,7 +387,7 @@ class WeeklyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowDownward />
+          <Icon>next_week</Icon>
           </Grid>
           <Grid item>
             <TextField
