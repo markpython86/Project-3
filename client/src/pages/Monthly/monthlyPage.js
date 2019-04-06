@@ -194,7 +194,7 @@ loadDaily = () => {
       .catch(err => console.log(err));
   }
 
-  deleteMonthlies = (id) => {
+deleteMonthlies = (id) => {
     API.deleteMonthly(id)
      .then(() =>  {
        this.loadMonthlies()
@@ -202,9 +202,13 @@ loadDaily = () => {
        })
       .catch(err => console.log(err));
   };
+ 
   updateMonthlies = (id, update) => {
       API.updateMonthly(id, update)
-      .then(() =>  this.loadMonthlies())
+      .then(() =>  
+      {this.loadMonthlies()
+      this.savedMessage()
+      })
       .catch(err => console.log(err));
   }; 
 
@@ -216,12 +220,11 @@ loadDaily = () => {
         
         
               } else {
-                console.log("User doesn't exists. Show error message");
                 
       API.saveDaily(data)
         .then(()=>{
           this.loadMonthlies()
-          this.loadDailies()
+          this.savedMessage()
         })
         .catch(err => console.log(err))
       }
