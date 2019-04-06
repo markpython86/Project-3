@@ -76,14 +76,8 @@ export default {
                             if (d == null) {
 
                                 const weekly = new Weekly({
-<<<<<<< HEAD
                                     weekStart: Moment(req.body.selectedDate).startOf('week').format('MM/DD'),
                                     weekEnd: Moment(req.body.selectedDate).endOf('week').format('MM/DD'),
-                                    month: newDaily.month,
-=======
-                                    weekStart: Moment(req.body.fullDate).startOf('week').format('MM/DD'),
-                                    weekEnd: Moment(req.body.fullDate).endOf('week').format('MM/DD'),
->>>>>>> 2016eecf9c9c496fba83778b5b0a91408c321776
                                     week: newDaily.week,
                                     year: newDaily.year,
                                     month: newDaily.month,
