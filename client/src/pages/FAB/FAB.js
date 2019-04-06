@@ -77,46 +77,69 @@ function FAB(props) {
   const { classes } = props;
 
   return (
-
     <Grid container className={classes.mainConatinerStyle}>
-      
-        {props.page === "daily" ? 
-          (
+      {props.page === "daily" ? (
+        <div>
           <Tooltip disableFocusListener title="Weekly Page">
-            <WrappedFab 
-            color="primary" 
-            aria-label="Back" 
-            className={classes.backView} 
-            style={{position: 'fixed'}}
-            component={Link}
-            to="/weekly"
-            
+            <WrappedFab
+              color="primary"
+              aria-label="Back"
+              className={classes.backView}
+              style={{ position: "fixed" }}
+              component={Link}
+              to="/weekly"
             >
-            <ArrowBackIosIcon id="backArrow"/>
+              <ArrowBackIosIcon id="backArrow" />
             </WrappedFab>
           </Tooltip>
-          ) : (
+          <Tooltip disableFocusListener title="Monthly Page">
+            <WrappedFab
+              color="primary"
+              aria-label="Forward"
+              className={classes.forwardView}
+              style={{ position: "fixed" }}
+              component={Link}
+              to="/monthly"
+            >
+              <ArrowForwardIosIcon id="forwardArrow" />
+            </WrappedFab>
+          </Tooltip>
+        </div>
+      ) : null}
+      {props.page === "weekly" ? (
+        <div>
           <Tooltip disableFocusListener title="Daily Page">
             <WrappedFab
-            color="primary"
-            aria-label="Forward"
-            className={classes.forwardView}
-            style={{ position: 'fixed' }}
-            component={Link}
-            to="/daily"
-            
+              color="primary"
+              aria-label="Forward"
+              className={classes.forwardView}
+              style={{ position: "fixed" }}
+              component={Link}
+              to="/daily"
             >
-            <ArrowForwardIosIcon id="forwardArrow" />
+              <ArrowForwardIosIcon id="forwardArrow" />
             </WrappedFab>
           </Tooltip>
-          )
-        }
-      
+          <Tooltip disableFocusListener title="Monthly Page">
+            <WrappedFab
+              color="primary"
+              aria-label="Back"
+              className={classes.backView}
+              style={{ position: "fixed" }}
+              component={Link}
+              to="/monthly"
+            >
+              <ArrowBackIosIcon id="backArrow" />
+            </WrappedFab>
+          </Tooltip>
+        </div>
+      ) : null}
 
-        <SimpleModalWrapped submit={props.submit} loadDailies={props.loadDailies} hello={'hello'}/>
-
-
-
+      <SimpleModalWrapped
+        submit={props.submit}
+        loadDailies={props.loadDailies}
+        hello={"hello"}
+      />
     </Grid>
   );
 }

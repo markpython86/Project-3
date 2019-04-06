@@ -49,6 +49,7 @@ export default {
            
             week:  parseInt(Moment(newDate).format('w') - 1),
             year: parseInt(Moment(newDate).format('YYYY')),
+            month: parseInt(Moment(newDate).format('MM')),
             best: best,
             worst: worst,
             nextWeek: nextWeek,

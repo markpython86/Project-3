@@ -217,69 +217,64 @@ this.errorMessage();        // API.saveDaily(data)
     const {handleSubmit} = this.props;
     return (
       <Palette>
-      {/* <Nav /> */}
-      <Wrapper>
-        {/* <Container spacing="0"> */}
-        <Snackbar
+        {/* <Nav /> */}
+        <Wrapper>
+          {/* <Container spacing="0"> */}
+          <Snackbar
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
+              vertical: "top",
+              horizontal: "center"
             }}
             open={this.state.savedMessage}
             autoHideDuration={3000}
             onClose={this.handleSaveMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleSaveMessage}
-            variant="success"
-            message="Nice! 👍 Your entry has been saved."
-          />
-        </Snackbar>
+            <MySnackbarContentWrapper
+              onClose={this.handleSaveMessage}
+              variant="success"
+              message="Nice! 👍 Your entry has been saved."
+            />
+          </Snackbar>
 
-
-        <Snackbar
+          <Snackbar
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
+              vertical: "top",
+              horizontal: "center"
             }}
             open={this.state.errorMessage}
             autoHideDuration={3000}
             onClose={this.handleErrorMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleErrorMessage}
-            variant="warning"
-            message="Oops! 😅 You already have an entry on this date. Just edit that one!"
-          />
-        </Snackbar>
+            <MySnackbarContentWrapper
+              onClose={this.handleErrorMessage}
+              variant="warning"
+              message="Oops! 😅 You already have an entry on this date. Just edit that one!"
+            />
+          </Snackbar>
 
-          
-        <Snackbar
+          <Snackbar
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
+              vertical: "top",
+              horizontal: "center"
             }}
             open={this.state.deletedMessage}
             autoHideDuration={3000}
             onClose={this.handleDeleteMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleDeleteMessage}
-            variant="error"
-            message="Bye, bye, bye. 👋 Your entry has been deleted."
-          />
-        </Snackbar>
+            <MySnackbarContentWrapper
+              onClose={this.handleDeleteMessage}
+              variant="error"
+              message="Bye, bye, bye. 👋 Your entry has been deleted."
+            />
+          </Snackbar>
           <Container spacing="16">
-
-          {/* // Add edit button to this page
+            {/* // Add edit button to this page
           // Add onClick to button to change to edit mode */}
-          {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
+            {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.weeklies.map((person, index) => (
-              <Item xs='12' sm='3'key={person._id}>
-              
-
-                <WeeklyCard 
+              <Item xs="12" sm="3" key={person._id}>
+                <WeeklyCard
                   key={person._id}
                   index={person._id}
                   // deleteWeekly = {this.deleteWeeklies}
@@ -290,19 +285,15 @@ this.errorMessage();        // API.saveDaily(data)
                   worst={person.worst}
                   nextWeek={person.nextWeek}
                 />
-              
               </Item>
-              
             ))}
-            <Item xs='12' sm='3'>
-                
-              </Item>
+            <Item xs="12" sm="3" />
           </Container>
           {/* </Container> */}
-      <FAB  submit={this.handleFormSubmit}/>
-      </Wrapper>
+          <FAB page="weekly" submit={this.handleFormSubmit} />
+        </Wrapper>
       </Palette>
-    )
+    );
   }
 }
 

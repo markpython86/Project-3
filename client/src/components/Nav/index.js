@@ -55,12 +55,9 @@ class MenuAppBar extends React.Component {
   componentWillMount() {
     const token = localStorage.getItem("auth_jwt_token");
 
-    // this.setState({
-    //   account: token
-    // })
-
-		console.log("CONSOLE:: MenuAppBar -> componentWillMount -> token", token);
-    
+    this.setState({
+      account: token
+    })
 
   }
 

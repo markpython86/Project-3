@@ -11,7 +11,7 @@ import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
 import Nav from "../../components/Nav";
-import MonthlyCard from "../Weekly/MonthlyCard";
+import MonthlyCard from "../monthly/MonthlyCard";
 
 
 
