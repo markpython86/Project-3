@@ -348,7 +348,7 @@ class MonthlyCard extends React.Component {
       
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <Flag />
+            <Icon>history</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -368,7 +368,7 @@ class MonthlyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowUpward />
+            <Icon>timer</Icon>
           </Grid>
           <Grid item>
             <TextField
@@ -387,7 +387,7 @@ class MonthlyCard extends React.Component {
 
         <Grid container alignItems="center">
           <Grid item id="textIcon">
-            <ArrowDownward />
+            <Icon>not_interested</Icon>
           </Grid>
           <Grid item>
             <TextField
