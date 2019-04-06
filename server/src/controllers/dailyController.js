@@ -2,7 +2,6 @@ import token from '../services/token';
 import User from '../models/user';
 import Daily from '../models/Daily';
 import Weekly from '../models/Weekly';
-import Monthly from '../models/Monthly';
 const Moment = require('moment');
 // import dailyController from './dailyController'
 
@@ -57,7 +56,6 @@ export default {
                     user_id: req.user._id,
                     week: parseInt(Moment(selectedDate).format('w') - 1),
                     year: parseInt(Moment(selectedDate).format('YYYY')),
-                    month: parseInt(Moment(selectedDate).format('MM')),
                     fullDate: Moment(selectedDate).format('MM-DD-YYYY')
 
 
@@ -68,8 +66,6 @@ export default {
                 return next(err)
             }
         }).then(newDaily => {
-            console.log('-=-=-=-=--=', req.body)
-
             User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
                 .then((data) => {
                     Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year },
@@ -113,47 +109,6 @@ export default {
                         })
                         .catch(err => console.log(err))
                     console.log('----------------data', newDaily)
-
-                    Monthly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month, year: newDaily.year },
-                        { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
-                        .then(d => {
-                            const habits = []
-                            habits.push(newDaily.habit1, newDaily.habit2, newDaily.habit3)
-                            console.log(habits)
-                            if (d == null) {
-                                const monthly = new Monthly({
-                                    monthAt: Moment(req.body.selectedDate).format('MMMM'),
-                                    month: newDaily.month,
-                                    week: newDaily.week,
-                                    year: newDaily.year,
-                                    user_id: req.user._id,
-                                    habits: habits,
-                                    remember: '',
-                                    start: '',
-                                    stop: ''
-
-                                })
-
-
-                                monthly.save(function (err, savedMonthly) {
-                                    if (err) {
-                                        return next(err)
-                                    }
-                                }).then(newMonthly => {
-                                    console.log('-=-=-=-=--=', newMonthly._id)
-                                    User.findByIdAndUpdate({ _id: req.user._id }, { $push: { monthly: newMonthly._id } })
-                                        .then()
-                                        .catch(err => console.log(err))
-
-                                    // console.log(newDaily)
-                                    // res.sendStatus(200);
-                                })
-                                    .catch(next)
-                            }
-
-                        })
-                        .catch(err => console.log(err))
-                    console.log('----------------data', newMonthly)
                     // res.
                 })
                 .catch(err => console.log(err))

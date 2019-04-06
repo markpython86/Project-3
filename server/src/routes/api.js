@@ -28,7 +28,6 @@ router.put('/weekly/:id', weeklyController.updateWeekly)
 router.delete('/weekly/:id', weeklyController.deleteWeekly)
 
 
-
 router.get('/monthly', monthlyController.getMonthly)
 // router.post('/monthly/new', monthlyController.createMonthly)
 router.put('/monthly/:id', monthlyController.updateMonthly)

@@ -68,6 +68,10 @@ class SwipeableTemporaryDrawer extends React.Component {
                 <ListItemText primary="Weekly"/>
             </ListItem>
 
+            <ListItem button key="Monthly" component={Link} to="/monthly">
+                <ListItemText primary="Monthly"/>
+            </ListItem>
+
           {/* ))} */}
         </List>
         <Divider />
