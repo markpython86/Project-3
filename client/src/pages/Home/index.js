@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import Palette from "../../pages/Grid/Palette"
 import { Link } from "react-router-dom";
 
+const token = localStorage.getItem('auth_jwt_token');
+
 
 
 
@@ -39,6 +41,8 @@ class Home extends Component {
     }
   }
 
+
+
   render() {
     const { classes, theme } = this.props;
     return (
@@ -50,11 +54,19 @@ class Home extends Component {
           </div>
         </Grid>
           {/* <Signup /> */}
-        
+        {token ? 
         <Grid container className={classes.center}>
 
 
-          <Grid item s={12} m={4}>
+               <Grid item s={12} m={4}>
+          <Button variant="contained" size="large" color="primary" className={classes.button} component={Link} to="/about">
+          Learn More
+          </Button>
+          </Grid>
+          </Grid> 
+             : 
+              <Grid container className={classes.center}>
+              <Grid item s={12} m={4}>
           <Button variant="contained" size="large" color="primary" className={classes.button} component={Link} to="/signup">
           Sign Up
           </Button>
@@ -72,8 +84,11 @@ class Home extends Component {
           Learn More
           </Button>
           </Grid>
+          </Grid>
 
-        </Grid>      
+            }
+          
+             
       </div>
       </Palette>
     );
