@@ -6,7 +6,13 @@ import mongoose from 'mongoose';
     remember: { type: String },
     start: { type: String },
     stop: { type: String },
-    monthAt: { type: String }
+    monthAt: { type: String },
+    user_id: {type: String},
+    habits: {type: Array},
+    year: {type: Number},
+    month: {type: Number},
+    week: {type: Number}
+
   })
 // add association later
 

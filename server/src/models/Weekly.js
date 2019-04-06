@@ -13,7 +13,8 @@ const weeklySchema = new mongoose.Schema({
   habits: {type: Array},
   user_id: {type: String },
   weekStart:{type: String },
-  weekEnd:{type: String }
+  weekEnd:{type: String },
+  month: {type: Number },
 })
 // add association later
 
