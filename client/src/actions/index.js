@@ -9,7 +9,9 @@ import {
     UPDATE_USER_PROFILE_GOOD,
     UPDATE_USER_PROFILE_FAIL,
     UPDATE_DAILY_GOOD,
-    UPDATE_DAILY_FAIL
+    UPDATE_DAILY_FAIL,
+    UPDATE_MONTHLY_GOOD,
+    UPDATE_MONTHLY_FAIL,
 } from './types';
 const ROOT_URL = process.env.API_URI || 'http://localhost:8000';
 
@@ -266,6 +268,81 @@ export function updateWeekly(id, update) {
                 console.log(error)
                 dispatch({
                     type: UPDATE_WEEKLY_FAIL
+                })
+            });
+    }
+}
+
+//-------------------------------------------------------------
+export function getMonthlies() {
+    return function (dispatch) {
+             axios
+            .get(`/api/monthly`)
+            .then(res => {
+
+                window.location = '/#monthly';
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                dispatch({
+                    type: GET_USER_MONTHLY,
+                    payload: res.data
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function postMonthly(monthlyObj) {
+    return function (dispatch) {
+        // Submit email/password to server
+        axios
+            .post(`/api/monthly/new`, monthlyObj)
+            .then(() => {
+                dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                
+                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function deleteMonthly(monthlyID) {
+    return function (dispatch) {
+        // Submit email/password to server
+        axios
+            .delete(`/api/monthly/${monthlyID}`)
+            .then(() => {
+                // dispatch({type: AUTH_USER})
+                 window.location.reload(true);
+                // localStorage.setItem('auth_jwt_token', res.data.token);
+                
+                axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+            })
+            .catch(error => {
+                console.log(error);
+                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+            });
+    }
+}
+
+export function updateMonthly(id, update) {
+    return function (dispatch) {
+        axios
+            .put(`/api/monthly/${id}`, update)
+            .then(() => {
+                dispatch({
+                    type: UPDATE_MONTHLY_GOOD
+                })
+                window.location.reload(true);
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch({
+                    type: UPDATE_MONTHLY_FAIL
                 })
             });
     }

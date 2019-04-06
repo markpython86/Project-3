@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import reduxThunk from 'redux-thunk';
 // import App1 from './pages/Daily/daily';
 import App from './components/app';
 import Home from './pages/Home';
-import Public from './components/public';
 import Account from './components/account';
 import Daily from './pages/Daily/dailyPage';
 // import Monthly from './pages/monthlyPage';
+import About from './pages/About/About';
+import Monthly from './pages/Monthly/monthlyPage';
 import Weekly from './pages/Weekly/weeklyPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
@@ -30,21 +31,44 @@ const token = localStorage.getItem('auth_jwt_token');
 if (token) {
   store.dispatch({type: AUTH_USER})
 }
+
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter hashType="noslash">
       <App>
         <MenuAppBar />
         <Switch>
+          {/* <Route exact path="/" render={() => (
+            token ? (
+              <Redirect to="/daily"/>
+            ) : (
+              <Home />
+            )
+          )}/> */}
+          <Route exact path="/signin" render={() => (
+            token ? (
+              <Redirect to="/daily"/>
+            ) : (
+              <Signin />
+            )
+          )}/>
+          <Route exact path="/signup" render={() => (
+            token ? (
+            <Redirect to="/daily"/>
+            ) : (
+              <Signup />
+            )
+          )}/>
           <Route exact path="/" component= {Home} />
           {/* <Route path="/public" component= {Public} /> */}
           <Route path="/account" component= {RequireAuth(Account)} />
-          <Route path="/signin" component= {Signin} />
-          <Route path="/signup" component= {Signup} />
+
+          <Route path="/about" component= {About} />
+          
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
           <Route path="/weekly" component= {RequireAuth(Weekly)} />
-          {/* <Route path="/monthly" component= {RequireAuth(Monthly)} />  */}
+          <Route path="/monthly" component= {RequireAuth(Monthly)} /> 
           {/* <Route path="/ui" component= {App1} /> */}
           
 

@@ -3,8 +3,8 @@ import {reduxForm, Field} from 'redux-form';
 import { connect } from 'react-redux';
 import {signUserIn} from '../../actions';
 import CenterCard363 from '../centerCard363';
-// import Input from '@material-ui/core/Input';
-
+import Button from '@material-ui/core/Button';
+import Palette from '../../pages/Grid/Palette'
 import './style.css';
 
 class Signin extends Component {
@@ -22,13 +22,13 @@ class Signin extends Component {
         this.props.signUserIn(d)
     }
     render() {
-        // console.log('this.props;: ', this.props);
         const {handleSubmit} = this.props;
         return (
+                <Palette>
                 <CenterCard363>
                     <div className='card-wrapper'>
                       <div className='card'>
-                        <h3 className="card-header">
+                        <h3 id="loginHeader">
                             Login to Minimalist
                         </h3>
                         <div className="card-body">
@@ -48,11 +48,11 @@ class Signin extends Component {
                                     name="email"
                                     component="input"
                                     className="input form-control form-control-lg"
-                                    placeholder="your email"
+                                    placeholder="Email"
                                     required
-                                    inputProps={{
-                                    'aria-label': 'Description',
-                                    }}
+                                    // inputProps={{
+                                    // 'aria-label': 'Description',
+                                    // }}
                                   />
                             </div>
 
@@ -63,22 +63,23 @@ class Signin extends Component {
                                     name="password"
                                     component="input"
                                     className=" input form-control form-control-lg"
-                                    placeholder="your password"
+                                    placeholder="Password"
                                     required
-                                    inputProps={{
-                                      'aria-label': 'Description',
-                                      }}
+                                    // inputProps={{
+                                    //   'aria-label': 'Description',
+                                    //   }}
                                     />
                             </div>
                             {this.renderAlert()}
-                            <div style={{'paddingTop': '30px'}}>
-                                <button type="submit" className="btn btn-lg btn-light btn-block submit">Sign in</button>
+                            <div>
+                                <Button type="submit" variant="contained" color="primary" className="button" >Sign in</Button>
                             </div>
                         </form>
                         </div>
                       </div>
                     </div>
                 </CenterCard363>
+                </Palette>
         );
     }
 }

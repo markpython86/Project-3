@@ -1,37 +1,57 @@
-// const db = require("../models");
+import token from '../services/token';
+import User from '../models/user';
+import Daily from '../models/Daily';
+import Weekly from '../models/Weekly';
+import Monthly from '../models/Monthly';
+const Moment = require('moment');
 
-// // Defining methods for the booksController
-// module.exports = {
-//   findAll: function(req, res) {
-//     db.Monthly
-//       .find(req.query)
-//       .sort({ date: -1 })
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   findById: function(req, res) {
-//     db.Monthly
-//       .findById(req.params.id)
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   create: function(req, res) {
-//     db.Monthly
-//       .create(req.body)
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   update: function(req, res) {
-//     db.Monthly
-//       .findOneAndUpdate({ _id: req.params.id }, req.body)
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   remove: function(req, res) {
-//     db.Monthly
-//       .findById({ _id: req.params.id })
-//       .then(dbModel => dbModel.remove())
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   }
-// };
+export default {
+    
+    getMonthly: (req,res,next) =>{
+                
+        
+        User.findById({ _id: req.user._id })
+            .populate({path: 'monthly', options: { sort: { 'month': 1 } } })
+            .populate('daily')
+            .then(function (data) {
+                res.send(data)
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+       
+    },
+//     
+
+    deleteMonthly: (req, res, next) => {
+        const monthlyID = req.params.id
+        User.update({_id: req.user._id}, { $pull: { monthly: { $in:  [monthlyID]}}})
+
+        .then(Monthly.findByIdAndRemove(monthlyID, function(err, data){
+            if (err) return res.status(500).send(err);
+           
+            res.sendStatus(200)
+        }))
+        .catch(next)
+        },
+        
+    
+    updateMonthly: (req, res, next) => {
+        
+            const monthlyId = req.params.id;
+            const newMonthly = {...req.body}
+           
+           
+            Monthly.findByIdAndUpdate(monthlyId, newMonthly, {
+                    new: true
+                })
+                .then(newMonthly => {
+                    res.sendStatus(200);
+                })
+                .catch(next)
+    }
+    
+}
+
+

@@ -4,14 +4,16 @@ import React, { Component } from "react";
 import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import API from "../../utils/API";
-import { postWeekly} from "../../actions";
+import { postMonthly } from "../../actions";
 import Wrapper from "../Grid/Wrapper";
 import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-// import Nav from "../../components/Nav";
-import WeeklyCard from "../Weekly/WeeklyCard";
+import Nav from "../../components/Nav";
+
+
+import MonthlyCard from "../Monthly/MonthlyCard";
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -115,7 +117,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      weeklies: [],
+      monthlies: [],
       dailies:[],
        savedMessage: false,
       deletedMessage: false,
@@ -125,87 +127,100 @@ class App extends Component {
   }
 
 
-  componentWillMount() {
-    this.loadWeeklies();
+  componentDidMount() {
+    this.loadMonthlies();
   }
+
+
 savedMessage = () => {
-    this.setState({ savedMessage: true });
-  };
+  this.setState({ savedMessage: true });
+};
 
-  errorMessage = () => {
-    this.setState({ errorMessage: true });
-  };
-  deletedMessage = () => {
-    this.setState({ deletedMessage: true });
-  };
+errorMessage = () => {
+  this.setState({ errorMessage: true });
+};
+deletedMessage = () => {
+  this.setState({ deletedMessage: true });
+};
 
- handleDeleteMessage = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+handleDeleteMessage = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
 
-    this.setState({ deletedMessage: false });
-  };
+  this.setState({ deletedMessage: false });
+};
 
-  handleSaveMessage = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+handleSaveMessage = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
 
-    this.setState({ savedMessage: false });
-  };
-  
-  handleErrorMessage = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  this.setState({ savedMessage: false });
+};
 
-    this.setState({ errorMessage: false });
-  };
+handleErrorMessage = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  this.setState({ errorMessage: false });
+};
+
+loadDaily = () => {
+  API.getDailies()
+  .then()
+  .catch(err => console.log(err))
+}
+
+
+
+
 
   //edit section==========================================================
   //function to load them and set state of daily ,weekly, or monthly
-  loadWeeklies = () => {
-    API.getWeeklies()
+  loadMonthlies = () => {
+    API.getMonthlies()
       .then(res => {
         this.setState({ 
-          weeklies: res.data.weekly,
+          monthlies: res.data.monthly,
           dailies: res.data.daily
-           })
+        })
       })
       .catch(err => console.log(err));
   }
-
-  deleteWeeklies = (id) => {
-    API.deleteWeekly(id)
+  deleteMonthlies = (id) => {
+    API.deleteMonthly(id)
      .then(() =>  {
-       this.loadWeeklies()
+       this.loadMonthlies()
        this.deletedMessage()
        })
       .catch(err => console.log(err));
   };
-  updateWeeklies = (id, update) => {
-    
-      API.updateWeekly(id, update)
+
+ 
+  updateMonthlies = (id, update) => {
+      API.updateMonthly(id, update)
       .then(() => {
-        this.loadWeeklies()
-        this.savedMessage()
-        })
+
+       this.loadMonthlies()
+       this.savedMessage()
+       })
       .catch(err => console.log(err));
   }; 
 
     handleFormSubmit = (data) => {
-      
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage(); 
-
-      } else {
-        API.saveDaily(data)
-          .then(() => {
-            this.loadWeeklies()
-            this.savedMessage()
-            })
-          .catch(err => console.log(err));
+        this.errorMessage();
+              } else {
+                
+      API.saveDaily(data)
+        .then(()=>{
+          this.loadMonthlies()
+          this.loadDailies()
+          this.savedMessage()
+        })
+        .catch(err => console.log(err))
       }
     };
 
@@ -214,83 +229,92 @@ savedMessage = () => {
     const {handleSubmit} = this.props;
     return (
       <Palette>
-        {/* <Nav /> */}
-        <Wrapper>
-          {/* <Container spacing="0"> */}
-          <Snackbar
+      {/* <Nav /> */}
+      <Wrapper>
+      <Snackbar
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "center"
+              vertical: 'top',
+              horizontal: 'center',
             }}
             open={this.state.savedMessage}
             autoHideDuration={3000}
             onClose={this.handleSaveMessage}
           >
-            <MySnackbarContentWrapper
-              onClose={this.handleSaveMessage}
-              variant="success"
-              message="Nice! 👍 Your entry has been saved."
-            />
-          </Snackbar>
+          <MySnackbarContentWrapper
+            onClose={this.handleSaveMessage}
+            variant="success"
+            message="Nice! 👍 Your entry has been saved."
+          />
+        </Snackbar>
 
-          <Snackbar
+
+        <Snackbar
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "center"
+              vertical: 'top',
+              horizontal: 'center',
             }}
             open={this.state.errorMessage}
             autoHideDuration={3000}
             onClose={this.handleErrorMessage}
           >
-            <MySnackbarContentWrapper
-              onClose={this.handleErrorMessage}
-              variant="warning"
-              message="Oops! 😅 You already have an entry on this date. Just edit that one!"
-            />
-          </Snackbar>
+          <MySnackbarContentWrapper
+            onClose={this.handleErrorMessage}
+            variant="warning"
+            message="Oops! 😅 You already have an entry on this date. Just edit that one!"
+          />
+        </Snackbar>
 
-          <Snackbar
+          
+        <Snackbar
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "center"
+              vertical: 'top',
+              horizontal: 'center',
             }}
             open={this.state.deletedMessage}
             autoHideDuration={3000}
             onClose={this.handleDeleteMessage}
           >
-            <MySnackbarContentWrapper
-              onClose={this.handleDeleteMessage}
-              variant="error"
-              message="Bye, bye, bye. 👋 Your entry has been deleted."
-            />
-          </Snackbar>
+          <MySnackbarContentWrapper
+            onClose={this.handleDeleteMessage}
+            variant="error"
+            message="Bye, bye, bye. 👋 Your entry has been deleted."
+          />
+        </Snackbar>
+        {/* <Container spacing="0"> */}
           <Container spacing="16">
-            {/* // Add edit button to this page
-          // Add onClick to button to change to edit mode */}
-            {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
-            {this.state.weeklies.map((person, index) => (
-              <Item xs="12" sm="3" key={person._id}>
-                <WeeklyCard
+          {/* // Add edit button to this page
+          {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
+
+            {this.state.monthlies.map((person, index) => (
+              <Item xs='12' sm='3'key={person._id}>
+              
+
+                <MonthlyCard 
                   key={person._id}
                   index={person._id}
-                  deleteWeekly = {this.deleteWeeklies}
-                  updatedWeekly={this.updateWeeklies}
-                  // preUpdate={this.updateWeeklies}
+                  deleteMonthly = {this.deleteMonthlies}
+                  updatedMonthly={this.updateMonthlies}
+                  preUpdate={this.updateMonthlies}
                   updates={person}
-                  best={person.best}
-                  worst={person.worst}
-                  nextWeek={person.nextWeek}
+                  remember={person.remember}
+                  start={person.start}
+                  stop={person.stop}
+                  monthAt={person.monthAt}
                 />
+              
               </Item>
+              
             ))}
-            <Item xs="12" sm="3" />
+            <Item xs='12' sm='3'>
+                
+              </Item>
           </Container>
           {/* </Container> */}
-          <FAB page="weekly" submit={this.handleFormSubmit} />
-        </Wrapper>
+      <FAB submit={this.handleFormSubmit}/>
+      </Wrapper>
       </Palette>
-    );
+    )
   }
 }
 
@@ -301,6 +325,6 @@ function mapStateToProps({auth}) {
 }
 
 
-export default connect(mapStateToProps,{ postWeekly })(reduxForm({
-    form: 'postWeekly'
+export default connect(mapStateToProps,{ postMonthly })(reduxForm({
+    form: 'postMonthly'
 })(App));

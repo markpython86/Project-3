@@ -1,4 +1,8 @@
 import Authentication from '../controllers/authentication';
+import dailyController from '../controllers/dailyController'
+import weeklyController from '../controllers/weeklyController'
+import monthlyController from '../controllers/monthlyController'
+
 
 const router = require('express').Router();
 
@@ -13,19 +17,26 @@ router.get('/userProfile', (req, res)=>{
 
 router.post('/userProfile', Authentication.updateProfile)
 
-router.get('/daily', Authentication.getDaily)
+router.get('/daily', dailyController.getDaily)
+router.post('/daily/new', dailyController.createDaily)
+router.delete('/daily/:id', dailyController.deleteDaily)
+router.put('/daily/:id', dailyController.updateDaily)
 
-router.post('/daily/new', Authentication.createDaily)
+router.get('/weekly', weeklyController.getWeekly)
+// router.post('/weekly/new', weeklyController.createWeekly)
+router.put('/weekly/:id', weeklyController.updateWeekly)
+router.delete('/weekly/:id', weeklyController.deleteWeekly)
 
-router.get('/weekly', Authentication.getWeekly)
 
-router.post('/weekly/new', Authentication.createWeekly)
+router.get('/monthly', monthlyController.getMonthly)
+// router.post('/monthly/new', monthlyController.createMonthly)
+router.put('/monthly/:id', monthlyController.updateMonthly)
+router.delete('/monthly/:id', monthlyController.deleteMonthly)
 
-//delete route
 
-router.delete('/daily/:id', Authentication.deleteDaily)
 
-router.put('/daily/:id', Authentication.updateDaily)
+
+
     
 
 

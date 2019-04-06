@@ -125,7 +125,11 @@ const styles = theme => ({
 
   hide: {
     display: 'none',
-  }
+  },
+
+  fab: {
+    marginBottom: 10,
+  },
 
 });
 
@@ -199,6 +203,20 @@ class SimpleModal extends React.Component {
     this.setState({ habit3: event.target.value });
   };
 
+  handleClearState = () => {
+    this.setState({
+      dailyHighlight: '',
+positive: '',
+negative: '',
+selectedTime1: new Date(),
+selectedTime2: new Date(),
+selectedDate: new Date(),
+habit1: '',
+habit2: '',
+habit3: '',
+    })
+  }
+
 
 
   render() {
@@ -226,6 +244,7 @@ class SimpleModal extends React.Component {
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate
     }
+
     return (
       
 
@@ -247,9 +266,6 @@ class SimpleModal extends React.Component {
           <tbody>
             <tr>
               <td>
-            
-
-
             <Grid container className={classes.center}>
  
   
@@ -259,7 +275,7 @@ class SimpleModal extends React.Component {
       props.submit(newState) 
       this.handleClosed(false)
       }} 
-        size="medium" id="saveButton" aria-label="Check" color='secondary'>
+        size="medium" id="saveButton" aria-label="Check" color='secondary' className={classes.fab}>
         <Icon fontSize="large">check_icon</Icon>
       </WrappedFab>
     </Tooltip>
@@ -269,7 +285,7 @@ class SimpleModal extends React.Component {
 
   <Grid item xs={5}>
     <Tooltip disableFocusListener title="Cancel">
-      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete">
+      <WrappedFab onClick={this.handleClose} size="medium" id="deleteButton" aria-label="Delete" className={classes.fab}>
         <Icon  fontSize="large">exit_to_app_icon</Icon>
       </WrappedFab>
     </Tooltip>
@@ -293,7 +309,7 @@ class SimpleModal extends React.Component {
                   margin="normal"
                   // label="Morning"
                   // value={this.props.wakeup}
-                  value={newState.wakeup}
+                  value={this.state.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -307,7 +323,7 @@ class SimpleModal extends React.Component {
                   <DatePicker
                     margin="normal"
                     // label="Date"
-                    value={newState.selectedDate}
+                    value={this.state.selectedDate}
                     onChange={this.handleDateChange}
                     id="timeRow"
                   />
@@ -322,7 +338,7 @@ class SimpleModal extends React.Component {
                     margin="normal"
                     // label="Evening"
                     // value={this.props.sleep}
-                    value={newState.sleep}
+                    value={this.state.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
@@ -416,7 +432,8 @@ class SimpleModal extends React.Component {
               <Select
                 classes={{ select: "habitIcon"}}
                 // name={this.state.habit1}
-                value={habit1}
+                // value={this.state.habit1}
+                value={this.state.habit1}
                 onChange={this.handleHabitChange1}
                 IconComponent={classes.hide}
                 className={classes.color}
@@ -496,7 +513,7 @@ class SimpleModal extends React.Component {
               <Select
                 classes={{ select: "habitIcon"}}
                 // name={this.state.habit2}
-                value={habit2}
+                value={this.state.habit2}
                 onChange={this.handleHabitChange2}
                 IconComponent={classes.hide}
                 className={classes.color}
@@ -575,7 +592,7 @@ class SimpleModal extends React.Component {
               <Select
                 classes={{ select: "habitIcon"}}
                 // name={this.state.habit3}
-                value={habit3}
+                value={this.state.habit3}
                 onChange={this.handleHabitChange3}
                 IconComponent={classes.hide}
                 className={classes.color}  

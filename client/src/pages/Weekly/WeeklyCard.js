@@ -124,13 +124,11 @@ class WeeklyCard extends React.Component {
     };
   }
 
-  
-
-  
-
-  
-
- 
+  notEditMode = () => {
+    this.setState({
+      isInEditMode: false,
+      })
+  }
 
   handleChangeBest = best => event => {
     this.setState({ [best]: event.target.value});
@@ -152,7 +150,6 @@ class WeeklyCard extends React.Component {
       best: this.props.best,
       worst: this.props.worst,
       nextWeek: this.props.nextWeek,
-      // selectedDate: this.props.selectedDate,
       isInEditMode: true,
 
       
@@ -172,6 +169,9 @@ class WeeklyCard extends React.Component {
     });
   }
 
+  loadWeeklies = () => {
+    this.props.loadWeeklies()
+  }
   handleClickAway = () => {
     if (!this.state.isInEditMode){
     this.setState({
@@ -179,12 +179,15 @@ class WeeklyCard extends React.Component {
     });
     }
   };
+  deleteWeekly = (id) => {
+    this.props.deleteWeekly(id)
+  }
+
 
   render() {
     const {
       props,
     } = this;
-      // console.log('props',props.updates)
     const { classes } = props;
     const habits = props.updates.habits.filter(String);
     const weekStart = props.updates.weekStart
@@ -227,21 +230,8 @@ class WeeklyCard extends React.Component {
      
       return compressed;
     };
-    
-    // It should go something like this:
-    
-    // var habitCounter = new Array("dog", "dog", "cat", "buffalo", "wolf", "cat", "tiger", "cat");
+
     var habitCounter = compressArray(habits);
-    // console.log(habitCounter);
-    /*
-    console: [
-      Object { value="dog", count=2}, 
-      Object { value="cat", count=3}, 
-      Object { value="buffalo", count=1}, 
-      Object { value="wolf", count=1}, 
-      Object { value="tiger", count=1}
-    ]
-    */
 
 
 
@@ -251,7 +241,7 @@ class WeeklyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} newState={newState} />}
+  {!this.state.isHidden && <Child props={props} editMode={this.editMode} loadWeeklies={this.loadWeeklies} notEditMode={this.notEditMode} deleteWeekly={this.deleteWeekly} hideIcons={this.hideIcons} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -296,7 +286,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Best"
-            placeholder="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -318,7 +308,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -338,7 +328,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Next"
-            placeholder="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -363,8 +353,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="best"
-            placeholder="Weekly Best"
+            label="Best"
+            placeholder="What was the best thing from this week?"
             multiline
             onChange={this.handleChangeBest}
             className={classes.textField}
@@ -384,7 +374,7 @@ class WeeklyCard extends React.Component {
             <TextField
             id="standard-textarea"
             label="Worst"
-            placeholder="Weekly Worst"
+            placeholder="What was the worst thing from this week?"
             multiline
             onChange={this.handleChangeWorst}
             className={classes.textField}
@@ -402,8 +392,8 @@ class WeeklyCard extends React.Component {
           <Grid item>
             <TextField
             id="standard-textarea"
-            label="Next Week"
-            placeholder="Next Week"
+            label="Next"
+            placeholder="What do I need to do next week?"
             multiline
             onChange={this.handleChangeNextWeek}
             className={classes.textField}
@@ -452,25 +442,29 @@ const Child = (props) => (
 
   <Grid container className="fab"> 
   
-  <Grid item xs={6}>
-    <Fab onClick={() => props.props.updatedDaily(props.props.index, props.newState) } size="small" id="saveButton" aria-label="Check" color='secondary'>
+  <Grid item xs={4}>
+    <Fab onClick={() => {
+      props.props.updatedWeekly(props.props.index, props.newState)
+      props.notEditMode();
+      } } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
-      {/* props.props.updatedDaily(props.props.index, ) */}
-      {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
     </Fab>
   </Grid>
 
-  <Grid item xs={6}>
+  <Grid item xs={4}>
     <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
       <Icon  fontSize="small">edit_icon</Icon>
     </Fab>
   </Grid>
 
-  {/* <Grid item xs={4}>
-    <Fab   onClick={() => props.props.deleteDaily(props.props.index)} size="small" id="deleteButton" aria-label="Delete">
+  <Grid item xs={4}>
+    <Fab onClick={() => {
+      props.props.deleteWeekly(props.props.index)
+      props.hideIcons()
+      }} size="small" id="deleteButton" aria-label="Delete">
       <Icon  fontSize="small">delete_icon</Icon>
     </Fab>
-  </Grid> */}
+  </Grid>
 
   </Grid>
 )
