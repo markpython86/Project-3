@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import reduxThunk from 'redux-thunk';
 // import App1 from './pages/Daily/daily';
 import App from './components/app';
@@ -30,6 +30,7 @@ const token = localStorage.getItem('auth_jwt_token');
 // if we have a token, consider the user to be signed in
 if (token) {
   store.dispatch({type: AUTH_USER})
+  console.log(token)
 }
 
 ReactDOM.render(
@@ -38,12 +39,33 @@ ReactDOM.render(
       <App>
         <MenuAppBar />
         <Switch>
+          {/* <Route exact path="/" render={() => (
+            token ? (
+              <Redirect to="/daily"/>
+            ) : (
+              <Home />
+            )
+          )}/> */}
+          <Route exact path="/signin" render={() => (
+            token ? (
+              <Redirect to="/daily"/>
+            ) : (
+              <Signin />
+            )
+          )}/>
+          <Route exact path="/signup" render={() => (
+            token ? (
+            <Redirect to="/daily"/>
+            ) : (
+              <Signup />
+            )
+          )}/>
           <Route exact path="/" component= {Home} />
           {/* <Route path="/public" component= {Public} /> */}
           <Route path="/account" component= {RequireAuth(Account)} />
+
           <Route path="/about" component= {About} />
-          <Route path="/signin" component= {Signin} />
-          <Route path="/signup" component= {Signup} />
+          
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
           <Route path="/weekly" component= {RequireAuth(Weekly)} />
