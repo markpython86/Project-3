@@ -317,7 +317,7 @@ deleteMonthlies = (id) => {
               </Item>
           </Container>
           {/* </Container> */}
-      <FAB submit={this.handleFormSubmit}/>
+      <FAB page='monthly' submit={this.handleFormSubmit}/>
       </Wrapper>
       </Palette>
     )

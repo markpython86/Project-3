@@ -309,7 +309,7 @@ habit3: '',
                   margin="normal"
                   // label="Morning"
                   // value={this.props.wakeup}
-                  value={this.state.wakeup}
+                  value={newState.wakeup}
                   onChange={this.handleTimeChange1}
                   id="timeRow"
                 />
@@ -338,7 +338,7 @@ habit3: '',
                     margin="normal"
                     // label="Evening"
                     // value={this.props.sleep}
-                    value={this.state.sleep}
+                    value={newState.sleep}
                     onChange={this.handleTimeChange2}
                     id="timeRow"
                   />
