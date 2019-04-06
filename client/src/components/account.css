@@ -2,6 +2,10 @@
   margin: 10px;
 };
 
+.marginButton {
+  margin: -20px;
+};
+
 .input {
   margin-left: 10px !important;
 };

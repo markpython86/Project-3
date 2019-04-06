@@ -19,6 +19,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
@@ -70,6 +71,7 @@ function AlignItemsList(props) {
                   primary="Daily"
                   secondary={
                     <React.Fragment>
+                
                       <Typography
                         component="span"
                         className={classes.inline}
@@ -77,20 +79,7 @@ function AlignItemsList(props) {
                       >
                         Total Number of Daily Entries: {state.daily.length}
                       </Typography>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                {/* <ListItemAvatar>
-                  <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
-                </ListItemAvatar> */}
-                <ListItemText
-                  
-                  inset={true}
-                  primary=""
-                  secondary={ 
-                  <React.Fragment>
+                      <br></br>
                       <Typography
                         component="span"
                         className={classes.inline}
@@ -102,6 +91,7 @@ function AlignItemsList(props) {
                   }
                 />
               </ListItem>
+              
 
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
@@ -253,22 +243,11 @@ class Account extends Component {
     const { submitting, dirty } = this.props;
     if (this.state.editing) {
       return (
-        <div className="form-group margin">
-          <IconButton
-            disabled={!dirty}
-            type="submit"
-            className="btn-lg btn btn-light btn-block"
-          >
-            Save Change
-          </IconButton>
-          <button
-            disabled={submitting}
-            className="btn-lg btn btn-secondary btn-block"
-            onClick={this.cancelForm.bind(this)}
-          >
-            Cancel
-          </button>
-        </div>
+        <div className="form-group marginButton">
+                  <Button disabled={!dirty} type="submit" variant="contained" color="primary" className="button" >Save Change</Button>
+
+                  <Button disabled={submitting} variant="contained" color="primary" className="button"  onClick={this.cancelForm.bind(this)}>Cancel</Button>
+      </div>
       );
     } else {
       return (
@@ -276,9 +255,7 @@ class Account extends Component {
         //   className="btn btn-light btn-lg btn-block"
         //   onClick={this.switchEditting.bind(this)}
         // >
-        <IconButton onClick={this.switchEditing.bind(this)} color="inherit">
-          <Edit />
-        </IconButton>
+        <Button variant="contained" color="primary" className="marginButton" onClick={this.switchEditing.bind(this)}>Update Information</Button>
         // </button>
       );
     }
