@@ -7,7 +7,7 @@
     "dev": "babel-watch src/server.js",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
-    "build": "rm -rf ./dist babel -d ./dist ./src -s"
+    "build": "rm -rf ./dist  && NPM_CONFIG_PRODUCTION=false babel -d ./dist ./src -s"
   },
   "author": "amazingandyyy",
   "license": "MIT",
