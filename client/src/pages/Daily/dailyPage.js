@@ -128,14 +128,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    
-    // this.props.tryConnect();
     this.loadDaily();
   }
-  // componentWillMount(){
-  //   this.loadDailies();
-  // }
-
 
   savedMessage = () => {
     this.setState({ savedMessage: true });

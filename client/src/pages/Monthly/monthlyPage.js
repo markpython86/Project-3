@@ -169,11 +169,7 @@ handleErrorMessage = (event, reason) => {
 
 loadDaily = () => {
   API.getDailies()
-  .then(res => {
-      console.log('ressssss', res.data.daily);
-      // this.setState({ dailies: res.data.daily })
-      // console.log(res.data.daily)
-    })
+  .then()
   .catch(err => console.log(err))
 }
 
