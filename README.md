@@ -1,7 +1,8 @@
 # Minimalist
 A minimal journaling app that helps users make daily, weekly, and monthly self-reflections.
 
-![](minimalist.gif)
+[![Liri Demo](minimalist.png)](https://youtu.be/vMQijetKvCY "minimalist")
+
 
 
 ### DEMO
