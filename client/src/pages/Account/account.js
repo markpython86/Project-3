@@ -23,6 +23,9 @@ import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
+import MaterialTable from 'material-table'
+import "./account.css";
+import Table from './table'
 
 const styles = theme => ({
   root: {
@@ -98,7 +101,7 @@ function AlignItemsList(props) {
                   }
                 />
               </ListItem>
-              <Divider variant="enum" />
+              <Divider variant="middle" />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar
@@ -136,6 +139,9 @@ AlignItemsList.propTypes = {
 
 const StatList = withStyles(styles)(AlignItemsList);
 
+
+
+
 class Account extends Component {
   constructor() {
     super();
@@ -144,88 +150,124 @@ class Account extends Component {
       daily: [],
       weekly: [],
       monthly: [],
+      dailyTable: [],
       allHabits: []
     };
     
-  }
+  };
+  
+
   componentWillMount() {
     this.props.tryConnect();
     this.props.getUserProfile();
     this.loadDaily()
-    // this.loadWeekly();
-  }
+    
+
+  };
 
   loadDaily = () => {
     API.getDailies()
       .then(res => {
-        console.log("ressssss", res.data.daily);
         this.setState({
           daily: res.data.daily,
           weekly: res.data.weekly,
           monthly: res.data.monthly,
-        });
-        this.getHabitStats()
+          allHabits: []
+          });
+        console.log(this.state.daily);
+        this.getArray()
+
       })
       .catch(err => console.log(err));
   };
 
-
-  getHabitStats() {
-    let allHabits = [];
-    let counts=[];
-
-    this.state.daily.map((person, index) => {
-      if(person.habit1 !== "") {
-        allHabits.push({ item: person.habit1, total: 1 });
-				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-      } 
-      if(person.habit2 !== "") {
-        allHabits.push({ item: person.habit2, total: 1 });
-				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-      }
-      if(person.habit3 !== "") {
-        allHabits.push({item: person.habit3, total: 1});
-				console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-      }
-
-    }); 
-let habitValues = new Set(allHabits)
-
-    allHabits.map((item, index) => {
-      if (habitValues.has(item))
-      console.log("Here")
-
-      if (counts.item === null) {
-        counts.push({item: item, total:1})
-				console.log("CONSOLE:: Account -> getHabitStats -> counts == -1" , counts);
-      }
-
-      if (counts.item !== null) {
-        counts.item.push({item: item, total:+1})
-				console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
-      }
+   getArray = ()=> {
+     let arry = [];
+     this.state.daily.map((item, index) => {
+      arry.push(
+        { "_id": item._id,
+          "selectedDate": item.selectedDate,
+          "highlights": item.highlights, 
+          "positive": item.positive, 
+          "negative": item.negative, 
+          "wakeup": item.wakeup, 
+          "sleep": item.sleep, 
+          "habits": item.habit1 + item.habit2 + item.habit3
+        }
+       )
+    
+     })
+    return(this.setState({
+      dailyTable: arry
+    }))
+  }
 
 
-    })
-    for (let i = 0; i <= allHabits.length; i++) {
-      if (counts[i] === undefined) {
-        counts.push(allHabits[i]);
-				console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
-      } else if (counts[allHabits[i]] === counts[allHabits[i]]){
-        counts.indexOf(allHabits[i])
+
+  // getHabitStats() {
+  //   let allHabits = [];
+  //   let counts=[];
+
+  //   this.state.daily.map((person, index) => {
+  //     if(person.habit1 !== "") {
+  //       allHabits.push({ item: person.habit1, total: 1 });
+	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
+  //     } 
+  //     if(person.habit2 !== "") {
+  //       allHabits.push({ item: person.habit2, total: 1 });
+	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
+  //     }
+  //     if(person.habit3 !== "") {
+  //       allHabits.push({item: person.habit3, total: 1});
+	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
+  //     }
+
+  //   }); 
+  // let habitValues = new Set(allHabits)
+
+  //   allHabits.map((item, index) => {
+  //     if (habitValues.has(item))
+  //     console.log("Here")
+
+  //     if (counts.item === null) {
+  //       counts.push({item: item, total:1})
+	// 			console.log("CONSOLE:: Account -> getHabitStats -> counts == -1" , counts);
+  //     }
+
+  //     // if (counts.item !== null) {
+  //     //   counts.item.push({item: item, total:+1})
+	// 		// 	console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
+  //     // }
+
+
+  //   })
+  //   // for (let i = 0; i <= allHabits.length; i++) {
+  //   //   if (counts[i] === undefined) {
+  //   //     counts.push(allHabits[i]);
+	// 	// 		console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
+  //   //   } else if (counts[allHabits[i]] === counts[allHabits[i]]){
+  //   //     counts.indexOf(allHabits[i])
         
-      }
-    }
+  //   //   }
+  //   // }
     
 
-    this.setState({
-      allHabits: allHabits,
-    });
+  //   this.setState({
+  //     allHabits: allHabits,
+  //   });
 
-  }
+  // }
 
   render() {
     let { status, profile } = this.props;
+    let daily =this.state.daily;
+    
+      // this.state.daily.map((item, index) => {
+ 
+      //   dailyArry.push(`{ _id: ${item._id}, selectedDate: ${item.selectedDate}, highlights: ${item.highlights}, positive: ${item.positive}, negative: ${item.negative}, wakeup: ${item.wakeup}, sleep: ${item.sleep}, habits: ${item.habit1} + item.habit2 + ${item.habit3}}`)
+      // });
+  
+
     return (
       <Palette>
         <Wrapper>
@@ -243,6 +285,11 @@ let habitValues = new Set(allHabits)
 
           <div className="row">
             <StatList state={this.state} />
+          </div>
+          <div className="row">
+
+          <Table data={this.state.dailyTable} />
+
           </div>
         </Wrapper>
       </Palette>

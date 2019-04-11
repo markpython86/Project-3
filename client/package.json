@@ -42,6 +42,7 @@
     "date-fns": "^2.0.0-alpha.27",
     "lodash": "^4.17.11",
     "material-components-web": "^1.0.1",
+    "material-table": "^1.29.1",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "prop-types": "^15.6.0",
