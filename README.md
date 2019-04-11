@@ -33,7 +33,7 @@ Live Heroku Link:
   * JWT Authentication
   
 ### Downloading the Repo and Running it Locally
-1. Clone repository TrainScheduleApp using the code -> _git clone https://github.com/danielpolk/TrainScheduleApp.git
+1. Clone repository using the code -> _git clone https://github.com/markpython86/Project-3.git
 2. Open a terminal session for the directory where the application was cloned to
 3. Run *npm install* to install all the dependencies
 4. Run *mongod* to get the daemon running for MongoDB
