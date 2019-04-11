@@ -1,6 +1,7 @@
+![](minimalist.001.png)
+
 # Minimalist
 A minimal journaling app that helps users make daily, weekly, and monthly self-reflections.
-![](./client/src/utils/minimalist.001.png)
 
 [![Liri Demo](minimalist.png)](https://youtu.be/vMQijetKvCY "minimalist")
 
