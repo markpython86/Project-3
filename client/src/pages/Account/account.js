@@ -20,6 +20,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
 import Table from './table'
+import MaterialTable from "material-table";
+import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Build, Code, EventSeat, Explore, Motorcycle, Pets, QuestionAnswer, Rowing, ShoppingCart, Search, Today, SwapVert, WatchLater, Work, Mic, Movie, Call, Email, SentimentSatisfied, Waves, Weekend, AttachMoney, Headset, ColorLens, Brush, Camera, Edit, Landscape, LinkedCamera, Timer, DirectionsBike, DirectionsBus, DirectionsCar, DirectionsRun, DirectionsRailway, LocalLaundryService, LocalActivity, LocalAtm, LocalBar, LocalCafe, LocalCarWash, LocalDining, LocalDrink, LocalHotel, ChildFriendly, Pool, Spa, SmokeFree, FreeBreakfast, GolfCourse, Casino, FitnessCenter, Kitchen, School, LocalLibrary, Watch, } from '@material-ui/icons/';
+
 
 const styles = theme => ({
   root: {
@@ -243,12 +246,41 @@ class Account extends Component {
           </div>
 
           <div className="row">
-            <Table data={this.state.dailyTable} />
+            <div className="table">
+              <MaterialTable
+                columns={[
+                  { title: "Entries", field: "_id", hidden: true },
+                  { title: "Date", field: "selectedDate" },
+                  { title: "Highlights", field: "highlights" },
+                  { title: "Positive", field: "positive" },
+                  { title: "Negative", field: "negative" },
+                  { title: "Wake Up", field: "wakeup" },
+                  { title: "Sleep", field: "sleep" },
+                  { title: "Habits", field: "habits" }
+                ]}
+                data={this.state.dailyTable}
+                title="Daily Statistics"
+              />
+            </div>
           </div>
 
           <div className="row">
-            {/* <Table data={this.state.weeklyTable} />
-            <Table data={this.state.monthlyTable} /> */}
+            <div className="table">
+              <MaterialTable
+                columns={[
+                  { title: "Entries", field: "_id", hidden: true },
+                  { title: "Year", field: "year" },
+                  { title: "Week Start", field: "weekStart" },
+                  { title: "Week End", field: "weekEnd" },
+                  { title: "Best of the Week", field: "best" },
+                  { title: "Worst of the Week", field: "worst" },
+                  { title: "Goal for Next Week", field: "nextWeek" },
+                  { title: "Habits", field: "habits" }
+                ]}
+                data={this.state.weeklyTable}
+                title="Weekly Statistics"
+              />
+            </div>
           </div>
         </Wrapper>
       </Palette>
@@ -292,10 +324,6 @@ class Account extends Component {
       );
     } else {
       return (
-        // <button
-        //   className="btn btn-light btn-lg btn-block"
-        //   onClick={this.switchEditting.bind(this)}
-        // >
         <Button
           variant="contained"
           color="primary"
@@ -304,18 +332,10 @@ class Account extends Component {
         >
           Update Information
         </Button>
-        // </button>
+
       );
     }
 
-    //     if(this.state.editing){
-    //   return (<div className="form-group margin">
-    //     <Button disabled={!dirty} type="submit" variant="contained" color="primary" className="button" >Save Change</Button>
-    //     <Button disabled={submitting} variant="contained" color="primary" className="button"  onClick={this.cancelForm.bind(this)}>Cancel</Button>
-    //   </div>)
-    // }else{
-    //   return (<Button variant="contained" color="primary" className="button" onClick={this.switchEditing.bind(this)}>Update Information</Button>)
-    // }
   }
   renderProfileForm() {
     const { editing } = this.state;
