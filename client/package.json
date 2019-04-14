@@ -3,10 +3,13 @@
   "version": "1.0.1",
   "description": "Simple starter package for Redux with React and Babel support",
   "main": "index.js",
+  "homepage": "https://markpython86.github.io/minimalist-journaling/",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "start": "serve ../docs",
-    "build": "rm -rf ../docs && webpack --config webpack.prod.js"
+    "build": "rm -rf ../docs && webpack --config webpack.prod.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d docs"
   },
   "author": "amazingandyyy",
   "license": "MIT",
@@ -26,7 +29,6 @@
     "husky": "^0.14.3",
     "node-sass": "^4.11.0",
     "sass-loader": "^6.0.6",
-    "serve": "^9.4.0",
     "style-loader": "^0.20.1",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2",
@@ -40,6 +42,7 @@
     "axios": "^0.17.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "date-fns": "^2.0.0-alpha.27",
+    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "material-components-web": "^1.0.1",
     "material-ui-pickers": "^2.2.4",

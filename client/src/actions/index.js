@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { 
+import {
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR,
@@ -27,7 +27,7 @@ export function signUserIn(data) {
         axios
             .post(`/signin`, data)
             .then(res => {
-                dispatch({type: AUTH_USER})
+                dispatch({ type: AUTH_USER })
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
                 window.location = '/#daily';
@@ -35,7 +35,7 @@ export function signUserIn(data) {
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -46,7 +46,7 @@ export function signUserUp(userObj) {
         axios
             .post(`/signup`, userObj)
             .then(res => {
-                dispatch({type: AUTH_USER})
+                dispatch({ type: AUTH_USER })
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
                 window.location = '/#daily';
@@ -54,14 +54,14 @@ export function signUserUp(userObj) {
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
 
 export function signUserOut() {
     return function (dispatch) {
-        dispatch({type: UNAUTH_USER})
+        dispatch({ type: UNAUTH_USER })
         localStorage.removeItem('auth_jwt_token');
     }
 }
@@ -108,7 +108,7 @@ export function updateUserProfile(profile) {
             })
             .catch(error => {
                 console.log(error.response.data)
-                if(error.response.data == "Incorrect Password") {
+                if (error.response.data == "Incorrect Password") {
                     dispatch({
                         type: UPDATE_USER_PROFILE_FAIL,
                         payload: "Incorrect Password. Please try it again."
@@ -120,7 +120,7 @@ export function updateUserProfile(profile) {
 
 export function getDailies() {
     return function (dispatch) {
-             axios
+        axios
             .get(`/api/daily`)
             .then(res => {
 
@@ -141,39 +141,28 @@ export function postDaily(dailyObj) {
         axios
             .post(`/api/daily/new`, dailyObj)
             .then(() => {
-                // console.log('\\\\\\\\\working')
-                dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                //==================== change this window location to daily================================
-                
-                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                dispatch({ type: AUTH_USER })
+                window.location.reload(true);
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
 
 export function deleteDaily(dailyID) {
     return function (dispatch) {
-        console.log(dailyID)
         // Submit email/password to server
         axios
             .delete(`/api/daily/${dailyID}`)
             .then(() => {
-                console.log('\\\\\\\\\working')
-                // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                //==================== change this window location to daily================================
-                
+                window.location.reload(true);
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -201,7 +190,7 @@ export function updateDaily(id, update) {
 
 export function getWeeklies() {
     return function (dispatch) {
-             axios
+        axios
             .get(`/api/weekly`)
             .then(res => {
 
@@ -222,15 +211,12 @@ export function postWeekly(weeklyObj) {
         axios
             .post(`/api/weekly/new`, weeklyObj)
             .then(() => {
-                dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                
-                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                dispatch({ type: AUTH_USER })
+                window.location.reload(true);
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -241,15 +227,12 @@ export function deleteWeekly(weeklyID) {
         axios
             .delete(`/api/weekly/${weeklyID}`)
             .then(() => {
-                // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                
+                window.location.reload(true);
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -276,7 +259,7 @@ export function updateWeekly(id, update) {
 //-------------------------------------------------------------
 export function getMonthlies() {
     return function (dispatch) {
-             axios
+        axios
             .get(`/api/monthly`)
             .then(res => {
 
@@ -297,15 +280,12 @@ export function postMonthly(monthlyObj) {
         axios
             .post(`/api/monthly/new`, monthlyObj)
             .then(() => {
-                dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                
-                // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                dispatch({ type: AUTH_USER })
+                window.location.reload(true);
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -316,15 +296,12 @@ export function deleteMonthly(monthlyID) {
         axios
             .delete(`/api/monthly/${monthlyID}`)
             .then(() => {
-                // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
-                // localStorage.setItem('auth_jwt_token', res.data.token);
-                
+                window.location.reload(true);
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
                 console.log(error);
-                dispatch({type: AUTH_ERROR, payload: 'Server Error, try later.'})
+                dispatch({ type: AUTH_ERROR, payload: 'Server Error, try later.' })
             });
     }
 }
@@ -347,5 +324,3 @@ export function updateMonthly(id, update) {
             });
     }
 }
-
-
