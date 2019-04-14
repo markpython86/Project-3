@@ -188,6 +188,7 @@ class Account extends Component {
     let dailyArray = [];
     let weeklyArray = [];
     let monthlyArray = [];
+   
 
     this.state.daily.map((item, index) => {
       dailyArray.push({
@@ -196,26 +197,44 @@ class Account extends Component {
         highlights: item.highlights,
         positive: item.positive,
         negative: item.negative,
+        habits: (
+          <div>
+            <i className="material-icons"> {item.habit1} </i>
+            <i className="material-icons"> {item.habit2} </i>
+            <i className="material-icons"> {item.habit3} </i>
+          </div>
+        ),
         wakeup: item.wakeup,
-        sleep: item.sleep,
-        habits: item.habit1 + item.habit2 + item.habit3
+        sleep: item.sleep
       });
     });
 
     this.state.weekly.map((item, index) => {
+      let habitW = [];
       weeklyArray.push({
         _id: item._id,
         best: item.best,
         worst: item.worst,
         nextWeek: item.nextWeek,
-        habits: item.habits,
+        habits: (
+          <div>
+            {item.habits.map(icon => {
+              habitW.push(
+              <i className="material-icons" key={icon}> {icon} </i>);
+            })}
+            {habitW}
+          </div>
+        ),
+
         week: item.week,
         weekEnd: item.weekEnd,
         weekStart: item.weekStart,
         year: item.year
       });
     });
+    console.log(dailyArray);
     console.log(weeklyArray);
+
 
     return this.setState({
       dailyTable: dailyArray,
@@ -260,6 +279,10 @@ class Account extends Component {
                 ]}
                 data={this.state.dailyTable}
                 title="Daily Statistics"
+                options={{
+                  paging: true,
+                  maxBodyHeight: 304
+                }}
               />
             </div>
           </div>
@@ -279,6 +302,10 @@ class Account extends Component {
                 ]}
                 data={this.state.weeklyTable}
                 title="Weekly Statistics"
+                options={{
+                  paging: true,
+                  maxBodyHeight: 304
+                }}
               />
             </div>
           </div>
