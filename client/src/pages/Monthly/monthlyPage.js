@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 // import "./App.css";
 // import {connect} from 'react-redux';
-import {reduxForm, Field} from 'redux-form';
-import {connect} from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import API from "../../utils/API";
 import { postMonthly } from "../../actions";
 import Wrapper from "../Grid/Wrapper";
@@ -118,11 +118,11 @@ class App extends Component {
     super();
     this.state = {
       monthlies: [],
-      dailies:[],
-       savedMessage: false,
+      dailies: [],
+      savedMessage: false,
       deletedMessage: false,
       errorMessage: false,
-      
+
     }
   }
 
@@ -132,50 +132,46 @@ class App extends Component {
   }
 
 
-savedMessage = () => {
-  this.setState({ savedMessage: true });
-};
+  savedMessage = () => {
+    this.setState({ savedMessage: true });
+  };
 
-errorMessage = () => {
-  this.setState({ errorMessage: true });
-};
-deletedMessage = () => {
-  this.setState({ deletedMessage: true });
-};
+  errorMessage = () => {
+    this.setState({ errorMessage: true });
+  };
+  deletedMessage = () => {
+    this.setState({ deletedMessage: true });
+  };
 
-handleDeleteMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
+  handleDeleteMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ deletedMessage: false });
+  };
+
+  handleSaveMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ savedMessage: false });
+  };
+
+  handleErrorMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ errorMessage: false });
+  };
+
+  loadDaily = () => {
+    API.getDailies()
+      .then()
+      .catch(err => console.log(err))
   }
-
-  this.setState({ deletedMessage: false });
-};
-
-handleSaveMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  this.setState({ savedMessage: false });
-};
-
-handleErrorMessage = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  this.setState({ errorMessage: false });
-};
-
-loadDaily = () => {
-  API.getDailies()
-  .then(res => {
-      console.log('ressssss', res.data.daily);
-      // this.setState({ dailies: res.data.daily })
-      // console.log(res.data.daily)
-    })
-  .catch(err => console.log(err))
-}
 
 
 
@@ -186,7 +182,7 @@ loadDaily = () => {
   loadMonthlies = () => {
     API.getMonthlies()
       .then(res => {
-        this.setState({ 
+        this.setState({
           monthlies: res.data.monthly,
           dailies: res.data.daily
         })
@@ -194,50 +190,45 @@ loadDaily = () => {
       .catch(err => console.log(err));
   }
 
-deleteMonthlies = (id) => {
+  deleteMonthlies = (id) => {
     API.deleteMonthly(id)
-     .then(() =>  {
-       this.loadMonthlies()
-       this.deletedMessage()
-       })
-      .catch(err => console.log(err));
-  };
- 
-  updateMonthlies = (id, update) => {
-      API.updateMonthly(id, update)
-      .then(() =>  
-      {this.loadMonthlies()
-      this.savedMessage()
+      .then(() => {
+        this.loadMonthlies()
+        this.deletedMessage()
       })
       .catch(err => console.log(err));
-  }; 
+  };
 
-    handleFormSubmit = (data) => {
-      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();        // API.saveDaily(data)
-                //   .then(() => this.loadDaily())
-                //   .catch(err => console.log(err));
-        
-        
-              } else {
-                
+  updateMonthlies = (id, update) => {
+    API.updateMonthly(id, update)
+      .then(() => {
+        this.loadMonthlies()
+        this.savedMessage()
+      })
+      .catch(err => console.log(err));
+  };
+
+  handleFormSubmit = (data) => {
+    if (this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
+      this.errorMessage();
+    } else {
       API.saveDaily(data)
-        .then(()=>{
+        .then(() => {
           this.loadMonthlies()
           this.savedMessage()
         })
         .catch(err => console.log(err))
-      }
-    };
+    }
+  };
 
 
   render() {
-    const {handleSubmit} = this.props;
+    const { handleSubmit } = this.props;
     return (
       <Palette>
-      {/* <Nav /> */}
-      <Wrapper>
-      <Snackbar
+        {/* <Nav /> */}
+        <Wrapper>
+          <Snackbar
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'center',
@@ -246,15 +237,15 @@ deleteMonthlies = (id) => {
             autoHideDuration={3000}
             onClose={this.handleSaveMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleSaveMessage}
-            variant="success"
-            message="Nice! 👍 Your entry has been saved."
-          />
-        </Snackbar>
+            <MySnackbarContentWrapper
+              onClose={this.handleSaveMessage}
+              variant="success"
+              message="Nice! 👍 Your entry has been saved."
+            />
+          </Snackbar>
 
 
-        <Snackbar
+          <Snackbar
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'center',
@@ -263,15 +254,15 @@ deleteMonthlies = (id) => {
             autoHideDuration={3000}
             onClose={this.handleErrorMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleErrorMessage}
-            variant="warning"
-            message="Oops! 😅 You already have an entry on this date. Just edit that one!"
-          />
-        </Snackbar>
+            <MySnackbarContentWrapper
+              onClose={this.handleErrorMessage}
+              variant="warning"
+              message="Oops! 😅 You already have an entry on this date. Just edit that one!"
+            />
+          </Snackbar>
 
-          
-        <Snackbar
+
+          <Snackbar
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'center',
@@ -280,26 +271,26 @@ deleteMonthlies = (id) => {
             autoHideDuration={3000}
             onClose={this.handleDeleteMessage}
           >
-          <MySnackbarContentWrapper
-            onClose={this.handleDeleteMessage}
-            variant="error"
-            message="Bye, bye, bye. 👋 Your entry has been deleted."
-          />
-        </Snackbar>
-        {/* <Container spacing="0"> */}
+            <MySnackbarContentWrapper
+              onClose={this.handleDeleteMessage}
+              variant="error"
+              message="Bye, bye, bye. 👋 Your entry has been deleted."
+            />
+          </Snackbar>
+          {/* <Container spacing="0"> */}
           <Container spacing="16">
 
-          {/* // Add edit button to this page
+            {/* // Add edit button to this page
           {/* Whatever submit button is used we need to add the onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} */}
 
             {this.state.monthlies.map((person, index) => (
-              <Item xs='12' sm='3'key={person._id}>
-              
+              <Item xs='12' sm='3' key={person._id}>
 
-                <MonthlyCard 
+
+                <MonthlyCard
                   key={person._id}
                   index={person._id}
-                  deleteMonthly = {this.deleteMonthlies}
+                  deleteMonthly={this.deleteMonthlies}
                   updatedMonthly={this.updateMonthlies}
                   preUpdate={this.updateMonthlies}
                   updates={person}
@@ -308,29 +299,29 @@ deleteMonthlies = (id) => {
                   stop={person.stop}
                   monthAt={person.monthAt}
                 />
-              
+
               </Item>
-              
+
             ))}
             <Item xs='12' sm='3'>
-                
-              </Item>
+
+            </Item>
           </Container>
           {/* </Container> */}
-      <FAB page='monthly' submit={this.handleFormSubmit}/>
-      </Wrapper>
+          <FAB page='monthly' submit={this.handleFormSubmit} />
+        </Wrapper>
       </Palette>
     )
   }
 }
 
-function mapStateToProps({auth}) {
-    return {
-        errorMsg: auth.error
-    }
+function mapStateToProps({ auth }) {
+  return {
+    errorMsg: auth.error
+  }
 }
 
 
-export default connect(mapStateToProps,{ postMonthly })(reduxForm({
-    form: 'postMonthly'
+export default connect(mapStateToProps, { postMonthly })(reduxForm({
+  form: 'postMonthly'
 })(App));

@@ -10,7 +10,7 @@ export default {
     // Validate jwt
     let try_token = req.header('Authorization').split(' ')[0];
     token.verifyToken(try_token, (err, payload) => {
-      if (err) return res.status(401).send(err);
+      if (err) return res.status(401).send('please login');
       User.findById(payload.sub)
         .exec((err, user) => {
           if (err || !user) {

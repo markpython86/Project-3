@@ -1,7 +1,5 @@
 import token from '../services/token';
 import User from '../models/user';
-import Daily from '../models/Daily';
-import Weekly from '../models/Weekly';
 const Moment = require('moment');
 // import dailyController from './dailyController'
 

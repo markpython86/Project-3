@@ -54,19 +54,23 @@ class MenuAppBar extends React.Component {
 
   componentWillMount() {
     const token = localStorage.getItem("auth_jwt_token");
-
+    if(token === null){
+      this.setState({
+      account: null
+    })
+    }else{
     this.setState({
       account: token
-    })
+    })}
 
   }
 
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ auth: event.target.checked });
   }
 
-  handleMenu(event) {
+  handleMenu = (event) => {
     this.setState({ 
       anchorEl: event.currentTarget,
       menu: event.currentTarget.id,
@@ -75,7 +79,7 @@ class MenuAppBar extends React.Component {
 
   }
 
-  handleClose() {
+  handleClose = () => {
     this.setState({ anchorEl: null })
   }
 
