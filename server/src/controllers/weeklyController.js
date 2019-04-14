@@ -1,8 +1,5 @@
-import token from '../services/token';
 import User from '../models/user';
-import Daily from '../models/Daily';
 import Weekly from '../models/Weekly';
-const Moment = require('moment');
 // import dailyController from './dailyController'
 
 
@@ -21,44 +18,44 @@ export default {
             });
        
     },
-    createWeekly: (req, res, next) => {
-//         
+//     createWeekly: (req, res, next) => {
+// //         
 
-        User.findById({_id: req.user._id})
-        .populate({path: 'weekly', options: { sort: { 'week': 1 } } })
-        .then(weekly => {
+//         User.findById({_id: req.user._id})
+//         .populate({path: 'weekly', options: { sort: { 'week': 1 } } })
+//         .then(weekly => {
 
-        })
-         const {
-            best,
-            worst,
-            nextWeek,
-        } = req.body;
-        let newDate = new Date()
-        const weekly = new Weekly({
+//         })
+//          const {
+//             best,
+//             worst,
+//             nextWeek,
+//         } = req.body;
+//         let newDate = new Date()
+//         const weekly = new Weekly({
            
-            week:  parseInt(Moment(newDate).format('w') - 1),
-            year: parseInt(Moment(newDate).format('YYYY')),
-            month: parseInt(Moment(newDate).format('MM')),
-            best: best,
-            worst: worst,
-            nextWeek: nextWeek,
-            user_id: req.user._id
-                })
+//             week:  parseInt(Moment(newDate).format('w') - 1),
+//             year: parseInt(Moment(newDate).format('YYYY')),
+//             month: parseInt(Moment(newDate).format('MM')),
+//             best: best,
+//             worst: worst,
+//             nextWeek: nextWeek,
+//             user_id: req.user._id
+//                 })
 
-                weekly.save(function (err, savedWeekly) {
-                    if (err) {
-                        return next(err)
-                    }
-                }).then(newWeekly => {
-                    User.findByIdAndUpdate({_id:req.user._id},{ $push: {weekly: newWeekly._id}})
-                    .then((data)=> res.sendStatus(200))
-                    .catch(err=>console.log(err))
+//                 weekly.save(function (err, savedWeekly) {
+//                     if (err) {
+//                         return next(err)
+//                     }
+//                 }).then(newWeekly => {
+//                     User.findByIdAndUpdate({_id:req.user._id},{ $push: {weekly: newWeekly._id}})
+//                     .then((data)=> res.sendStatus(200))
+//                     .catch(err=>console.log(err))
 
-                    res.sendStatus(200);
-                })
-                .catch(next)
-    },
+//                     res.sendStatus(200);
+//                 })
+//                 .catch(next)
+//     },
 
     deleteWeekly: (req, res, next) => {
         const weeklyID = req.params.id
@@ -89,5 +86,3 @@ export default {
     }
     
 }
-
-

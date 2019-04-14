@@ -7,7 +7,7 @@ import './style.css';
 
 
 class Signout extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.signUserOut()
     }
     render() {

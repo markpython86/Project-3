@@ -36,43 +36,30 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter hashType="noslash">
       <App>
-        <MenuAppBar />
+        <MenuAppBar token={token}/>
         <Switch>
-          {/* <Route exact path="/" render={() => (
-            token ? (
-              <Redirect to="/daily"/>
-            ) : (
-              <Home />
-            )
-          )}/> */}
-          <Route exact path="/signin" render={() => (
-            token ? (
+          <Route path="/signin" render={() => (
+            (localStorage.getItem('auth_jwt_token')) ? (
               <Redirect to="/daily"/>
             ) : (
               <Signin />
             )
           )}/>
-          <Route exact path="/signup" render={() => (
-            token ? (
-            <Redirect to="/daily"/>
+
+          <Route path="/signup" render={() => (
+            (localStorage.getItem('auth_jwt_token')) ? (
+             <Redirect to="/daily"/>
             ) : (
               <Signup />
             )
           )}/>
           <Route exact path="/" component= {Home} />
-          {/* <Route path="/public" component= {Public} /> */}
           <Route path="/account" component= {RequireAuth(Account)} />
-
           <Route path="/about" component= {About} />
-          
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
           <Route path="/weekly" component= {RequireAuth(Weekly)} />
           <Route path="/monthly" component= {RequireAuth(Monthly)} /> 
-          {/* <Route path="/ui" component= {App1} /> */}
-          
-
-
         </Switch>
       
       </App>

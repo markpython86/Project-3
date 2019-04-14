@@ -127,9 +127,12 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    
+    // this.props.tryConnect();
     this.loadDaily();
   }
+
 
   savedMessage = () => {
     this.setState({ savedMessage: true });
@@ -185,7 +188,8 @@ class App extends Component {
        })
 
       .catch(err => console.log(err));
-  };
+  }
+
   updateDailies = (id, update) => {
       API.updateDaily(id, update)
       .then(() => {
@@ -195,23 +199,21 @@ class App extends Component {
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit = (data) => {
-      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();
-      } else {
-        API.saveDaily(data)
-        .then(() => {
-          this.loadDaily()
-          this.savedMessage()
-        })
+  handleFormSubmit = (data) => {
+    if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)){
+      this.errorMessage()
+    } else{
+      API.saveDaily(data)
+          .then(() => {
+            this.loadDaily()
+            this.savedMessage()
+          })
           .catch(err => console.log(err));
-      }
-    };
+    }
+  };
 
 
   render() {
-    // const {handleSubmit} = this.props;
-
     const { classes } = this.props;
 
     return (
@@ -275,7 +277,6 @@ class App extends Component {
                   index={person._id}
                   deleteDaily = {this.deleteDailies}
                   updatedDaily={this.updateDailies}
-                  preUpdate={this.updateDailies}
                   updates={person}
                   Highlights={person.highlights}
                   positive={person.positive}

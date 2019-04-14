@@ -159,7 +159,7 @@ class Account extends Component {
       monthly: []
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.tryConnect();
     this.props.getUserProfile();
     this.loadDaily();
