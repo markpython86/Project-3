@@ -5,13 +5,9 @@ import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
 import {tryConnect, getUserProfile, updateUserProfile} from '../../actions';
 import CenterCard363 from '../../components/centerCard363';
-import IconButton from "@material-ui/core/IconButton";
-import {Edit} from '@material-ui/icons';
 import "./account.css";
 import Wrapper from "../Grid/Wrapper";
-import Container from "../Grid/Container";
 import Palette from "../Grid/Palette";
-import { Grid } from "@material-ui/core";
 import API from "../../utils/API";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -23,8 +19,6 @@ import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
-import MaterialTable from 'material-table'
-import "./account.css";
 import Table from './table'
 
 const styles = theme => ({
@@ -48,7 +42,6 @@ function AlignItemsList(props) {
           <List className={classes.root}>
             <div className="card-header">
               <h4>Account Statistics</h4>
-             
             </div>
             <div className="card-body">
               <ListItem alignItems="flex-start">
@@ -56,11 +49,9 @@ function AlignItemsList(props) {
                   <Avatar alt="Daily" src="../utils/images/dailyIcon.png" />
                 </ListItemAvatar>
                 <ListItemText
-                
                   primary="Daily"
                   secondary={
                     <React.Fragment>
-                
                       <Typography
                         component="span"
                         className={classes.inline}
@@ -68,19 +59,19 @@ function AlignItemsList(props) {
                       >
                         Total Number of Daily Entries: {state.daily.length}
                       </Typography>
-                      <br></br>
+                      <br />
                       <Typography
                         component="span"
                         className={classes.inline}
                         color="textPrimary"
                       >
-                        Total Number of Daily Habits:   {state.allHabits.length}
+                        Total Number of Daily Habits: {state.allHabits.length}
                       </Typography>
                     </React.Fragment>
                   }
                 />
               </ListItem>
-              <Divider variant="middle" light={true}/>
+              <Divider variant="middle" light={true} />
 
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
@@ -95,13 +86,13 @@ function AlignItemsList(props) {
                         className={classes.inline}
                         color="textPrimary"
                       >
-                        Total Number of Weekly Entries: {}
+                        Total Number of Weekly Entries: {state.weekly.length}
                       </Typography>
                     </React.Fragment>
                   }
                 />
               </ListItem>
-              <Divider variant="middle" />
+              <Divider variant="middle" light={true} />
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar
@@ -118,8 +109,7 @@ function AlignItemsList(props) {
                         className={classes.inline}
                         color="textPrimary"
                       >
-                        Total Number of Monthly Entries:{" "}
-                       
+                        Total Number of Monthly Entries:{state.monthly.length}
                       </Typography>
                     </React.Fragment>
                   }
@@ -153,120 +143,86 @@ class Account extends Component {
       dailyTable: [],
       allHabits: []
     };
-    
-  };
-  
+  }
 
   componentWillMount() {
     this.props.tryConnect();
     this.props.getUserProfile();
-    this.loadDaily()
-    
-
-  };
+    this.loadDaily();
+    this.loadWeeklies();
+  }
 
   loadDaily = () => {
     API.getDailies()
       .then(res => {
         this.setState({
           daily: res.data.daily,
-          weekly: res.data.weekly,
-          monthly: res.data.monthly,
-          allHabits: []
-          });
+          // weekly: res.data.weekly,
+          // monthly: res.data.monthly
+        });
+        console.log("DAILY")
         console.log(this.state.daily);
-        this.getArray()
+        // this.getArray();
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadWeeklies = () => {
+    API.getWeeklies()
+      .then(res => {
+        this.setState({
+          weekly: res.data.weekly,
+        });
+        console.log("WEEKLY ");
+        console.log(this.state.weekly);
+        this.getArray();
 
       })
       .catch(err => console.log(err));
   };
 
-   getArray = ()=> {
-     let arry = [];
-     this.state.daily.map((item, index) => {
-      arry.push(
-        { "_id": item._id,
-          "selectedDate": item.selectedDate,
-          "highlights": item.highlights, 
-          "positive": item.positive, 
-          "negative": item.negative, 
-          "wakeup": item.wakeup, 
-          "sleep": item.sleep, 
-          "habits": item.habit1 + item.habit2 + item.habit3
-        }
-       )
-    
-     })
-    return(this.setState({
-      dailyTable: arry
-    }))
-  }
+  getArray = () => {
+    let dailyArray = [];
+    let weeklyArray = [];
+    let monthlyArray = [];
 
+    this.state.daily.map((item, index) => {
+      dailyArray.push({
+        _id: item._id,
+        selectedDate: item.selectedDate,
+        highlights: item.highlights,
+        positive: item.positive,
+        negative: item.negative,
+        wakeup: item.wakeup,
+        sleep: item.sleep,
+        habits: item.habit1 + item.habit2 + item.habit3
+      });
+    });
 
+    this.state.weekly.map((item, index) => {
+      weeklyArray.push({
+        _id: item._id,
+        best: item.best,
+        worst: item.worst,
+        nextWeek: item.nextWeek,
+        habits: item.habits,
+        week: item.week,
+        weekEnd: item.weekEnd,
+        weekStart: item.weekStart,
+        year: item.year
+      });
+    });
+    console.log(weeklyArray);
 
-  // getHabitStats() {
-  //   let allHabits = [];
-  //   let counts=[];
-
-  //   this.state.daily.map((person, index) => {
-  //     if(person.habit1 !== "") {
-  //       allHabits.push({ item: person.habit1, total: 1 });
-	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-  //     } 
-  //     if(person.habit2 !== "") {
-  //       allHabits.push({ item: person.habit2, total: 1 });
-	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-  //     }
-  //     if(person.habit3 !== "") {
-  //       allHabits.push({item: person.habit3, total: 1});
-	// 			console.log("CONSOLE:: Account -> getHabitStats -> habit1", allHabits);
-  //     }
-
-  //   }); 
-  // let habitValues = new Set(allHabits)
-
-  //   allHabits.map((item, index) => {
-  //     if (habitValues.has(item))
-  //     console.log("Here")
-
-  //     if (counts.item === null) {
-  //       counts.push({item: item, total:1})
-	// 			console.log("CONSOLE:: Account -> getHabitStats -> counts == -1" , counts);
-  //     }
-
-  //     // if (counts.item !== null) {
-  //     //   counts.item.push({item: item, total:+1})
-	// 		// 	console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
-  //     // }
-
-
-  //   })
-  //   // for (let i = 0; i <= allHabits.length; i++) {
-  //   //   if (counts[i] === undefined) {
-  //   //     counts.push(allHabits[i]);
-	// 	// 		console.log("CONSOLE:: Account -> getHabitStats -> counts", counts);
-  //   //   } else if (counts[allHabits[i]] === counts[allHabits[i]]){
-  //   //     counts.indexOf(allHabits[i])
-        
-  //   //   }
-  //   // }
-    
-
-  //   this.setState({
-  //     allHabits: allHabits,
-  //   });
-
-  // }
+    return this.setState({
+      dailyTable: dailyArray,
+      weeklyTable: weeklyArray
+      // monthlyTable: monthlyArray
+    });
+  };
 
   render() {
     let { status, profile } = this.props;
-    let daily =this.state.daily;
-    
-      // this.state.daily.map((item, index) => {
- 
-      //   dailyArry.push(`{ _id: ${item._id}, selectedDate: ${item.selectedDate}, highlights: ${item.highlights}, positive: ${item.positive}, negative: ${item.negative}, wakeup: ${item.wakeup}, sleep: ${item.sleep}, habits: ${item.habit1} + item.habit2 + ${item.habit3}}`)
-      // });
-  
 
     return (
       <Palette>
@@ -276,7 +232,6 @@ class Account extends Component {
               <div className="card border-secondary">
                 <h4 className="card-header">Account Information</h4>
                 <div className="card-body">
-                  {/* <p className="text-muted">Server status: {status} ☀</p> */}
                   {profile && this.renderProfileForm()}
                 </div>
               </div>
@@ -286,10 +241,14 @@ class Account extends Component {
           <div className="row">
             <StatList state={this.state} />
           </div>
+
           <div className="row">
+            <Table data={this.state.dailyTable} />
+          </div>
 
-          <Table data={this.state.dailyTable} />
-
+          <div className="row">
+            {/* <Table data={this.state.weeklyTable} />
+            <Table data={this.state.monthlyTable} /> */}
           </div>
         </Wrapper>
       </Palette>
