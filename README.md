@@ -1,74 +1,42 @@
-# mern-stack
-MongoDB, Expressjs, React/Redux, Nodejs
+![](Minimalist.001.png)
 
-## clone or download and send me PR(please)
-```terminal
-$ git clone https://github.com/amazingandyyy/mern-stack.git
-```
+# Minimalist
+A minimal journaling app that guides users through daily, weekly, and monthly self-reflections. Intentionally minimal. Incredibly powerful.
 
-# Usage(make it run on your machine)
-- You need make the both the following two run
+### Purpose and Usefulness
+Machines are great at taking in data and course correcting. Humans aren't as great, it turns out. Even though self-reflection is essesstial to our growth, surveys show that people would rather receive small amounts of electic shocks than have to sit for 15 minutes doing nothing but self-reflection. Minimalist takes the pain out of this process by making self-reflection quick, easy, and helpful. Three questions at the end of every day, three questions at the end of every week, and three questions at the end of every month. All of a sudden, you might notice trends when you look back on your week or month. The included habit tracker also helps you see your habits grow over time. It's all about growth over time. When you take minimal time to do minimal journaling, you'll find the rewards aren't minimal.
 
-## Prerequirements
-- [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
-- [Node](https://nodejs.org/en/download/) ^8.0.0
-- [npm](https://nodejs.org/en/download/package-manager/)
+### Features
+  * Daily View
+  * Weekly View
+  * Monthly View
+  * Habit Tracker
+  * Account Dashboard
 
-## Client-side usage(PORT: 3000)
-```terminal
-$ cd client
-$ npm i
-$ npm run dev
-```
+### DEMO
+[![Minimalist Demo](minimalist.png)](https://youtu.be/vMQijetKvCY "minimalist")
 
-## Server-side usage(PORT: 8000)
-(You need to add a JWT_SECRET in .env to connect to MongoDB -> make it run -> check your terminal for instructions
-)
-```terminal
-$ cd server
-$ npm i
-$ npm run dev
-```
+### Links
+Github Repository: https://github.com/markpython86/Project-3
+Live Heroku Link: 
 
-## Deploy Server to [Heroku](https://dashboard.heroku.com/)
-```terminal
-$ npm i -g heroku
-$ heroku login
-$ heroku create
-$ npm run heroku:add <your-heroku-app-name>
-$ npm run deploy:heroku
-```
+### Technologies Used
+  * Javascript
+  * MongoDB
+  * Express
+  * React
+  * Mongoose
+  * Morgan
+  * Heroku
+  * Material-UI
+  * Webpack
+  * JWT Authentication
+  
+### Downloading the Repo and Running it Locally
+1. Clone repository using the code -> _git clone https://github.com/markpython86/Project-3.git
+2. Open a terminal session for the directory where the application was cloned to
+3. Run *npm install* to install all the dependencies
+4. Run *mongod* to get the daemon running for MongoDB
+3. Be sure to run *npm run dev* in both the server and client folders
 
-# Dependencies(tech-stacks)
-Client-side | Server-side
---- | ---
-axios: ^0.15.3 | bcrypt-nodejs: ^0.0.3
-babel-preset-stage-1: ^6.1.18|body-parser: ^1.15.2
-lodash: ^3.10.1 | cors: ^2.8.1
-react: ^16.2.0 | dotenv: ^2.0.0
-react-dom: ^16.2.0 | express: ^4.14.0
-react-redux: ^4.0.0 | jwt-simple: ^0.5.1
-react-router-dom: ^4.2.2 | mongoose: ^4.7.4
-redux: ^3.7.2 | morgan: ^1.7.0
-redux-form: ^6.4.1 |
-redux-thunk: ^2.1.0 |
-
-# Screenshots of this project
-
-User visit public and Home page
-![User visit public and Home page](http://i.imgur.com/ORCGHHY.png)
-
-User can sign in or sign up
-![User can sign in or sign up](http://i.imgur.com/rrmbU5I.png)
-
-After signing in user can go to account route and make request to token-protected API endpoint
-![After signing in user can go to account route](http://i.imgur.com/FzLB51u.png)
-
-## BUGs or comments
-[Create new Issues](https://github.com/amazingandyyy/mern-stack/issues)
-
-## Author
-[Amazingandyyy](https://amazingandyyy.com)
-
-### License
-[MIT](https://github.com/amazingandyyy/eventbrite-api/blob/master/LICENSE)
+#### Enjoy!

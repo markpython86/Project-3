@@ -448,6 +448,8 @@ const Child = (props) => (
     <Fab onClick={() => {
       props.props.updatedWeekly(props.props.index, props.newState)
       props.notEditMode();
+      props.hideIcons()
+
       } } size="small" id="saveButton" aria-label="Check" color='secondary'>
       <Icon  fontSize="small">check_icon</Icon> 
     </Fab>
