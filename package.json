@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/amazingandyyy/mern-stack#readme",
   "devDependencies": {
-    "husky": "^0.14.3",
-    "nodemon": "^1.17.5"
+    "husky": "^4.2.1",
+    "nodemon": "^2.0.2"
   },
   "dependencies": {}
 }
